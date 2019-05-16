@@ -252,7 +252,72 @@ paths:
                   $ref: '#/components/schemas/Deposit'
         '400':
           description: Invalid IBAN
-         
+  /Withdrawals:
+    get:
+      tags:
+        - Withdrawal
+      summary: gets all Withdrawals
+      operationId: GetAllWithdrawals
+      description: Gets a list with all Withdrawal transactions
+      responses:
+        '200':
+          description: The list with all Withdrawals is successfully fetched
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Withdrawal'
+        default:
+          description: Oops, it looks like it didn't do what it was supposed to be doing..
+    post:
+      tags:
+        - Withdrawal
+      summary: Create a new Withdrawal
+      operationId: CreatNewWithdrawal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Withdrawal'
+      description: Creates a new Withdrawal
+      responses:
+        '200':
+          description: Withdrawal successfully created! 
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Withdrawal'
+        '400':
+          description: bad input parameter
+          
+  /Withdrawals/{iban}:
+    get:
+      parameters:
+        - in: path
+          name: iban
+          required: true
+          schema:
+            type: string
+          description: The IBAN
+      tags:
+        - Withdrawal
+      summary: Get all withdrawals for a specific account
+      operationId: GetAllWithdrawalsConnectedToSpecifiedAccount
+      description: Gets a list of all withdraw transactions of the specified account
+      responses:
+        '200':
+          description: The list with all Withdrawals for the specified account is successfully fetched 
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Withdrawal'
+        '400':
+          description: bad input parameter
 components:
   schemas:
     Account:
