@@ -1,0 +1,296 @@
+openapi: 3.0.0
+info:
+  version: '0.1'
+  title: ''
+  description: ''
+paths:
+  /accounts:
+    get:
+      tags:
+        - account
+      summary: Returns all accounts
+      operationId: getAccounts
+      description: Returns a list of all accounts
+      responses:
+        '200':
+          description: the account list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+        '400':
+          description: Nee
+    post:
+      tags:
+        - account
+      summary: Creates an account
+      operationId: createAccount
+      description: Creates a new bankaccount, if the logged in user is an employee
+      responses:
+        default:
+          description: Account created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+        description: Account details
+        required: true
+  /account/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The account ID
+      tags:
+        - account
+      summary: Returns specified account
+      operationId: getAccountById
+      description: Returns the specified account
+      responses:
+        '200':
+          description: the account 
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Account'
+        '400':
+          description: Nee
+          
+  /users:
+    get:
+      tags:
+        - user
+      summary: Returns all users
+      operationId: getUsers
+      description: Returns a list of all users
+      responses:
+        '200':
+          description: the user list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          description: Nee
+  /user/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The user ID
+      tags:
+        - user
+      summary: Returns specified user
+      operationId: getUserById
+      description: Returns the specified user
+      responses:
+        '200':
+          description: the user 
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          description: Nee
+  /users/login:
+    post:
+      tags:
+        - user
+      summary: Logs user into the system
+      operationId: loginUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        description: Username and password
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content: 
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Invalid username/password supplied
+  /transactions:
+    post:
+      tags:
+        - transaction
+      summary: Place a new transaction
+      operationId: createTransaction
+      description: Creates a transaction of the specified amount between the specified accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+      responses:
+        '200':
+          description: succes 
+        '400':
+          description: Nee
+    get:
+      tags: 
+        - transaction
+      summary: Get all transactions
+      operationId: getAllTransactions
+      description: Gets all transactions from all accounts
+      responses:
+        '200':
+          description: succes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+        '400':
+          description: Nee
+  /transactions/{iban}:
+    get:
+      parameters: 
+        - in: path
+          name: iban
+          required: true
+          schema:
+            type: string
+          description: the iban of the user who's transactions you want to get
+      tags: 
+        - transaction
+      summary: Get the transactions of a specific account
+      operationId: getTransactionsFromAccount
+      description: Get the transactions of a specific account
+      responses:
+        '200':
+          description: succes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+        '400':
+          description: Nee 
+         
+components:
+  schemas:
+    Account:
+      type: object
+      required:
+        - Iban
+        - Name
+        - Balance
+        - Type
+        - Status
+      properties:
+        Iban:
+          type: string
+        Name:
+          type: string
+        Balance:
+          type: number
+        Accounttype:
+          type: string
+        Status:
+          type: boolean
+    User:
+      type: object
+      required:
+        - Id
+        - Name
+        - Password
+        - Role
+        - Accounts
+      properties:
+        Id:
+          type: integer
+        Name:
+          type: string
+        Password:
+          type: string
+        Role:
+          type: string
+        Accounts:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Account'
+    Transaction:
+      type: object
+      required:
+        - From
+        - To
+        - Amount
+        - TimeStamp
+        - PerformedBy
+        - Id
+      properties:
+        Id:
+          type: integer
+          format: int64
+        From:
+          type: string
+          description: the iban of the sending end
+        To:
+          type: string
+          description: the iban of the receiving end
+        Amount:
+          type: number
+          description: the amount to transfer
+        TimeStamp:
+          type: string
+          format: date-time
+        PerformedBy:
+          type: integer
+          description: userID of the user who creates the transaction
+    Withdrawal:
+      type: object
+      required:
+        - From
+        - Amount
+      properties:
+        From:
+          type: string
+          description: de iban van de gebruiker
+        Amount:
+          type: number
+          description: het op te nemen bedrag
+        TimeStamp:
+          type: string
+          format: date-time
+    Deposit:
+      type: object
+      required:
+        - To
+        - Amount
+      properties:
+        To:
+          type: string
+          description: de iban van de gebruiker
+        Amount:
+          type: number
+          description: het te storten bedrag
+        TimeStamp:
+          type: string
+          format: date-time
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/JesseTheRookie/api/0.1
