@@ -190,6 +190,68 @@ paths:
                   $ref: '#/components/schemas/Transaction'
         '400':
           description: Nee 
+  /deposits:
+    get:
+      tags:
+        - deposits
+      summary: Returns all deposits
+      operationId: getDeposits
+      description: Returns a list of all deposits
+      responses:
+        '200':
+          description: the deposits list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Deposit'
+        '400':
+          description: There occured an error
+    post:
+      tags:
+        - deposits
+      summary: Creates an deposit
+      operationId: createDeposit
+      description: Creates a new deposit moment
+      responses:
+        '200':
+          description: Money succesfully deposited
+        '400':
+          description: There occured an error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Deposit'
+        description: Account details
+        required: true
+  /deposits/{iban}:
+    get:
+      parameters:
+        - in: path
+          name: iban
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: The account IBAN
+      tags:
+        - account
+      summary: Returns specified account
+      operationId: getDepositsByIban
+      description: Returns the specified IBAN deposits
+      responses:
+        '200':
+          description: the account 
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Deposit'
+        '400':
+          description: Invalid IBAN
          
 components:
   schemas:
@@ -291,6 +353,7 @@ components:
         TimeStamp:
           type: string
           format: date-time
+          
 servers:
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/JesseTheRookie/api/0.1
