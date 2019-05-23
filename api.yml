@@ -145,9 +145,14 @@ paths:
               $ref: '#/components/schemas/Transaction'
       responses:
         '200':
-          description: succes 
+          description: succes and returns transactionID
+          content:
+            application/json:
+              schema:
+                type: integer
+                name: transactionID
         '400':
-          description: Nee
+          description: the operation is unsuccesfull
     get:
       tags: 
         - transaction
