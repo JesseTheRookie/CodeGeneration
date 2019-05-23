@@ -154,11 +154,22 @@ paths:
         '400':
           description: the operation is unsuccesfull
     get:
+    - in: query
+      name: transactionID
+      required: false
+      schema:
+        type: integer
+      description: The id of a transaction
+    - in: query
+      name: iban
+      required: false
+      schema:
+        type: string
+      description: The iban code of an user (from, to, performedBy)
       tags: 
         - transaction
-      summary: Get all transactions
-      operationId: getAllTransactions
-      description: Gets all transactions from all accounts
+      summary: Get transactions depending on the optional parameters; the abstinence of any parameters results in all transactions.
+      operationId: getTransactions
       responses:
         '200':
           description: succes
@@ -170,31 +181,6 @@ paths:
                   $ref: '#/components/schemas/Transaction'
         '400':
           description: Nee
-  /transactions/{iban}:
-    get:
-      parameters: 
-        - in: path
-          name: iban
-          required: true
-          schema:
-            type: string
-          description: the iban of the user who's transactions you want to get
-      tags: 
-        - transaction
-      summary: Get the transactions of a specific account
-      operationId: getTransactionsFromAccount
-      description: Get the transactions of a specific account
-      responses:
-        '200':
-          description: succes
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Transaction'
-        '400':
-          description: Nee 
   /deposits:
     get:
       tags:
