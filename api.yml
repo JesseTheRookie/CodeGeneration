@@ -1,93 +1,204 @@
 openapi: 3.0.0
 info:
-  version: '0.1'
-  title: ''
-  description: ''
+  version: '1.0'
+  title: 'Inholland_Bank_API'
+  description: 'Banking API voor Inholland'
+  
 paths:
   /accounts:
     get:
+      security:
+        - ApiKeyAuth: []
       tags:
         - account
       summary: Returns all accounts
       operationId: getAccounts
-      description: Returns a list of all accounts
+      description: Returns a list of all accounts, if the logged in user is an employee
+      parameters: 
+        - name: type
+          in: query
+          description: The type of accounts that need to be considered to filter
+          required: false
+          schema:
+            type: string
+            enum:
+              - current
+              - savings
       responses:
-        '200':
-          description: the account list
+        "200":
+          description: The account list
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Account'
-        '400':
-          description: Nee
+                  $ref: "#/components/schemas/Account"
+        "400":
+          description: Client says no
+        "500":
+          description: Server says no
     post:
+      security:
+        - ApiKeyAuth: []
       tags:
         - account
       summary: Creates an account
       operationId: createAccount
-      description: Creates a new bankaccount, if the logged in user is an employee
+      description: Creates a new account, if the logged in user is an employee
       responses:
-        default:
+        "200":
           description: Account created
+        "400":
+          description: Client says no
+        "405":
+          description: Invalid input
+        "500":
+          description: Server says no
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Account'
+              $ref: "#/components/schemas/Account"
         description: Account details
         required: true
-  /account/{id}:
+
+  /accounts/{iban}:
     get:
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
-          name: id
+          name: iban
           required: true
           schema:
-            type: integer
-            minimum: 1
-          description: The account ID
+            type: string
+          description: The iban
       tags:
         - account
-      summary: Returns specified account
-      operationId: getAccountById
+      summary: Returns the specified account
+      operationId: getAccountByIban
       description: Returns the specified account
       responses:
-        '200':
-          description: the account 
+        "200":
+          description: the account
           content:
             application/json:
               schema:
                 type: object
                 items:
-                  $ref: '#/components/schemas/Account'
-        '400':
-          description: Nee
-          
+                  $ref: "#/components/schemas/Account"
+        "400":
+          description: Client says no
+        "404":
+          description: Account not found
+        "500":
+          description: Server says no
+
+    put:
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: iban
+          required: true
+          schema:
+            type: string
+          description: The iban
+      tags:
+        - account
+      summary: Toggles the status of the specified account
+      operationId: toggleAccountStatus
+      description: Toggles the status of the specified account, active or frozen
+      responses:
+        "200":
+          description: Status updated
+        "400":
+          description: Client says no
+        "404":
+          description: Account not found
+        "500":
+          description: Server says no
+    delete:
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: iban
+          required: true
+          schema:
+            type: string
+          description: The iban
+      tags:
+        - account
+      summary: Deletes the specified account
+      operationId: deleteAccount
+      description: Deletes the specified account, if the logged in user is an employee AND the balance of the account is zero
+      responses:
+        "200":
+          description: Status updated
+        "400":
+          description: Client says no
+        "404":
+          description: Account not found
+        "500":
+          description: Server says no
+
   /users:
     get:
+      security:
+        - ApiKeyAuth: []
       tags:
         - user
       summary: Returns all users
       operationId: getUsers
       description: Returns a list of all users
       responses:
-        '200':
+        "200":
           description: the user list
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
-        '400':
+                  $ref: "#/components/schemas/User"
+        "400":
           description: Nee
-  /user/{id}:
+    
+    post:
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - user
+      summary: Creates a new user
+      operationId: createUser
+      description: Creates a new user, if the logged in user is an employee, and returns the userId
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: user created
+          content:
+            application/json:
+              schema:
+                type: integer
+                description: userId
+        "400": 
+          description: Client says no
+        "405":
+          description: Invalid input
+        "500":
+          description: Server says no
+          
+  /users/{userId}:
     get:
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
-          name: id
+          name: userId
           required: true
           schema:
             type: integer
@@ -99,16 +210,53 @@ paths:
       operationId: getUserById
       description: Returns the specified user
       responses:
-        '200':
-          description: the user 
+        "200":
+          description: the user
           content:
             application/json:
               schema:
                 type: object
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
         '400':
-          description: Nee
+          description: Client says no
+        '404':
+          description: User not found
+        '405':
+          description: Validation exception
+        "500":
+          description: Server says no
+          
+  /users/{userId}/accounts:
+    get:
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+          description: The user Id
+      tags:
+        - user
+      summary: Returns all accounts of the specified user
+      operationId: getAccountsByUserId
+      description: Returns a list of accounts, belonging to the logged in user
+      responses:
+        "200":
+          description: the account(s)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Account"
+        "400":
+          description: Client says no
+        "500":
+          description: Server says no
+
   /users/login:
     post:
       tags:
@@ -119,20 +267,35 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
         description: Username and password
         required: true
       responses:
-        '200':
-          description: successful operation
-          content: 
+        "200":
+          description: User logged in
+          content:
             application/json:
               schema:
                 type: string
-        '400':
+        "400":
           description: Invalid username/password supplied
+        "500":
+          description: Server says no
+
+  /users/logout:
+    get:
+      tags:
+        - user
+      summary: Logs out current logged in user session
+      operationId: logoutUser
+      responses:
+        default:
+          description: successful operation
+          
   /transactions:
     post:
+      security:
+        - ApiKeyAuth: []
       tags:
         - transaction
       summary: Place a new transaction
@@ -150,26 +313,41 @@ paths:
             application/json:
               schema:
                 type: integer
-                name: transactionID
+                description: transactionID
         '400':
           description: the operation is unsuccesfull
     get:
-    - in: query
-      name: transactionID
-      required: false
-      schema:
-        type: integer
-      description: The id of a transaction
-    - in: query
-      name: iban
-      required: false
-      schema:
-        type: string
-      description: The iban code of an user (from, to, performedBy)
+      security:
+        - ApiKeyAuth: []
       tags: 
         - transaction
       summary: Get transactions depending on the optional parameters; the abstinence of any parameters results in all transactions.
       operationId: getTransactions
+      parameters:
+        - name: transactionID
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: The id of a transaction
+        - name: from
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The iban of the sending backaccount
+        - name: to
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The iban of the receiving backaccount
+        - name: performedBy
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: The userId of the user who performed the transaction
       responses:
         '200':
           description: succes
@@ -181,8 +359,11 @@ paths:
                   $ref: '#/components/schemas/Transaction'
         '400':
           description: Nee
+          
   /deposits:
     get:
+      security:
+        - ApiKeyAuth: []
       tags:
         - deposits
       summary: Returns all deposits
@@ -200,6 +381,8 @@ paths:
         '400':
           description: There occured an error
     post:
+      security:
+        - ApiKeyAuth: []
       tags:
         - deposits
       summary: Creates an deposit
@@ -219,6 +402,8 @@ paths:
         required: true
   /deposits/{iban}:
     get:
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: iban
@@ -228,8 +413,8 @@ paths:
             minimum: 1
           description: The account IBAN
       tags:
-        - account
-      summary: Returns specified account
+        - deposits
+      summary: Returns the deposits of the specified account
       operationId: getDepositsByIban
       description: Returns the specified IBAN deposits
       responses:
@@ -245,6 +430,8 @@ paths:
           description: Invalid IBAN
   /Withdrawals:
     get:
+      security:
+        - ApiKeyAuth: []
       tags:
         - Withdrawal
       summary: gets all Withdrawals
@@ -262,6 +449,8 @@ paths:
         default:
           description: Oops, it looks like it didn't do what it was supposed to be doing..
     post:
+      security:
+        - ApiKeyAuth: []
       tags:
         - Withdrawal
       summary: Create a new Withdrawal
@@ -286,6 +475,8 @@ paths:
           
   /Withdrawals/{iban}:
     get:
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: iban
@@ -309,12 +500,14 @@ paths:
                   $ref: '#/components/schemas/Withdrawal'
         '400':
           description: bad input parameter
+          
 components:
   schemas:
     Account:
       type: object
       required:
         - Iban
+        - UserId
         - Name
         - Balance
         - Type
@@ -322,24 +515,27 @@ components:
       properties:
         Iban:
           type: string
+        UserId:
+          type: number
         Name:
           type: string
         Balance:
           type: number
         Accounttype:
           type: string
+          enum: [current, savings]
         Status:
-          type: boolean
+          type: string
+          enum: [active, frozen]
     User:
       type: object
       required:
-        - Id
+        - UserId
         - Name
         - Password
         - Role
-        - Accounts
       properties:
-        Id:
+        UserId:
           type: integer
         Name:
           type: string
@@ -347,10 +543,11 @@ components:
           type: string
         Role:
           type: string
+          enum: [user, employee, user_employee]
         Accounts:
           type: array
-          items: 
-            $ref: '#/components/schemas/Account'
+          items:
+            $ref: "#/components/schemas/Account"
     Transaction:
       type: object
       required:
@@ -409,7 +606,8 @@ components:
         TimeStamp:
           type: string
           format: date-time
-          
-servers:
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/JesseTheRookie/api/0.1
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-authtoken
