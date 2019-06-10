@@ -73,8 +73,8 @@ public class User   {
   @OneToMany(targetEntity = Account.class, fetch = FetchType.EAGER)
   private List<Account> accounts = null;
 
-  public User userId(Long userId) {
-    this.id = userId;
+  public User id(Long id) {
+    this.id = id;
     return this;
   }
 

@@ -21,13 +21,19 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
 public class Account   {
+
+  @ManyToOne(targetEntity = User.class)
+  private User user;
+  //ToDo hoe krijg ik de user hierin bij inlezen van het csv bestand? Zonder daarbij service.findbyis te doen oid (neem aan dat je niet vanuit model naar service wil/mag)
+  // Constructor aanpassen zodat deze een user accepteerd, in account csv user id opnemen. Bij line parser user.findbyid gebruiken om de user te achterhalen van dat id.
+  //ToDo hoe krijg ik die vervolgens bij user ook te zien bij accounts?
+
   @Id
   @JsonProperty("Iban")
   private String iban = null;
 
-  @JsonProperty("UserId")
-  @ManyToOne(targetEntity = User.class)
-  private Long userId = null;
+  @JsonProperty("id")
+  private Long id = null;
 
   @JsonProperty("Name")
   private String name = null;
@@ -106,6 +112,18 @@ public class Account   {
     return this;
   }
 
+  public Account(String iban, Long id, String name, BigDecimal balance, AccounttypeEnum type, StatusEnum status){
+    this.iban = iban;
+    this.id = id;
+    this.name = name;
+    this.balance = balance;
+    this.accounttype = type;
+    this.status = status;
+  }
+
+  public Account(){}
+
+
   /**
    * Get iban
    * @return iban
@@ -121,8 +139,8 @@ public class Account   {
     this.iban = iban;
   }
 
-  public Account userId(Long userId) {
-    this.userId = userId;
+  public Account id(Long id) {
+    this.id = id;
     return this;
   }
 
@@ -134,12 +152,12 @@ public class Account   {
   @NotNull
 
   @Valid
-  public Long getUserId() {
-    return userId;
+  public Long getId() {
+    return id;
   }
 
-  public void setUserId(Long userId) {
-    this.userId = userId;
+  public void setId(Long userId) {
+    this.id = userId;
   }
 
   public Account name(String name) {
@@ -233,7 +251,7 @@ public class Account   {
     }
     Account account = (Account) o;
     return Objects.equals(this.iban, account.iban) &&
-        Objects.equals(this.userId, account.userId) &&
+        Objects.equals(this.id, account.id) &&
         Objects.equals(this.name, account.name) &&
         Objects.equals(this.balance, account.balance) &&
         Objects.equals(this.accounttype, account.accounttype) &&
@@ -242,7 +260,7 @@ public class Account   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(iban, userId, name, balance, accounttype, status);
+    return Objects.hash(iban, id, name, balance, accounttype, status);
   }
 
   @Override
@@ -251,7 +269,7 @@ public class Account   {
     sb.append("class Account {\n");
     
     sb.append("    iban: ").append(toIndentedString(iban)).append("\n");
-    sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    balance: ").append(toIndentedString(balance)).append("\n");
     sb.append("    accounttype: ").append(toIndentedString(accounttype)).append("\n");

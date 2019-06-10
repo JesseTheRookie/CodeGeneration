@@ -1,13 +1,17 @@
 package io.swagger.config;
 
+import io.swagger.model.Account;
 import io.swagger.model.ApiKey;
 import io.swagger.model.User;
+import io.swagger.repository.AccountRepository;
 import io.swagger.repository.ApiKeyRepository;
 import io.swagger.repository.UserRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.nio.file.AccessDeniedException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -17,10 +21,12 @@ public class MyApplicationRunner implements ApplicationRunner {
 
     private UserRepository userRepository;
     private ApiKeyRepository keyRepository;
+    private AccountRepository accountRepository;
 
-    public MyApplicationRunner(UserRepository userRepository, ApiKeyRepository keyRepository){
+    public MyApplicationRunner(UserRepository userRepository, AccountRepository accountRepository, ApiKeyRepository keyRepository){
 
         this.userRepository = userRepository;
+        this.accountRepository = accountRepository;
         this.keyRepository = keyRepository;
     }
 
@@ -40,6 +46,23 @@ public class MyApplicationRunner implements ApplicationRunner {
 
         userRepository.findAll()
                 .forEach(System.out::println);
+
+        Files.lines(Paths.get("src/main/resources/accounts.csv"))
+                .forEach(
+                        line -> accountRepository.save(
+                                new Account((line.split(",")[0]),
+                                        Long.parseLong(line.split(",")[1]),
+                                        line.split(",")[2],
+                                        new BigDecimal(line.split(",")[3]),
+                                        Account.AccounttypeEnum.fromValue(line.split(",")[4]),
+                                        Account.StatusEnum.fromValue(line.split(",")[5])
+                                )
+                        )
+                );
+
+        accountRepository.findAll()
+                .forEach(System.out::println);
+
 
         for (String s : Arrays.asList(new String[]{"e800eff2-846c-4334-9168-bcc14bdf0a9c","ebace734-4b2c-4791-aaac-e076cb3c221e","0449e978-5e4e-40bb-8af2-c29478bc3a98"})){
             keyRepository.save(new ApiKey(s));

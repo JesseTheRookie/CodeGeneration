@@ -3,6 +3,7 @@ package io.swagger.api;
 import io.swagger.model.Account;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import io.swagger.service.SwaggerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -31,10 +32,13 @@ public class AccountsApiController implements AccountsApi {
 
     private final HttpServletRequest request;
 
+    private SwaggerService service;
+
     @org.springframework.beans.factory.annotation.Autowired
-    public AccountsApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+    public AccountsApiController(ObjectMapper objectMapper, HttpServletRequest request, SwaggerService service) {
         this.objectMapper = objectMapper;
         this.request = request;
+        this.service = service;
     }
 
     public ResponseEntity<Void> createAccount(@ApiParam(value = "Account details" ,required=true )  @Valid @RequestBody Account body) {
@@ -54,7 +58,7 @@ public class AccountsApiController implements AccountsApi {
 
     public ResponseEntity<List<Account>> getAccounts(@ApiParam(value = "The type of accounts that need to be considered to filter", allowableValues = "current, savings") @Valid @RequestParam(value = "type", required = false) String type) {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<List<Account>>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<List<Account>>((List<Account>)service.getAllAccounts(), HttpStatus.OK);
     }
 
     public ResponseEntity<Void> toggleAccountStatus(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban) {
