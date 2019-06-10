@@ -4,23 +4,27 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.model.Account;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.Entity;
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
  * User
  */
+@Entity
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
 public class User   {
-  @JsonProperty("UserId")
-  private Integer userId = null;
+  @Id
+  @JsonProperty("Id")
+  private Long id = null;
 
   @JsonProperty("Name")
   private String name = null;
@@ -63,28 +67,39 @@ public class User   {
   @JsonProperty("Role")
   private RoleEnum role = null;
 
+
   @JsonProperty("Accounts")
   @Valid
+  @OneToMany(targetEntity = Account.class, fetch = FetchType.EAGER)
   private List<Account> accounts = null;
 
-  public User userId(Integer userId) {
-    this.userId = userId;
+  public User userId(Long userId) {
+    this.id = userId;
     return this;
   }
 
+  public User(Long id, String name, String password, RoleEnum role){
+    this.id = id;
+    this.name = name;
+    this.password = password;
+    this.role = role;
+  }
+
+  public User(){}
+
   /**
-   * Get userId
-   * @return userId
+   * Get id
+   * @return id
   **/
   @ApiModelProperty(required = true, value = "")
   @NotNull
 
-  public Integer getUserId() {
-    return userId;
+  public Long getId() {
+    return id;
   }
 
-  public void setUserId(Integer userId) {
-    this.userId = userId;
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public User name(String name) {
@@ -184,7 +199,7 @@ public class User   {
       return false;
     }
     User user = (User) o;
-    return Objects.equals(this.userId, user.userId) &&
+    return Objects.equals(this.id, user.id) &&
         Objects.equals(this.name, user.name) &&
         Objects.equals(this.password, user.password) &&
         Objects.equals(this.role, user.role) &&
@@ -193,7 +208,7 @@ public class User   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(userId, name, password, role, accounts);
+    return Objects.hash(id, name, password, role, accounts);
   }
 
   @Override
@@ -201,7 +216,7 @@ public class User   {
     StringBuilder sb = new StringBuilder();
     sb.append("class User {\n");
     
-    sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("    role: ").append(toIndentedString(role)).append("\n");

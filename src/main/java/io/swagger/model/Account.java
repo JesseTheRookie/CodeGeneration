@@ -8,20 +8,26 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.Entity;
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
  * Account
  */
+@Entity
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
 public class Account   {
+  @Id
   @JsonProperty("Iban")
   private String iban = null;
 
   @JsonProperty("UserId")
-  private BigDecimal userId = null;
+  @ManyToOne(targetEntity = User.class)
+  private Long userId = null;
 
   @JsonProperty("Name")
   private String name = null;
@@ -115,7 +121,7 @@ public class Account   {
     this.iban = iban;
   }
 
-  public Account userId(BigDecimal userId) {
+  public Account userId(Long userId) {
     this.userId = userId;
     return this;
   }
@@ -128,11 +134,11 @@ public class Account   {
   @NotNull
 
   @Valid
-  public BigDecimal getUserId() {
+  public Long getUserId() {
     return userId;
   }
 
-  public void setUserId(BigDecimal userId) {
+  public void setUserId(Long userId) {
     this.userId = userId;
   }
 

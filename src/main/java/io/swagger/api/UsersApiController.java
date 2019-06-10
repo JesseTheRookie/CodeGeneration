@@ -1,9 +1,11 @@
 package io.swagger.api;
 
+import com.google.common.collect.Lists;
 import io.swagger.model.Account;
 import io.swagger.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import io.swagger.service.SwaggerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -32,10 +34,13 @@ public class UsersApiController implements UsersApi {
 
     private final HttpServletRequest request;
 
+    private SwaggerService service;
+
     @org.springframework.beans.factory.annotation.Autowired
-    public UsersApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+    public UsersApiController(ObjectMapper objectMapper, HttpServletRequest request, SwaggerService service) {
         this.objectMapper = objectMapper;
         this.request = request;
+        this.service = service;
     }
 
     public ResponseEntity<Integer> createUser(@ApiParam(value = ""  )  @Valid @RequestBody User body) {
@@ -55,7 +60,7 @@ public class UsersApiController implements UsersApi {
 
     public ResponseEntity<List<User>> getUsers() {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<List<User>>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<List<User>>((List<User>)service.getAllUsers(), HttpStatus.OK);
     }
 
     public ResponseEntity<String> loginUser(@ApiParam(value = "Username and password" ,required=true )  @Valid @RequestBody User body) {
