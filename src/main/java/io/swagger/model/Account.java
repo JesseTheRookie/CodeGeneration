@@ -15,31 +15,31 @@ import javax.validation.constraints.*;
  * Account
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-11T12:03:46.065Z[GMT]")
 public class Account   {
-  @JsonProperty("Iban")
+  @JsonProperty("iban")
   private String iban = null;
 
-  @JsonProperty("UserId")
-  private BigDecimal userId = null;
+  @JsonProperty("id")
+  private BigDecimal id = null;
 
-  @JsonProperty("Name")
+  @JsonProperty("name")
   private String name = null;
 
-  @JsonProperty("Balance")
+  @JsonProperty("balance")
   private BigDecimal balance = null;
 
   /**
-   * Gets or Sets accounttype
+   * The type of the account; current or savings
    */
-  public enum AccounttypeEnum {
+  public enum TypeEnum {
     CURRENT("current"),
     
     SAVINGS("savings");
 
     private String value;
 
-    AccounttypeEnum(String value) {
+    TypeEnum(String value) {
       this.value = value;
     }
 
@@ -50,8 +50,8 @@ public class Account   {
     }
 
     @JsonCreator
-    public static AccounttypeEnum fromValue(String text) {
-      for (AccounttypeEnum b : AccounttypeEnum.values()) {
+    public static TypeEnum fromValue(String text) {
+      for (TypeEnum b : TypeEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
           return b;
         }
@@ -59,11 +59,11 @@ public class Account   {
       return null;
     }
   }
-  @JsonProperty("Accounttype")
-  private AccounttypeEnum accounttype = null;
+  @JsonProperty("type")
+  private TypeEnum type = null;
 
   /**
-   * Gets or Sets status
+   * The status of the account; frozen or active
    */
   public enum StatusEnum {
     ACTIVE("active"),
@@ -92,7 +92,7 @@ public class Account   {
       return null;
     }
   }
-  @JsonProperty("Status")
+  @JsonProperty("status")
   private StatusEnum status = null;
 
   public Account iban(String iban) {
@@ -101,10 +101,10 @@ public class Account   {
   }
 
   /**
-   * Get iban
+   * The Iban of the account
    * @return iban
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(required = true, value = "The Iban of the account")
   @NotNull
 
   public String getIban() {
@@ -115,25 +115,25 @@ public class Account   {
     this.iban = iban;
   }
 
-  public Account userId(BigDecimal userId) {
-    this.userId = userId;
+  public Account id(BigDecimal id) {
+    this.id = id;
     return this;
   }
 
   /**
-   * Get userId
-   * @return userId
+   * The id of the user
+   * @return id
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(required = true, value = "The id of the user")
   @NotNull
 
   @Valid
-  public BigDecimal getUserId() {
-    return userId;
+  public BigDecimal getId() {
+    return id;
   }
 
-  public void setUserId(BigDecimal userId) {
-    this.userId = userId;
+  public void setId(BigDecimal id) {
+    this.id = id;
   }
 
   public Account name(String name) {
@@ -142,10 +142,10 @@ public class Account   {
   }
 
   /**
-   * Get name
+   * The name of the user
    * @return name
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(required = true, value = "The name of the user")
   @NotNull
 
   public String getName() {
@@ -162,10 +162,10 @@ public class Account   {
   }
 
   /**
-   * Get balance
+   * The ammount of money in the account
    * @return balance
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(required = true, value = "The ammount of money in the account")
   @NotNull
 
   @Valid
@@ -177,23 +177,24 @@ public class Account   {
     this.balance = balance;
   }
 
-  public Account accounttype(AccounttypeEnum accounttype) {
-    this.accounttype = accounttype;
+  public Account type(TypeEnum type) {
+    this.type = type;
     return this;
   }
 
   /**
-   * Get accounttype
-   * @return accounttype
+   * The type of the account; current or savings
+   * @return type
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "The type of the account; current or savings")
+  @NotNull
 
-  public AccounttypeEnum getAccounttype() {
-    return accounttype;
+  public TypeEnum getType() {
+    return type;
   }
 
-  public void setAccounttype(AccounttypeEnum accounttype) {
-    this.accounttype = accounttype;
+  public void setType(TypeEnum type) {
+    this.type = type;
   }
 
   public Account status(StatusEnum status) {
@@ -202,10 +203,10 @@ public class Account   {
   }
 
   /**
-   * Get status
+   * The status of the account; frozen or active
    * @return status
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(required = true, value = "The status of the account; frozen or active")
   @NotNull
 
   public StatusEnum getStatus() {
@@ -227,16 +228,16 @@ public class Account   {
     }
     Account account = (Account) o;
     return Objects.equals(this.iban, account.iban) &&
-        Objects.equals(this.userId, account.userId) &&
+        Objects.equals(this.id, account.id) &&
         Objects.equals(this.name, account.name) &&
         Objects.equals(this.balance, account.balance) &&
-        Objects.equals(this.accounttype, account.accounttype) &&
+        Objects.equals(this.type, account.type) &&
         Objects.equals(this.status, account.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(iban, userId, name, balance, accounttype, status);
+    return Objects.hash(iban, id, name, balance, type, status);
   }
 
   @Override
@@ -245,10 +246,10 @@ public class Account   {
     sb.append("class Account {\n");
     
     sb.append("    iban: ").append(toIndentedString(iban)).append("\n");
-    sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    balance: ").append(toIndentedString(balance)).append("\n");
-    sb.append("    accounttype: ").append(toIndentedString(accounttype)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();

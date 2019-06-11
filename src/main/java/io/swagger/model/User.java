@@ -6,9 +6,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.model.Account;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -17,19 +14,19 @@ import javax.validation.constraints.*;
  * User
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-11T12:03:46.065Z[GMT]")
 public class User   {
-  @JsonProperty("UserId")
-  private Integer userId = null;
+  @JsonProperty("id")
+  private Integer id = null;
 
-  @JsonProperty("Name")
+  @JsonProperty("name")
   private String name = null;
 
-  @JsonProperty("Password")
+  @JsonProperty("password")
   private String password = null;
 
   /**
-   * Gets or Sets role
+   * The role the users has; a user, employee or user_employee
    */
   public enum RoleEnum {
     USER("user"),
@@ -60,31 +57,27 @@ public class User   {
       return null;
     }
   }
-  @JsonProperty("Role")
+  @JsonProperty("role")
   private RoleEnum role = null;
 
-  @JsonProperty("Accounts")
-  @Valid
-  private List<Account> accounts = null;
-
-  public User userId(Integer userId) {
-    this.userId = userId;
+  public User id(Integer id) {
+    this.id = id;
     return this;
   }
 
   /**
-   * Get userId
-   * @return userId
+   * The id of the user
+   * @return id
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(required = true, value = "The id of the user")
   @NotNull
 
-  public Integer getUserId() {
-    return userId;
+  public Integer getId() {
+    return id;
   }
 
-  public void setUserId(Integer userId) {
-    this.userId = userId;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public User name(String name) {
@@ -93,10 +86,10 @@ public class User   {
   }
 
   /**
-   * Get name
+   * The name of the user
    * @return name
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(required = true, value = "The name of the user")
   @NotNull
 
   public String getName() {
@@ -113,10 +106,10 @@ public class User   {
   }
 
   /**
-   * Get password
+   * The password of the users
    * @return password
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(required = true, value = "The password of the users")
   @NotNull
 
   public String getPassword() {
@@ -133,10 +126,10 @@ public class User   {
   }
 
   /**
-   * Get role
+   * The role the users has; a user, employee or user_employee
    * @return role
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(required = true, value = "The role the users has; a user, employee or user_employee")
   @NotNull
 
   public RoleEnum getRole() {
@@ -145,33 +138,6 @@ public class User   {
 
   public void setRole(RoleEnum role) {
     this.role = role;
-  }
-
-  public User accounts(List<Account> accounts) {
-    this.accounts = accounts;
-    return this;
-  }
-
-  public User addAccountsItem(Account accountsItem) {
-    if (this.accounts == null) {
-      this.accounts = new ArrayList<Account>();
-    }
-    this.accounts.add(accountsItem);
-    return this;
-  }
-
-  /**
-   * Get accounts
-   * @return accounts
-  **/
-  @ApiModelProperty(value = "")
-  @Valid
-  public List<Account> getAccounts() {
-    return accounts;
-  }
-
-  public void setAccounts(List<Account> accounts) {
-    this.accounts = accounts;
   }
 
 
@@ -184,16 +150,15 @@ public class User   {
       return false;
     }
     User user = (User) o;
-    return Objects.equals(this.userId, user.userId) &&
+    return Objects.equals(this.id, user.id) &&
         Objects.equals(this.name, user.name) &&
         Objects.equals(this.password, user.password) &&
-        Objects.equals(this.role, user.role) &&
-        Objects.equals(this.accounts, user.accounts);
+        Objects.equals(this.role, user.role);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(userId, name, password, role, accounts);
+    return Objects.hash(id, name, password, role);
   }
 
   @Override
@@ -201,11 +166,10 @@ public class User   {
     StringBuilder sb = new StringBuilder();
     sb.append("class User {\n");
     
-    sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("    role: ").append(toIndentedString(role)).append("\n");
-    sb.append("    accounts: ").append(toIndentedString(accounts)).append("\n");
     sb.append("}");
     return sb.toString();
   }
