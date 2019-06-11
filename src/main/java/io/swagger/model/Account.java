@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
+import java.util.Optional;
+
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.Entity;
@@ -19,21 +21,19 @@ import javax.validation.constraints.*;
  */
 @Entity
 @Validated
+@Table(name = "accounts")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
 public class Account   {
-
-  @ManyToOne(targetEntity = User.class)
-  private User user;
-  //ToDo hoe krijg ik de user hierin bij inlezen van het csv bestand? Zonder daarbij service.findbyis te doen oid (neem aan dat je niet vanuit model naar service wil/mag)
-  // Constructor aanpassen zodat deze een user accepteerd, in account csv user id opnemen. Bij line parser user.findbyid gebruiken om de user te achterhalen van dat id.
-  //ToDo hoe krijg ik die vervolgens bij user ook te zien bij accounts?
-
   @Id
   @JsonProperty("Iban")
   private String iban = null;
-
+/*
   @JsonProperty("id")
   private Long id = null;
+*/
+  @JsonProperty("User")
+  @ManyToOne(targetEntity = User.class)
+  private User user;
 
   @JsonProperty("Name")
   private String name = null;
@@ -111,10 +111,31 @@ public class Account   {
     this.iban = iban;
     return this;
   }
-
+/*
   public Account(String iban, Long id, String name, BigDecimal balance, AccounttypeEnum type, StatusEnum status){
     this.iban = iban;
     this.id = id;
+    this.name = name;
+    this.balance = balance;
+    this.accounttype = type;
+    this.status = status;
+  }*/
+
+
+  public Account(String iban, Optional<User> user, String name, BigDecimal balance, AccounttypeEnum type, StatusEnum status){
+    this.iban = iban;
+    if(user.isPresent()){
+      this.user = user.get();
+    }
+    this.name = name;
+    this.balance = balance;
+    this.accounttype = type;
+    this.status = status;
+  }
+
+  public Account(String iban, User user, String name, BigDecimal balance, AccounttypeEnum type, StatusEnum status){
+    this.iban = iban;
+    this.user = user;
     this.name = name;
     this.balance = balance;
     this.accounttype = type;
@@ -138,11 +159,11 @@ public class Account   {
   public void setIban(String iban) {
     this.iban = iban;
   }
-
+/*
   public Account id(Long id) {
     this.id = id;
     return this;
-  }
+  }*/
 
   /**
    * Get userId
@@ -150,7 +171,7 @@ public class Account   {
   **/
   @ApiModelProperty(required = true, value = "")
   @NotNull
-
+/*
   @Valid
   public Long getId() {
     return id;
@@ -158,7 +179,7 @@ public class Account   {
 
   public void setId(Long userId) {
     this.id = userId;
-  }
+  }*/
 
   public Account name(String name) {
     this.name = name;
@@ -251,7 +272,7 @@ public class Account   {
     }
     Account account = (Account) o;
     return Objects.equals(this.iban, account.iban) &&
-        Objects.equals(this.id, account.id) &&
+        Objects.equals(this.user, account.user) &&
         Objects.equals(this.name, account.name) &&
         Objects.equals(this.balance, account.balance) &&
         Objects.equals(this.accounttype, account.accounttype) &&
@@ -260,7 +281,7 @@ public class Account   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(iban, id, name, balance, accounttype, status);
+    return Objects.hash(iban, user, name, balance, accounttype, status);
   }
 
   @Override
@@ -269,7 +290,7 @@ public class Account   {
     sb.append("class Account {\n");
     
     sb.append("    iban: ").append(toIndentedString(iban)).append("\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    user: ").append(toIndentedString(user)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    balance: ").append(toIndentedString(balance)).append("\n");
     sb.append("    accounttype: ").append(toIndentedString(accounttype)).append("\n");

@@ -1,4 +1,4 @@
-0000,bank,bank123,user_employee
-0001,stefan,admin123,user_employee
-0002,bert,user123,user
-0003,ernie,user123,employee
+bank,bank123,user_employee
+stefan,admin123,user_employee
+bert,user123,user
+ernie,user123,employee

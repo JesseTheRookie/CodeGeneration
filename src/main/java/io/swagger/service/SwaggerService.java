@@ -22,8 +22,20 @@ public class SwaggerService {
         return userRepository.findAll();
     }
 
+    public void createUser(User newUser){
+        userRepository.save(newUser);
+    }
+
     public Iterable<Account> getAllAccounts(){
         return accountRepository.findAll();
     }
+
+    public void toggleAccountStatus(String iban){
+        Account a = accountRepository.findById(iban).orElseThrow(IllegalArgumentException::new);
+        if (a.getStatus() == Account.StatusEnum.ACTIVE){
+           a.setStatus(Account.StatusEnum.FROZEN);
+        }else a.setStatus(Account.StatusEnum.ACTIVE);
+    }
+    // ToDo status toggle
 
 }

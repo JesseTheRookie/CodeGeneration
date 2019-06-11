@@ -63,7 +63,8 @@ public class AccountsApiController implements AccountsApi {
 
     public ResponseEntity<Void> toggleAccountStatus(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban) {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        service.toggleAccountStatus(iban);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
 }

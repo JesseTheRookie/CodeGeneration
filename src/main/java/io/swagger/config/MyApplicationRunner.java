@@ -15,6 +15,7 @@ import java.nio.file.AccessDeniedException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Optional;
 
 @Component
 public class MyApplicationRunner implements ApplicationRunner {
@@ -36,10 +37,9 @@ public class MyApplicationRunner implements ApplicationRunner {
         Files.lines(Paths.get("src/main/resources/users.csv"))
                 .forEach(
                         line -> userRepository.save(
-                                new User(Long.parseLong(line.split(",")[0]),
+                                new User(line.split(",")[0],
                                         line.split(",")[1],
-                                        line.split(",")[2],
-                                        User.RoleEnum.fromValue(line.split(",")[3])
+                                        User.RoleEnum.fromValue(line.split(",")[2])
                                 )
                         )
                 );
@@ -51,7 +51,7 @@ public class MyApplicationRunner implements ApplicationRunner {
                 .forEach(
                         line -> accountRepository.save(
                                 new Account((line.split(",")[0]),
-                                        Long.parseLong(line.split(",")[1]),
+                                        userRepository.findById(Integer.parseInt(line.split(",")[1])),
                                         line.split(",")[2],
                                         new BigDecimal(line.split(",")[3]),
                                         Account.AccounttypeEnum.fromValue(line.split(",")[4]),

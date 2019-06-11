@@ -20,11 +20,14 @@ import javax.validation.constraints.*;
  */
 @Entity
 @Validated
+@Table(name = "users")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
 public class User   {
   @Id
+  @SequenceGenerator(name = "user_seq", initialValue = 100)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
   @JsonProperty("Id")
-  private Long id = null;
+  private Integer id = null;
 
   @JsonProperty("Name")
   private String name = null;
@@ -67,19 +70,19 @@ public class User   {
   @JsonProperty("Role")
   private RoleEnum role = null;
 
-
-  @JsonProperty("Accounts")
-  @Valid
-  @OneToMany(targetEntity = Account.class, fetch = FetchType.EAGER)
-  private List<Account> accounts = null;
-
-  public User id(Long id) {
+  public User id(Integer id) {
     this.id = id;
     return this;
   }
 
-  public User(Long id, String name, String password, RoleEnum role){
+  public User(Integer id, String name, String password, RoleEnum role){
     this.id = id;
+    this.name = name;
+    this.password = password;
+    this.role = role;
+  }
+
+  public User(String name, String password, RoleEnum role){
     this.name = name;
     this.password = password;
     this.role = role;
@@ -94,11 +97,11 @@ public class User   {
   @ApiModelProperty(required = true, value = "")
   @NotNull
 
-  public Long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
@@ -162,33 +165,6 @@ public class User   {
     this.role = role;
   }
 
-  public User accounts(List<Account> accounts) {
-    this.accounts = accounts;
-    return this;
-  }
-
-  public User addAccountsItem(Account accountsItem) {
-    if (this.accounts == null) {
-      this.accounts = new ArrayList<Account>();
-    }
-    this.accounts.add(accountsItem);
-    return this;
-  }
-
-  /**
-   * Get accounts
-   * @return accounts
-  **/
-  @ApiModelProperty(value = "")
-  @Valid
-  public List<Account> getAccounts() {
-    return accounts;
-  }
-
-  public void setAccounts(List<Account> accounts) {
-    this.accounts = accounts;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -202,13 +178,12 @@ public class User   {
     return Objects.equals(this.id, user.id) &&
         Objects.equals(this.name, user.name) &&
         Objects.equals(this.password, user.password) &&
-        Objects.equals(this.role, user.role) &&
-        Objects.equals(this.accounts, user.accounts);
+        Objects.equals(this.role, user.role);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, password, role, accounts);
+    return Objects.hash(id, name, password, role);
   }
 
   @Override
@@ -220,7 +195,6 @@ public class User   {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("    role: ").append(toIndentedString(role)).append("\n");
-    sb.append("    accounts: ").append(toIndentedString(accounts)).append("\n");
     sb.append("}");
     return sb.toString();
   }

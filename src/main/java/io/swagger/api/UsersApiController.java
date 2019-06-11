@@ -45,7 +45,8 @@ public class UsersApiController implements UsersApi {
 
     public ResponseEntity<Integer> createUser(@ApiParam(value = ""  )  @Valid @RequestBody User body) {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<Integer>(HttpStatus.NOT_IMPLEMENTED);
+        service.createUser(body);
+        return new ResponseEntity<Integer>(Integer.valueOf(body.getId()),HttpStatus.OK);
     }
 
     public ResponseEntity<List<Account>> getAccountsByUserId(@ApiParam(value = "The user Id",required=true) @PathVariable("userId") Integer userId) {
