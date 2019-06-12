@@ -24,7 +24,7 @@ public class AccountsApiControllerIntegrationTest {
     @Test
     public void createAccountTest() throws Exception {
         Account body = new Account();
-        ResponseEntity<Void> responseEntity = api.createAccount(body);
+        ResponseEntity<String> responseEntity = api.createAccount(body);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 
@@ -38,7 +38,7 @@ public class AccountsApiControllerIntegrationTest {
     @Test
     public void getAccountByIbanTest() throws Exception {
         String iban = "iban_example";
-        ResponseEntity<List<Account>> responseEntity = api.getAccountByIban(iban);
+        ResponseEntity<Account> responseEntity = api.getAccountByIban(iban);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 
@@ -52,7 +52,8 @@ public class AccountsApiControllerIntegrationTest {
     @Test
     public void toggleAccountStatusTest() throws Exception {
         String iban = "iban_example";
-        ResponseEntity<Void> responseEntity = api.toggleAccountStatus(iban);
+        Account body = new Account();
+        ResponseEntity<Void> responseEntity = api.toggleAccountStatus(iban, body);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 

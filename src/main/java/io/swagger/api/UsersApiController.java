@@ -43,22 +43,26 @@ public class UsersApiController implements UsersApi {
         this.service = service;
     }
 
+    // Werkt
     public ResponseEntity<Integer> createUser(@ApiParam(value = ""  )  @Valid @RequestBody User body) {
         String accept = request.getHeader("Accept");
         service.createUser(body);
-        return new ResponseEntity<Integer>(Integer.valueOf(body.getId()),HttpStatus.OK);
+        return new ResponseEntity<Integer>(Integer.valueOf(body.getId()),HttpStatus.CREATED);
     }
 
+    // Werkt
     public ResponseEntity<List<Account>> getAccountsByUserId(@ApiParam(value = "The user Id",required=true) @PathVariable("userId") Integer userId) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<List<Account>>(service.getAccountsByUserId(userId), HttpStatus.OK);
     }
 
-    public ResponseEntity<List<User>> getUserById(@Min(1)@ApiParam(value = "The user ID",required=true, allowableValues = "") @PathVariable("userId") Integer userId) {
+    // Werkt
+    public ResponseEntity<User> getUserById(@Min(1)@ApiParam(value = "The user ID",required=true, allowableValues = "") @PathVariable("userId") Integer userId) {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<List<User>>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<User>(service.getUserById(userId), HttpStatus.OK);
     }
 
+    // Werkt
     public ResponseEntity<List<User>> getUsers() {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<List<User>>((List<User>)service.getAllUsers(), HttpStatus.OK);

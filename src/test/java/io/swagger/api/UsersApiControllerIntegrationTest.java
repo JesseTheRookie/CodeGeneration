@@ -39,7 +39,7 @@ public class UsersApiControllerIntegrationTest {
     @Test
     public void getUserByIdTest() throws Exception {
         Integer userId = 56;
-        ResponseEntity<List<User>> responseEntity = api.getUserById(userId);
+        ResponseEntity<User> responseEntity = api.getUserById(userId);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 

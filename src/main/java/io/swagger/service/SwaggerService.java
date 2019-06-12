@@ -36,128 +36,43 @@ public class SwaggerService {
     }
 
     public List<Account> getAccountsByUserId(Integer id) {
-        List<Account> results = new List<Account>() {
-            @Override
-            public int size() {
-                return 0;
-            }
+       return accountRepository.getAccountsById(id);
+    }
 
-            @Override
-            public boolean isEmpty() {
-                return false;
-            }
+    public User getUserById(Integer userId) {
+        return userRepository.findById(userId).orElseThrow(IllegalArgumentException::new);
+    }
 
-            @Override
-            public boolean contains(Object o) {
-                return false;
-            }
+    public void createAccount(Account body) {
+        accountRepository.save(body);
+    }
 
-            @Override
-            public Iterator<Account> iterator() {
-                return null;
-            }
+    public Account getAccountByIban(String iban) {
+        return accountRepository.findById(iban).orElseThrow(IllegalArgumentException::new);
+    }
 
-            @Override
-            public Object[] toArray() {
-                return new Object[0];
-            }
+    public void deleteAccount(String iban) {
+        accountRepository.delete(accountRepository.findById(iban).orElseThrow(IllegalArgumentException::new));
+    }
 
-            @Override
-            public <T> T[] toArray(T[] a) {
-                return null;
-            }
+    public void toggleAccountStatus(String iban, Account body) {
 
-            @Override
-            public boolean add(Account account) {
-                return false;
-            }
+        /*
+        accountRepository.deleteById(iban);
+        accountRepository.save(body);
+        */
+        // Bovenstaande werkt ook, echter kan op onderstaande manier enkel de status aangepast worden
+        // dit voorkomt aanpassen van bv balance
 
-            @Override
-            public boolean remove(Object o) {
-                return false;
-            }
-
-            @Override
-            public boolean containsAll(Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public boolean addAll(Collection<? extends Account> c) {
-                return false;
-            }
-
-            @Override
-            public boolean addAll(int index, Collection<? extends Account> c) {
-                return false;
-            }
-
-            @Override
-            public boolean removeAll(Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public boolean retainAll(Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public void clear() {
-
-            }
-
-            @Override
-            public Account get(int index) {
-                return null;
-            }
-
-            @Override
-            public Account set(int index, Account element) {
-                return null;
-            }
-
-            @Override
-            public void add(int index, Account element) {
-
-            }
-
-            @Override
-            public Account remove(int index) {
-                return null;
-            }
-
-            @Override
-            public int indexOf(Object o) {
-                return 0;
-            }
-
-            @Override
-            public int lastIndexOf(Object o) {
-                return 0;
-            }
-
-            @Override
-            public ListIterator<Account> listIterator() {
-                return null;
-            }
-
-            @Override
-            public ListIterator<Account> listIterator(int index) {
-                return null;
-            }
-
-            @Override
-            public List<Account> subList(int fromIndex, int toIndex) {
-                return null;
-            }
-        };
-        List<Account> allAccounts = (List<Account>) accountRepository.findAll();
-        for (Account a:allAccounts){
-            if (a.getUserId().equals(id)){
-                results.add(a);
-            }
-        }
-        return results;
+        Account oldAccount = accountRepository.findById(iban).orElseThrow(IllegalArgumentException::new);
+        Account updatedAccount = new Account(
+                oldAccount.getIban(),
+                oldAccount.getUser(),
+                oldAccount.getName(),
+                oldAccount.getBalance(),
+                oldAccount.getAccounttype(),
+                body.getStatus());
+        accountRepository.delete(oldAccount);
+        accountRepository.save(updatedAccount);
     }
 }

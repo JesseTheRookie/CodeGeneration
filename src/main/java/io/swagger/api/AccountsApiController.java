@@ -41,29 +41,38 @@ public class AccountsApiController implements AccountsApi {
         this.service = service;
     }
 
-    public ResponseEntity<Void> createAccount(@ApiParam(value = "Account details" ,required=true )  @Valid @RequestBody Account body) {
+    // Werkt
+    public ResponseEntity<String> createAccount(@ApiParam(value = "Account details" ,required=true )  @Valid @RequestBody Account body) {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        service.createAccount(body);
+        return new ResponseEntity<String>(String.valueOf(body.getIban()), HttpStatus.CREATED);
     }
 
+    // Werkt
     public ResponseEntity<Void> deleteAccount(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban) {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        service.deleteAccount(iban);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Account>> getAccountByIban(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban) {
+    // Werkt
+    public ResponseEntity<Account> getAccountByIban(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban) {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<List<Account>>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<Account>(service.getAccountByIban(iban),HttpStatus.OK);
     }
 
+    // Werkt
+    // ToDo optionele variabele doen nu nog niets
     public ResponseEntity<List<Account>> getAccounts(@ApiParam(value = "The type of accounts that need to be considered to filter", allowableValues = "current, savings") @Valid @RequestParam(value = "type", required = false) String type) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<List<Account>>((List<Account>)service.getAllAccounts(), HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> toggleAccountStatus(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban) {
+
+    public ResponseEntity<Void> toggleAccountStatus(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban, @Valid @RequestBody Account body) {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        service.toggleAccountStatus(iban, body);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
 }

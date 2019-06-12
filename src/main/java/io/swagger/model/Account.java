@@ -133,7 +133,7 @@ public class Account   {
     this.status = status;
   }
 
-  /*
+
   public Account(String iban, User user, String name, BigDecimal balance, AccounttypeEnum type, StatusEnum status){
     this.iban = iban;
     this.user = user;
@@ -141,7 +141,7 @@ public class Account   {
     this.balance = balance;
     this.accounttype = type;
     this.status = status;
-  }*/
+  }
 
   public Account(){}
 
@@ -184,6 +184,10 @@ public class Account   {
 
   public Integer getUserId(){
     return this.user.getId();
+  }
+
+  public User getUser(){
+    return this.user;
   }
 
 

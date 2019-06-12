@@ -26,17 +26,18 @@ import java.util.Map;
 @Api(value = "accounts", description = "the accounts API")
 public interface AccountsApi {
 
-    @ApiOperation(value = "Creates an account", nickname = "createAccount", notes = "Creates a new account, if the logged in user is an employee", authorizations = {
+    @ApiOperation(value = "Creates an account", nickname = "createAccount", notes = "Creates a new account, if the logged in user is an employee", response = String.class, authorizations = {
         @Authorization(value = "ApiKeyAuth")    }, tags={ "account", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Account created"),
+        @ApiResponse(code = 200, message = "Account created", response = String.class),
         @ApiResponse(code = 400, message = "Client says no"),
         @ApiResponse(code = 405, message = "Invalid input"),
         @ApiResponse(code = 500, message = "Server says no") })
     @RequestMapping(value = "/accounts",
-        consumes = { "application/json" },
+            produces = { "application/json" },
+            consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<Void> createAccount(@ApiParam(value = "Account details" ,required=true )  @Valid @RequestBody Account body);
+    ResponseEntity<String> createAccount(@ApiParam(value = "Account details" ,required=true )  @Valid @RequestBody Account body);
 
 
     @ApiOperation(value = "Deletes the specified account", nickname = "deleteAccount", notes = "Deletes the specified account, if the logged in user is an employee AND the balance of the account is zero", authorizations = {
@@ -51,7 +52,7 @@ public interface AccountsApi {
     ResponseEntity<Void> deleteAccount(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban);
 
 
-    @ApiOperation(value = "Returns the specified account", nickname = "getAccountByIban", notes = "Returns the specified account", response = Account.class, responseContainer = "List", authorizations = {
+    @ApiOperation(value = "Returns the specified account", nickname = "getAccountByIban", notes = "Returns the specified account", response = Account.class, authorizations = {
         @Authorization(value = "ApiKeyAuth")    }, tags={ "account", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "the account", response = Account.class, responseContainer = "List"),
@@ -61,7 +62,7 @@ public interface AccountsApi {
     @RequestMapping(value = "/accounts/{iban}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<Account>> getAccountByIban(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban);
+    ResponseEntity<Account> getAccountByIban(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban);
 
 
     @ApiOperation(value = "Returns all accounts", nickname = "getAccounts", notes = "Returns a list of all accounts, if the logged in user is an employee", response = Account.class, responseContainer = "List", authorizations = {
@@ -84,7 +85,9 @@ public interface AccountsApi {
         @ApiResponse(code = 404, message = "Account not found"),
         @ApiResponse(code = 500, message = "Server says no") })
     @RequestMapping(value = "/accounts/{iban}",
+            consumes = { "application/json" },
         method = RequestMethod.PUT)
-    ResponseEntity<Void> toggleAccountStatus(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban);
+
+    ResponseEntity<Void> toggleAccountStatus(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban, @Valid @RequestBody Account body);
 
 }

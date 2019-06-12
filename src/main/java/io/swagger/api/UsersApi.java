@@ -53,10 +53,10 @@ public interface UsersApi {
     ResponseEntity<List<Account>> getAccountsByUserId(@ApiParam(value = "The user Id",required=true) @PathVariable("userId") Integer userId);
 
 
-    @ApiOperation(value = "Returns specified user", nickname = "getUserById", notes = "Returns the specified user", response = User.class, responseContainer = "List", authorizations = {
+    @ApiOperation(value = "Returns specified user", nickname = "getUserById", notes = "Returns the specified user", response = User.class, authorizations = {
         @Authorization(value = "ApiKeyAuth")    }, tags={ "user", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "the user", response = User.class, responseContainer = "List"),
+        @ApiResponse(code = 200, message = "the user", response = User.class),
         @ApiResponse(code = 400, message = "Client says no"),
         @ApiResponse(code = 404, message = "User not found"),
         @ApiResponse(code = 405, message = "Validation exception"),
@@ -64,7 +64,7 @@ public interface UsersApi {
     @RequestMapping(value = "/users/{userId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<User>> getUserById(@Min(1)@ApiParam(value = "The user ID",required=true, allowableValues = "") @PathVariable("userId") Integer userId);
+    ResponseEntity<User> getUserById(@Min(1)@ApiParam(value = "The user ID",required=true, allowableValues = "") @PathVariable("userId") Integer userId);
 
 
     @ApiOperation(value = "Returns all users", nickname = "getUsers", notes = "Returns a list of all users", response = User.class, responseContainer = "List", authorizations = {
