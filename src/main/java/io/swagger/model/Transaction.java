@@ -8,17 +8,26 @@ import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import org.threeten.bp.OffsetDateTime;
 import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
  * Transaction
  */
+@Entity
 @Validated
+@Table(name = "transactions")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
 public class Transaction   {
+  @Id
+  @GeneratedValue
   @JsonProperty("Id")
-  private Long id = null;
+  private Integer id = null;
 
   @JsonProperty("From")
   private String from = null;
@@ -35,7 +44,7 @@ public class Transaction   {
   @JsonProperty("PerformedBy")
   private Integer performedBy = null;
 
-  public Transaction id(Long id) {
+  public Transaction id(Integer id) {
     this.id = id;
     return this;
   }
@@ -45,13 +54,11 @@ public class Transaction   {
    * @return id
   **/
   @ApiModelProperty(required = true, value = "")
-  @NotNull
-
-  public Long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
