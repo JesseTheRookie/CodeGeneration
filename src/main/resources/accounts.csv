@@ -1,4 +1,4 @@
 NL01INHO0000000001,100,bank,1000000000,current,active
-NL01INHO0000000002,10,stefan,1000,current,active
-NL01INHO0000000003,0001,stefan,1337,savings,active
-NL01INHO0000000004,0002,bert,9001,current,active
+NL01INHO0000000002,101,stefan,1000,current,active
+NL01INHO0000000003,101,stefan,1337,savings,active
+NL01INHO0000000004,102,bert,9001,current,active

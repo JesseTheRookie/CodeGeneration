@@ -27,7 +27,7 @@ public class User   {
   @SequenceGenerator(name = "user_seq", initialValue = 100)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
   @JsonProperty("Id")
-  private Integer id = null;
+  private Integer id;
 
   @JsonProperty("Name")
   private String name = null;
@@ -70,6 +70,7 @@ public class User   {
   @JsonProperty("Role")
   private RoleEnum role = null;
 
+
   public User id(Integer id) {
     this.id = id;
     return this;
@@ -95,7 +96,7 @@ public class User   {
    * @return id
   **/
   @ApiModelProperty(required = true, value = "")
-  @NotNull
+  //@NotNull
 
   public Integer getId() {
     return id;

@@ -51,7 +51,7 @@ public class UsersApiController implements UsersApi {
 
     public ResponseEntity<List<Account>> getAccountsByUserId(@ApiParam(value = "The user Id",required=true) @PathVariable("userId") Integer userId) {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<List<Account>>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<List<Account>>(service.getAccountsByUserId(userId), HttpStatus.OK);
     }
 
     public ResponseEntity<List<User>> getUserById(@Min(1)@ApiParam(value = "The user ID",required=true, allowableValues = "") @PathVariable("userId") Integer userId) {

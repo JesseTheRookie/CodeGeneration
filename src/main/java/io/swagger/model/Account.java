@@ -133,6 +133,7 @@ public class Account   {
     this.status = status;
   }
 
+  /*
   public Account(String iban, User user, String name, BigDecimal balance, AccounttypeEnum type, StatusEnum status){
     this.iban = iban;
     this.user = user;
@@ -140,7 +141,7 @@ public class Account   {
     this.balance = balance;
     this.accounttype = type;
     this.status = status;
-  }
+  }*/
 
   public Account(){}
 
@@ -169,8 +170,8 @@ public class Account   {
    * Get userId
    * @return userId
   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+//  @ApiModelProperty(required = true, value = "")
+//  @NotNull
 /*
   @Valid
   public Long getId() {
@@ -180,6 +181,11 @@ public class Account   {
   public void setId(Long userId) {
     this.id = userId;
   }*/
+
+  public Integer getUserId(){
+    return this.user.getId();
+  }
+
 
   public Account name(String name) {
     this.name = name;
@@ -288,7 +294,6 @@ public class Account   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Account {\n");
-    
     sb.append("    iban: ").append(toIndentedString(iban)).append("\n");
     sb.append("    user: ").append(toIndentedString(user)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
