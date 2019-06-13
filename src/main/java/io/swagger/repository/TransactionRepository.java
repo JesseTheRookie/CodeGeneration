@@ -1,6 +1,7 @@
 package io.swagger.repository;
 
 import io.swagger.model.Transaction;
+import io.swagger.model.Account;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
