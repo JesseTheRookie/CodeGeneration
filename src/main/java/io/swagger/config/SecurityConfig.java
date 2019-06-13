@@ -1,5 +1,5 @@
 package io.swagger.config;
-/*
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
@@ -29,6 +29,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests()
+
+                .antMatchers("/users/**", "/accounts","/transactions").hasRole("ADMIN")
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll();
+
+                /*
                 .antMatchers("/").permitAll()// Everybody can see root
                 .antMatchers(HttpMethod.POST, "/users/**").hasRole("ADMIN") // Only Admin can POST
                 .antMatchers(HttpMethod.PUT, "/accounts/**").hasRole("ADMIN") // Only Admin can POST
@@ -37,7 +48,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/transactions/**").permitAll() // All users can GET
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().permitAll(); // The login page can be seen by everybody
+                .formLogin().permitAll(); // The login page can be seen by everybody*/
     }
 }
-*/
