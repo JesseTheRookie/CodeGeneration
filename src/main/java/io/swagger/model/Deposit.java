@@ -1,22 +1,40 @@
 package io.swagger.model;
 
+import java.sql.Timestamp;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
+import java.util.Date;
+
+
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.threeten.bp.OffsetDateTime;
 import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
  * Deposit
  */
+@Entity
 @Validated
+@NoArgsConstructor
+@ToString
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
 public class Deposit   {
+
+  @Id
+  @GeneratedValue
+  private Long id;
+
   @JsonProperty("To")
   private String to = null;
 
@@ -24,11 +42,16 @@ public class Deposit   {
   private BigDecimal amount = null;
 
   @JsonProperty("TimeStamp")
-  private OffsetDateTime timeStamp = null;
+  private Timestamp timeStamp = new Timestamp(new Date().getTime());
 
   public Deposit to(String to) {
     this.to = to;
     return this;
+  }
+
+  public Deposit(String to, BigDecimal amount) {
+    this.to = to;
+    this.amount = amount;
   }
 
   /**
@@ -67,7 +90,7 @@ public class Deposit   {
     this.amount = amount;
   }
 
-  public Deposit timeStamp(OffsetDateTime timeStamp) {
+  public Deposit timeStamp(Timestamp timeStamp) {
     this.timeStamp = timeStamp;
     return this;
   }
@@ -79,11 +102,11 @@ public class Deposit   {
   @ApiModelProperty(value = "")
 
   @Valid
-  public OffsetDateTime getTimeStamp() {
+  public Timestamp getTimeStamp() {
     return timeStamp;
   }
 
-  public void setTimeStamp(OffsetDateTime timeStamp) {
+  public void setTimeStamp(Timestamp timeStamp) {
     this.timeStamp = timeStamp;
   }
 
@@ -105,18 +128,6 @@ public class Deposit   {
   @Override
   public int hashCode() {
     return Objects.hash(to, amount, timeStamp);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Deposit {\n");
-    
-    sb.append("    to: ").append(toIndentedString(to)).append("\n");
-    sb.append("    amount: ").append(toIndentedString(amount)).append("\n");
-    sb.append("    timeStamp: ").append(toIndentedString(timeStamp)).append("\n");
-    sb.append("}");
-    return sb.toString();
   }
 
   /**
