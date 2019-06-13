@@ -50,12 +50,14 @@ public class TransactionsApiController implements TransactionsApi {
         return new ResponseEntity<Integer>(Integer.valueOf(body.getId()), HttpStatus.CREATED);
     }
     //Get allTransactions werkt
-    public ResponseEntity<List<Transaction>> getTransactions(@ApiParam(value = "The id of a transaction") @Valid @RequestParam(value = "transactionID", required = false) Integer transactionID, @ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "from", required = false) String from, @ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "to", required = false) String to,@ApiParam(value = "The userId of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) {
+    public ResponseEntity<List<Transaction>> getTransactions(@ApiParam(value = "The id of a transaction") @Valid @RequestParam(value = "transactionID", required = false) Integer transactionID, @ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "fromIban", required = false) String fromIban, @ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "to", required = false) String to,@ApiParam(value = "The userId of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) {
         String accept = request.getHeader("Accept");
-        /*if("transactionID" == null){
-        }*/
-        //Get all transactions
-        return new ResponseEntity<List<Transaction>>((List<Transaction>)transactionService.getAllTransactions(), HttpStatus.OK);
+        if(fromIban != null){
+            return new ResponseEntity<List<Transaction>>((List<Transaction>)transactionService.getTransactionByIban(fromIban), HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<List<Transaction>>((List<Transaction>)transactionService.getAllTransactions(), HttpStatus.OK);
+        }
     }
 
 }

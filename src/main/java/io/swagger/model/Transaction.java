@@ -35,7 +35,7 @@ public class Transaction   {
   private String to = null;
 
   @JsonProperty("Amount")
-  private BigDecimal amount = null;
+  private Double amount = null;
 
   @JsonProperty("TimeStamp")
   //private Timestamp timeStamp = null;
@@ -58,7 +58,7 @@ public class Transaction   {
     this.performedBy = performedBy;
   }*/
 
-  public Transaction(String fromIban, String to, BigDecimal amount, Integer performedBy){
+  public Transaction(String fromIban, String to, Double amount, Integer performedBy){
     this.fromIban = fromIban;
     this.to = to;
     this.amount = amount;
@@ -81,7 +81,7 @@ public class Transaction   {
     this.id = id;
   }
 
-  public Transaction from(String fromIban) {
+  public Transaction fromIban(String fromIban) {
     this.fromIban = fromIban;
     return this;
   }
@@ -92,7 +92,7 @@ public class Transaction   {
   @ApiModelProperty(required = true, value = "the iban of the sending end")
   @NotNull
 
-  public String getFrom() {
+  public String getFromIban() {
     return fromIban;
   }
 
@@ -120,7 +120,7 @@ public class Transaction   {
     this.to = to;
   }
 
-  public Transaction amount(BigDecimal amount) {
+  public Transaction amount(Double amount) {
     this.amount = amount;
     return this;
   }
@@ -133,11 +133,11 @@ public class Transaction   {
   @NotNull
 
   @Valid
-  public BigDecimal getAmount() {
+  public Double getAmount() {
     return amount;
   }
 
-  public void setAmount(BigDecimal amount) {
+  public void setAmount(Double amount) {
     this.amount = amount;
   }
 
