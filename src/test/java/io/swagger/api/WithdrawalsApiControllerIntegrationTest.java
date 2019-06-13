@@ -22,11 +22,12 @@ public class WithdrawalsApiControllerIntegrationTest {
     private WithdrawalsApi api;
 
     @Test
-    public void creatNewWithdrawalTest() throws Exception {
+    public void createNewWithdrawalTest() throws Exception {
         Withdrawal body = new Withdrawal();
-        ResponseEntity<List<Withdrawal>> responseEntity = api.creatNewWithdrawal(body);
+        ResponseEntity<Withdrawal> responseEntity = api.createNewWithdrawal(body);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
+
 
     @Test
     public void getAllWithdrawalsTest() throws Exception {

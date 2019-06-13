@@ -1,33 +1,58 @@
 package io.swagger.model;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
-import org.threeten.bp.OffsetDateTime;
+
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
  * Withdrawal
  */
+@Entity
 @Validated
+@NoArgsConstructor
+@ToString
+//@Table(name = "withdrawal")
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
 public class Withdrawal   {
-  @JsonProperty("From")
-  private String from = null;
+
+  @Id
+  @GeneratedValue
+  private Long id;
+
+  @JsonProperty("SenderIban")
+  private String senderIban = null;
 
   @JsonProperty("Amount")
   private BigDecimal amount = null;
 
   @JsonProperty("TimeStamp")
-  private OffsetDateTime timeStamp = null;
+  private Timestamp timeStamp = new Timestamp(new Date().getTime());
 
-  public Withdrawal from(String from) {
-    this.from = from;
+
+  public Withdrawal(String senderIban, BigDecimal amount) {
+    this.senderIban = senderIban;
+    this.amount = amount;
+  }
+
+  public Withdrawal senderIban(String senderIban) {
+    this.senderIban = senderIban;
     return this;
   }
 
@@ -38,12 +63,12 @@ public class Withdrawal   {
   @ApiModelProperty(required = true, value = "de iban van de gebruiker")
   @NotNull
 
-  public String getFrom() {
-    return from;
+  public String getSenderIban() {
+    return senderIban;
   }
 
-  public void setFrom(String from) {
-    this.from = from;
+  public void setSenderIban(String senderIban) {
+    this.senderIban = senderIban;
   }
 
   public Withdrawal amount(BigDecimal amount) {
@@ -67,7 +92,7 @@ public class Withdrawal   {
     this.amount = amount;
   }
 
-  public Withdrawal timeStamp(OffsetDateTime timeStamp) {
+  public Withdrawal timeStamp(Timestamp timeStamp) {
     this.timeStamp = timeStamp;
     return this;
   }
@@ -79,11 +104,11 @@ public class Withdrawal   {
   @ApiModelProperty(value = "")
 
   @Valid
-  public OffsetDateTime getTimeStamp() {
+  public Timestamp getTimeStamp() {
     return timeStamp;
   }
 
-  public void setTimeStamp(OffsetDateTime timeStamp) {
+  public void setTimeStamp(Timestamp timeStamp) {
     this.timeStamp = timeStamp;
   }
 
@@ -97,32 +122,16 @@ public class Withdrawal   {
       return false;
     }
     Withdrawal withdrawal = (Withdrawal) o;
-    return Objects.equals(this.from, withdrawal.from) &&
+    return Objects.equals(this.senderIban, withdrawal.senderIban) &&
         Objects.equals(this.amount, withdrawal.amount) &&
         Objects.equals(this.timeStamp, withdrawal.timeStamp);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(from, amount, timeStamp);
+    return Objects.hash(senderIban, amount, timeStamp);
   }
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Withdrawal {\n");
-    
-    sb.append("    from: ").append(toIndentedString(from)).append("\n");
-    sb.append("    amount: ").append(toIndentedString(amount)).append("\n");
-    sb.append("    timeStamp: ").append(toIndentedString(timeStamp)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
