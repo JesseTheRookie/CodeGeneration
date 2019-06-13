@@ -4,6 +4,7 @@ import io.swagger.filter.ApiKeyAuthFilter;
 import io.swagger.repository.ApiKeyRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 
 @Configuration
 @EnableWebSecurity
+@Order(2)
 public class APISecurityConfig extends WebSecurityConfigurerAdapter {
 
     private ApiKeyRepository keyRepository;
