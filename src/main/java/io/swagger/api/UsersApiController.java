@@ -1,11 +1,10 @@
 package io.swagger.api;
 
-import com.google.common.collect.Lists;
 import io.swagger.model.Account;
 import io.swagger.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
-import io.swagger.service.SwaggerService;
+import io.swagger.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -13,17 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
+
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
 @Controller
 public class UsersApiController implements UsersApi {
@@ -34,10 +28,10 @@ public class UsersApiController implements UsersApi {
 
     private final HttpServletRequest request;
 
-    private SwaggerService service;
+    private UserService service;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public UsersApiController(ObjectMapper objectMapper, HttpServletRequest request, SwaggerService service) {
+    public UsersApiController(ObjectMapper objectMapper, HttpServletRequest request, UserService service) {
         this.objectMapper = objectMapper;
         this.request = request;
         this.service = service;
