@@ -3,6 +3,7 @@ package io.swagger.api;
 import io.swagger.model.Withdrawal;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import io.swagger.service.WithdrawalsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -31,25 +32,28 @@ public class WithdrawalsApiController implements WithdrawalsApi {
 
     private final HttpServletRequest request;
 
+    private WithdrawalsService service;
+
     @org.springframework.beans.factory.annotation.Autowired
-    public WithdrawalsApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+    public WithdrawalsApiController(ObjectMapper objectMapper, HttpServletRequest request, WithdrawalsService service) {
         this.objectMapper = objectMapper;
         this.request = request;
+        this.service = service;
     }
 
-    public ResponseEntity<List<Withdrawal>> creatNewWithdrawal(@ApiParam(value = ""  )  @Valid @RequestBody Withdrawal body) {
+    public ResponseEntity<Withdrawal> createNewWithdrawal(@ApiParam(value = ""  )  @Valid @RequestBody Withdrawal body) {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<List<Withdrawal>>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<Withdrawal>(service.createNewWithdrawal(body), HttpStatus.CREATED);
     }
 
     public ResponseEntity<List<Withdrawal>> getAllWithdrawals() {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<List<Withdrawal>>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<List<Withdrawal>>((List<Withdrawal>) service.getAllWithdrawals(), HttpStatus.OK);
     }
 
     public ResponseEntity<List<Withdrawal>> getAllWithdrawalsConnectedToSpecifiedAccount(@ApiParam(value = "The IBAN",required=true) @PathVariable("iban") String iban) {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<List<Withdrawal>>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<List<Withdrawal>>(service.getWithdrawalsByIban(iban), HttpStatus.OK);
     }
 
 }

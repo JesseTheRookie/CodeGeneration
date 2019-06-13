@@ -26,16 +26,16 @@ import java.util.Map;
 @Api(value = "Withdrawals", description = "the Withdrawals API")
 public interface WithdrawalsApi {
 
-    @ApiOperation(value = "Create a new Withdrawal", nickname = "creatNewWithdrawal", notes = "Creates a new Withdrawal", response = Withdrawal.class, responseContainer = "List", authorizations = {
+    @ApiOperation(value = "Create a new Withdrawal", nickname = "createNewWithdrawal", notes = "Creates a new Withdrawal", response = Withdrawal.class, authorizations = {
         @Authorization(value = "ApiKeyAuth")    }, tags={ "Withdrawal", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Withdrawal successfully created!", response = Withdrawal.class, responseContainer = "List"),
+        @ApiResponse(code = 200, message = "Withdrawal successfully created!", response = Withdrawal.class),
         @ApiResponse(code = 400, message = "bad input parameter") })
-    @RequestMapping(value = "/Withdrawals",
+    @RequestMapping(value = "/withdrawals",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<List<Withdrawal>> creatNewWithdrawal(@ApiParam(value = ""  )  @Valid @RequestBody Withdrawal body);
+    ResponseEntity<Withdrawal> createNewWithdrawal(@ApiParam(value = ""  )  @Valid @RequestBody Withdrawal body);
 
 
     @ApiOperation(value = "gets all Withdrawals", nickname = "getAllWithdrawals", notes = "Gets a list with all Withdrawal transactions", response = Withdrawal.class, responseContainer = "List", authorizations = {
@@ -43,7 +43,7 @@ public interface WithdrawalsApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "The list with all Withdrawals is successfully fetched", response = Withdrawal.class, responseContainer = "List"),
         @ApiResponse(code = 200, message = "Oops, it looks like it didn't do what it was supposed to be doing..") })
-    @RequestMapping(value = "/Withdrawals",
+    @RequestMapping(value = "/withdrawals",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<List<Withdrawal>> getAllWithdrawals();
@@ -54,7 +54,7 @@ public interface WithdrawalsApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "The list with all Withdrawals for the specified account is successfully fetched", response = Withdrawal.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "bad input parameter") })
-    @RequestMapping(value = "/Withdrawals/{iban}",
+    @RequestMapping(value = "/withdrawals/{iban}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<List<Withdrawal>> getAllWithdrawalsConnectedToSpecifiedAccount(@ApiParam(value = "The IBAN",required=true) @PathVariable("iban") String iban);

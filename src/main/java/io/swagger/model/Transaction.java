@@ -1,5 +1,7 @@
 package io.swagger.model;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -9,10 +11,7 @@ import java.math.BigDecimal;
 import org.threeten.bp.OffsetDateTime;
 import org.springframework.validation.annotation.Validated;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -25,12 +24,12 @@ import javax.validation.constraints.*;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
 public class Transaction   {
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @JsonProperty("Id")
   private Integer id = null;
 
-  @JsonProperty("From")
-  private String from = null;
+  @JsonProperty("FromIban")
+  private String fromIban = null;
 
   @JsonProperty("To")
   private String to = null;
@@ -39,7 +38,8 @@ public class Transaction   {
   private BigDecimal amount = null;
 
   @JsonProperty("TimeStamp")
-  private OffsetDateTime timeStamp = null;
+  //private Timestamp timeStamp = null;
+  private Timestamp timeStamp = new Timestamp(new Date().getTime());
 
   @JsonProperty("PerformedBy")
   private Integer performedBy = null;
@@ -49,24 +49,42 @@ public class Transaction   {
     return this;
   }
 
+  /*public Transaction(Integer id, String from, String to, BigDecimal amount, Timestamp timeStamp, Integer performedBy){
+    this.id = id;
+    this.from = from;
+    this.to = to;
+    this.amount = amount;
+    this.timeStamp = timeStamp;
+    this.performedBy = performedBy;
+  }*/
+
+  public Transaction(String fromIban, String to, BigDecimal amount, Integer performedBy){
+    this.fromIban = fromIban;
+    this.to = to;
+    this.amount = amount;
+    this.performedBy = performedBy;
+  }
+  public Transaction(){
+
+  }
+
   /**
    * Get id
    * @return id
   **/
   @ApiModelProperty(required = true, value = "")
   public Integer getId() {
-    return id;
+    return this.id;
   }
 
   public void setId(Integer id) {
     this.id = id;
   }
 
-  public Transaction from(String from) {
-    this.from = from;
+  public Transaction from(String fromIban) {
+    this.fromIban = fromIban;
     return this;
   }
-
   /**
    * the iban of the sending end
    * @return from
@@ -75,11 +93,11 @@ public class Transaction   {
   @NotNull
 
   public String getFrom() {
-    return from;
+    return fromIban;
   }
 
   public void setFrom(String from) {
-    this.from = from;
+    this.fromIban = fromIban;
   }
 
   public Transaction to(String to) {
@@ -123,7 +141,7 @@ public class Transaction   {
     this.amount = amount;
   }
 
-  public Transaction timeStamp(OffsetDateTime timeStamp) {
+  public Transaction timeStamp(Timestamp timeStamp) {
     this.timeStamp = timeStamp;
     return this;
   }
@@ -136,11 +154,11 @@ public class Transaction   {
   @NotNull
 
   @Valid
-  public OffsetDateTime getTimeStamp() {
+  public Timestamp getTimeStamp() {
     return timeStamp;
   }
 
-  public void setTimeStamp(OffsetDateTime timeStamp) {
+  public void setTimeStamp(Timestamp timeStamp) {
     this.timeStamp = timeStamp;
   }
 
@@ -148,7 +166,10 @@ public class Transaction   {
     this.performedBy = performedBy;
     return this;
   }
-
+  static public Timestamp parseStringToTimeStamp(String s){
+    Timestamp timestamp = Timestamp.valueOf(s);
+    return timestamp;
+  }
   /**
    * userID of the user who creates the transaction
    * @return performedBy
@@ -175,7 +196,7 @@ public class Transaction   {
     }
     Transaction transaction = (Transaction) o;
     return Objects.equals(this.id, transaction.id) &&
-        Objects.equals(this.from, transaction.from) &&
+        Objects.equals(this.fromIban, transaction.fromIban) &&
         Objects.equals(this.to, transaction.to) &&
         Objects.equals(this.amount, transaction.amount) &&
         Objects.equals(this.timeStamp, transaction.timeStamp) &&
@@ -184,7 +205,7 @@ public class Transaction   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, from, to, amount, timeStamp, performedBy);
+    return Objects.hash(id, fromIban, to, amount, timeStamp, performedBy);
   }
 
   @Override
@@ -193,7 +214,7 @@ public class Transaction   {
     sb.append("class Transaction {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    from: ").append(toIndentedString(from)).append("\n");
+    sb.append("    from: ").append(toIndentedString(fromIban)).append("\n");
     sb.append("    to: ").append(toIndentedString(to)).append("\n");
     sb.append("    amount: ").append(toIndentedString(amount)).append("\n");
     sb.append("    timeStamp: ").append(toIndentedString(timeStamp)).append("\n");
