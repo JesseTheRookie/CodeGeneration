@@ -1,46 +1,33 @@
 package io.swagger.service;
 
 import io.swagger.model.Account;
-import io.swagger.model.User;
 import io.swagger.repository.AccountRepository;
-import io.swagger.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 @Service
-public class SwaggerService {
-
-    private UserRepository userRepository;
+public class AccountService {
     private AccountRepository accountRepository;
 
-    public SwaggerService(UserRepository userRepository, AccountRepository accountRepository) {
-
-        this.userRepository = userRepository;
+    public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
-    public Iterable<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<Account> getAllAccountsByType(String type) {
+            return accountRepository.getAccountsByType(type);
+        /*
+        List<Account> accounts = (List<Account>) accountRepository.findAll();
+        return (List<Account>) accounts.stream()
+                .filter(account -> account.getAccounttype().toString().equals(type))
+                .findAny()
+                .orElse(null);*/
     }
 
-    public void createUser(User newUser) {
-        userRepository.save(newUser);
-    }
-
-    public Iterable<Account> getAllAccounts() {
-        return accountRepository.findAll();
-    }
+    public Iterable<Account> getAllAccountsByType(){return accountRepository.findAll();}
 
     public List<Account> getAccountsByUserId(Integer id) {
-       return accountRepository.getAccountsById(id);
-    }
-
-    public User getUserById(Integer userId) {
-        return userRepository.findById(userId).orElseThrow(IllegalArgumentException::new);
+        return accountRepository.getAccountsById(id);
     }
 
     public void createAccount(Account body) {
