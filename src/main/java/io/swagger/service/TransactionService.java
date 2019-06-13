@@ -15,5 +15,5 @@ public class TransactionService {
     public void createTransaction (Transaction newTransaction) {
         transactionRepository.save(newTransaction);
     }
-
+    public Iterable<Transaction> getAllTransactions(){return transactionRepository.findAll();}
 }
