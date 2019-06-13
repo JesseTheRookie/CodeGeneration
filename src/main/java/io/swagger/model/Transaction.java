@@ -28,8 +28,8 @@ public class Transaction   {
   @JsonProperty("Id")
   private Integer id = null;
 
-  @JsonProperty("From")
-  private String from = null;
+  @JsonProperty("FromIban")
+  private String fromIban = null;
 
   @JsonProperty("To")
   private String to = null;
@@ -49,15 +49,21 @@ public class Transaction   {
     return this;
   }
 
-  public Transaction(Integer id, String from, String to, BigDecimal amount, Timestamp timeStamp, Integer performedBy){
+  /*public Transaction(Integer id, String from, String to, BigDecimal amount, Timestamp timeStamp, Integer performedBy){
     this.id = id;
     this.from = from;
     this.to = to;
     this.amount = amount;
     this.timeStamp = timeStamp;
     this.performedBy = performedBy;
-  }
+  }*/
 
+  public Transaction(String fromIban, String to, BigDecimal amount, Integer performedBy){
+    this.fromIban = fromIban;
+    this.to = to;
+    this.amount = amount;
+    this.performedBy = performedBy;
+  }
   public Transaction(){
 
   }
@@ -75,8 +81,8 @@ public class Transaction   {
     this.id = id;
   }
 
-  public Transaction from(String from) {
-    this.from = from;
+  public Transaction from(String fromIban) {
+    this.fromIban = fromIban;
     return this;
   }
   /**
@@ -87,11 +93,11 @@ public class Transaction   {
   @NotNull
 
   public String getFrom() {
-    return from;
+    return fromIban;
   }
 
   public void setFrom(String from) {
-    this.from = from;
+    this.fromIban = fromIban;
   }
 
   public Transaction to(String to) {
@@ -190,7 +196,7 @@ public class Transaction   {
     }
     Transaction transaction = (Transaction) o;
     return Objects.equals(this.id, transaction.id) &&
-        Objects.equals(this.from, transaction.from) &&
+        Objects.equals(this.fromIban, transaction.fromIban) &&
         Objects.equals(this.to, transaction.to) &&
         Objects.equals(this.amount, transaction.amount) &&
         Objects.equals(this.timeStamp, transaction.timeStamp) &&
@@ -199,7 +205,7 @@ public class Transaction   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, from, to, amount, timeStamp, performedBy);
+    return Objects.hash(id, fromIban, to, amount, timeStamp, performedBy);
   }
 
   @Override
@@ -208,7 +214,7 @@ public class Transaction   {
     sb.append("class Transaction {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    from: ").append(toIndentedString(from)).append("\n");
+    sb.append("    from: ").append(toIndentedString(fromIban)).append("\n");
     sb.append("    to: ").append(toIndentedString(to)).append("\n");
     sb.append("    amount: ").append(toIndentedString(amount)).append("\n");
     sb.append("    timeStamp: ").append(toIndentedString(timeStamp)).append("\n");
