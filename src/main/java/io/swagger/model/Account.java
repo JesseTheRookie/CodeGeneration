@@ -1,6 +1,8 @@
 package io.swagger.model;
 
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -74,7 +76,7 @@ public class Account   {
     @JsonProperty("Accounttype")
     private AccounttypeEnum accounttype = null;
 
-
+    @JsonIgnore
     public String typeValue = null;
 
 
@@ -174,6 +176,7 @@ public class Account   {
     return this;
   }*/
 
+    @JsonIgnore
     /**
      * Get userId
      * @return userId
