@@ -46,7 +46,7 @@ public class TransactionsApiController implements TransactionsApi {
     public ResponseEntity<Integer> createTransaction(@ApiParam(value = ""  )  @Valid @RequestBody Transaction body) {
         String accept = request.getHeader("Accept");
         transactionService.createTransaction(body);
-        return new ResponseEntity<Integer>(Integer.valueOf(body.getId()),HttpStatus.CREATED);
+        return new ResponseEntity<Integer>(Integer.valueOf(body.getId()), HttpStatus.CREATED);
     }
 
     public ResponseEntity<List<Transaction>> getTransactions(@ApiParam(value = "The id of a transaction") @Valid @RequestParam(value = "transactionID", required = false) Integer transactionID,@ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "from", required = false) String from,@ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "to", required = false) String to,@ApiParam(value = "The userId of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) {
