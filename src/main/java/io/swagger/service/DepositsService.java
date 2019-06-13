@@ -31,8 +31,8 @@ public class DepositsService {
     }
 
     public void createTestDeposits(){
-        this.createDeposit(new Deposit("NL01INHO0000000004", new BigDecimal("50")));
-        this.createDeposit(new Deposit("NL01INHO0000000003", new BigDecimal("12")));
-        this.createDeposit(new Deposit("NL01INHO0000000002", new BigDecimal("404")));
+        this.createDeposit(new Deposit("NL01INHO0000000004", 50.00));
+        this.createDeposit(new Deposit("NL01INHO0000000003", 12.00));
+        this.createDeposit(new Deposit("NL01INHO0000000002", 404.00));
     }
 }

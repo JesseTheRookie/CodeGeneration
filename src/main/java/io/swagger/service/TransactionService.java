@@ -21,7 +21,7 @@ public class TransactionService {
     }
     public void addToAccount (String iban, Double amount){
        Account account = accountService.getAccountByIban(iban);
-       account.setBalance(account.getBalance() + 1000.00);
+       account.setBalance(account.getBalance());
     }
     public void reductFromAccount (String iban){}
 

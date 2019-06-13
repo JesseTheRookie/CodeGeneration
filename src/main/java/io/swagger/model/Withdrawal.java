@@ -40,13 +40,13 @@ public class Withdrawal   {
   private String senderIban = null;
 
   @JsonProperty("Amount")
-  private BigDecimal amount = null;
+  private Double amount = null;
 
   @JsonProperty("TimeStamp")
   private Timestamp timeStamp = new Timestamp(new Date().getTime());
 
 
-  public Withdrawal(String senderIban, BigDecimal amount) {
+  public Withdrawal(String senderIban, Double amount) {
     this.senderIban = senderIban;
     this.amount = amount;
   }
@@ -71,7 +71,7 @@ public class Withdrawal   {
     this.senderIban = senderIban;
   }
 
-  public Withdrawal amount(BigDecimal amount) {
+  public Withdrawal amount(Double amount) {
     this.amount = amount;
     return this;
   }
@@ -84,11 +84,11 @@ public class Withdrawal   {
   @NotNull
 
   @Valid
-  public BigDecimal getAmount() {
+  public Double getAmount() {
     return amount;
   }
 
-  public void setAmount(BigDecimal amount) {
+  public void setAmount(Double amount) {
     this.amount = amount;
   }
 

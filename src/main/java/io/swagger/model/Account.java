@@ -39,7 +39,7 @@ public class Account   {
     private String name = null;
 
     @JsonProperty("Balance")
-    private BigDecimal balance = null;
+    private Double balance = null;
 
     /**
      * Gets or Sets accounttype
@@ -128,7 +128,7 @@ public class Account   {
   }*/
 
 
-    public Account(String iban, Optional<User> user, String name, BigDecimal balance, AccounttypeEnum type, StatusEnum status){
+    public Account(String iban, Optional<User> user, String name, Double balance, AccounttypeEnum type, StatusEnum status){
         this.iban = iban;
         if(user.isPresent()){
             this.user = user.get();
@@ -141,7 +141,7 @@ public class Account   {
     }
 
 
-    public Account(String iban, User user, String name, BigDecimal balance, AccounttypeEnum type, StatusEnum status){
+    public Account(String iban, User user, String name, Double balance, AccounttypeEnum type, StatusEnum status){
         this.iban = iban;
         this.user = user;
         this.name = name;
@@ -219,7 +219,7 @@ public class Account   {
         this.name = name;
     }
 
-    public Account balance(BigDecimal balance) {
+    public Account balance(Double balance) {
         this.balance = balance;
         return this;
     }
@@ -232,11 +232,11 @@ public class Account   {
     @NotNull
 
     @Valid
-    public BigDecimal getBalance() {
+    public Double getBalance() {
         return balance;
     }
 
-    public void setBalance(BigDecimal balance) {
+    public void setBalance(Double balance) {
         this.balance = balance;
     }
 

@@ -14,10 +14,10 @@ public class WithdrawalsService {
     public WithdrawalsService(WithdrawalsRepository withdrawalsRepository) {
         this.withdrawalsRepository = withdrawalsRepository;
 
-        this.createNewWithdrawal(new Withdrawal("NL01INHO0000000004", new BigDecimal("50")));
-        this.createNewWithdrawal(new Withdrawal("NL01INHO0000000004", new BigDecimal("4")));
-        this.createNewWithdrawal(new Withdrawal("NL01INHO0000000004", new BigDecimal("6")));
-        this.createNewWithdrawal(new Withdrawal("NL01INHO0000000004", new BigDecimal("89")));
+        this.createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 50.00));
+        this.createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 4.00));
+        this.createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 6.00));
+        this.createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 89.00));
     }
 
     public Withdrawal createNewWithdrawal(Withdrawal newWithdrawal){

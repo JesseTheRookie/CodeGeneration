@@ -61,7 +61,7 @@ public class MyApplicationRunner implements ApplicationRunner {
                                 new Account((line.split(",")[0]),
                                         userRepository.findById(Integer.parseInt(line.split(",")[1])),
                                         line.split(",")[2],
-                                        new BigDecimal(line.split(",")[3]),
+                                        Double.parseDouble(line.split(",")[3]),
                                         Account.AccounttypeEnum.fromValue(line.split(",")[4]),
                                         Account.StatusEnum.fromValue(line.split(",")[5])
                                 )

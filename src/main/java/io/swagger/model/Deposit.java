@@ -39,7 +39,7 @@ public class Deposit   {
   private String to = null;
 
   @JsonProperty("Amount")
-  private BigDecimal amount = null;
+  private Double amount = null;
 
   @JsonProperty("TimeStamp")
   private Timestamp timeStamp = new Timestamp(new Date().getTime());
@@ -49,7 +49,7 @@ public class Deposit   {
     return this;
   }
 
-  public Deposit(String to, BigDecimal amount) {
+  public Deposit(String to, Double amount) {
     this.to = to;
     this.amount = amount;
   }
@@ -69,7 +69,7 @@ public class Deposit   {
     this.to = to;
   }
 
-  public Deposit amount(BigDecimal amount) {
+  public Deposit amount(Double amount) {
     this.amount = amount;
     return this;
   }
@@ -82,11 +82,11 @@ public class Deposit   {
   @NotNull
 
   @Valid
-  public BigDecimal getAmount() {
+  public Double getAmount() {
     return amount;
   }
 
-  public void setAmount(BigDecimal amount) {
+  public void setAmount(Double amount) {
     this.amount = amount;
   }
 
