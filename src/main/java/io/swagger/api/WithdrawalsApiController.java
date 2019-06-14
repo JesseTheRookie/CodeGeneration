@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
 @Controller
 public class WithdrawalsApiController implements WithdrawalsApi {
@@ -41,7 +42,7 @@ public class WithdrawalsApiController implements WithdrawalsApi {
         this.service = service;
     }
 
-    public ResponseEntity<Withdrawal> createNewWithdrawal(@ApiParam(value = ""  )  @Valid @RequestBody Withdrawal body) {
+    public ResponseEntity<Withdrawal> createNewWithdrawal(@ApiParam(value = "") @Valid @RequestBody Withdrawal body) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Withdrawal>(service.createNewWithdrawal(body), HttpStatus.CREATED);
     }
@@ -51,7 +52,7 @@ public class WithdrawalsApiController implements WithdrawalsApi {
         return new ResponseEntity<List<Withdrawal>>((List<Withdrawal>) service.getAllWithdrawals(), HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Withdrawal>> getAllWithdrawalsConnectedToSpecifiedAccount(@ApiParam(value = "The IBAN",required=true) @PathVariable("iban") String iban) {
+    public ResponseEntity<List<Withdrawal>> getAllWithdrawalsConnectedToSpecifiedAccount(@ApiParam(value = "The IBAN", required = true) @PathVariable("iban") String iban) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<List<Withdrawal>>(service.getWithdrawalsByIban(iban), HttpStatus.OK);
     }
