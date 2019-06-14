@@ -4,24 +4,14 @@ import io.swagger.model.Account;
 import io.swagger.model.ApiKey;
 import io.swagger.model.Transaction;
 import io.swagger.model.User;
-import io.swagger.repository.AccountRepository;
-import io.swagger.repository.ApiKeyRepository;
-import io.swagger.repository.TransactionRepository;
-import io.swagger.repository.UserRepository;
+import io.swagger.repository.*;
 import io.swagger.service.TransactionService;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-
-import java.math.BigDecimal;
-import java.nio.file.AccessDeniedException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.Optional;
-
 
 @Component
 public class MyApplicationRunner implements ApplicationRunner {
@@ -82,22 +72,8 @@ public class MyApplicationRunner implements ApplicationRunner {
         keyRepository.findAll()
                 .forEach(System.out::println);
 
-        //Transactions
-
-        /*Files.lines(Paths.get("src/main/resources/transactions.csv"))
-                .forEach(
-                        line -> transactionRepository.save(
-                                new Transaction(
-                                        //Integer.parseInt(line.split(",")[0]),
-                                        line.split(",")[1],
-                                        line.split(",")[2],
-                                        Double.parseDouble(line.split( ",")[3]),
-                                        //Transaction.parseStringToTimeStamp(line.split(",")[4]),
-                                        Integer.parseInt(line.split(",")[5]))
-                        ));*/
-
         transactionService.createTransaction(new Transaction("NL01INHO0000000004", "NL01INHO0000000003", 50.0, 1));
-        transactionService.createTransaction(new Transaction("NL01INHO0000000003", "NL01INHO0000000004", 100.1, 2));
+        transactionService.createTransaction(new Transaction("NL01INHO0000000003", "NL01INHO0000000004", 50.0, 2));
         transactionService.createTransaction(new Transaction("NL01INHO0000000004", "NL01INHO0000000003", 50.0, 3));
 
         transactionRepository.findAll()

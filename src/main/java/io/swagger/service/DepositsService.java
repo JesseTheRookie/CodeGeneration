@@ -1,7 +1,9 @@
 package io.swagger.service;
 
 import io.swagger.model.Deposit;
+import io.swagger.model.Account;
 import io.swagger.repository.DepositsRepository;
+import io.swagger.repository.AccountRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -12,13 +14,16 @@ import java.util.List;
 public class DepositsService {
 
     private DepositsRepository depositsRepository;
+    private AccountRepository accountRepository;
 
-    public DepositsService(DepositsRepository depositsRepository) {
+    public DepositsService(DepositsRepository depositsRepository, AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
         this.depositsRepository = depositsRepository;
-        createTestDeposits();
+        //createTestDeposits();
     }
 
     public void createDeposit(Deposit newDeposit) {
+        addToAccount(newDeposit.getTo(), newDeposit.getAmount());
         depositsRepository.save(newDeposit);
     }
 
@@ -28,6 +33,12 @@ public class DepositsService {
 
     public List<Deposit> getDepositByIban(String iban) {
         return depositsRepository.getDepositsByIban(iban);
+    }
+
+    public void addToAccount (String iban, Double amount){
+        Account account = accountRepository.findById(iban).orElse(null);
+        account.setBalance(account.getBalance() + amount);
+        accountRepository.save(account);
     }
 
     public void createTestDeposits(){
