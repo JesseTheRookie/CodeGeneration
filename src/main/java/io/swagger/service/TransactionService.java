@@ -21,18 +21,18 @@ public class TransactionService {
     public TransactionService(TransactionRepository transactionRepository, AccountRepository accountRepository){
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
-        //createTestTransactions();
     }
+
     public void addToAccount (String iban, Double amount){
-      // Account account = accountRepository.getAccountsById(iban);
         Account account = accountRepository.findById(iban).orElse(null);
         account.setBalance(account.getBalance() + amount);
-       // AccountService account1 =  AccountService::getAccountByIban(iban);
+        accountRepository.save(account);
     }
+
     public void reductFromAccount (String iban, Double amount){
-        //Account account = accountService.getAccountByIban(iban);
         Account account = accountRepository.findById(iban).orElse(null);
         account.setBalance(account.getBalance() - amount);
+        accountRepository.save(account);
     }
 
     public void createTransaction (Transaction newTransaction) {
@@ -44,10 +44,4 @@ public class TransactionService {
     }
     public Iterable<Transaction> getAllTransactions(){return transactionRepository.findAll();}
     public Iterable<Transaction> getTransactionByIban(String iban){return transactionRepository.getTransactionByIban(iban);}
-
-    /*public void createTestTransactions(){
-        this.createTransaction(new Transaction("NL01INHO0000000004", "NL01INHO0000000003", 50.0, 1));
-        this.createTransaction(new Transaction("NL01INHO0000000003", "NL01INHO0000000004", 100.1, 2));
-        this.createTransaction(new Transaction("NL01INHO0000000004", "NL01INHO0000000003", 50.0, 3));
-    }*/
 }

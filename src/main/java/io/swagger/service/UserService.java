@@ -1,6 +1,6 @@
 package io.swagger.service;
 
-import com.sun.xml.internal.ws.api.message.ExceptionHasMessage;
+//import com.sun.xml.internal.ws.api.message.ExceptionHasMessage;
 import io.swagger.api.SecurityController;
 import io.swagger.model.Account;
 import io.swagger.model.User;
