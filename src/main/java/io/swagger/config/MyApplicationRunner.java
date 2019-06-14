@@ -80,23 +80,25 @@ public class MyApplicationRunner implements ApplicationRunner {
                 .forEach(System.out::println);
 
         //Transactions
-        /*
+
         Files.lines(Paths.get("src/main/resources/transactions.csv"))
                 .forEach(
                         line -> transactionRepository.save(
                                 new Transaction(
-                                        Integer.parseInt(line.split(",")[0]),
+                                        //Integer.parseInt(line.split(",")[0]),
                                         line.split(",")[1],
                                         line.split(",")[2],
-                                        new BigDecimal(line.split( ",")[3]),
-                                        Transaction.parseStringToTimeStamp(line.split(",")[4]),
+                                        Double.parseDouble(line.split( ",")[3]),
+                                        //Transaction.parseStringToTimeStamp(line.split(",")[4]),
                                         Integer.parseInt(line.split(",")[5]))
                         ));
 
         transactionRepository.findAll()
                 .forEach(System.out::println);
 
-         */
+        accountRepository.findAll()
+                .forEach(System.out::println);
+
     }
 }
 

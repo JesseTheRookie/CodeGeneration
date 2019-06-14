@@ -15,7 +15,7 @@ public class AccountService {
     }
 
     public List<Account> getAllAccountsByType(String type) {
-            return accountRepository.getAccountsByType(type);
+        return accountRepository.getAccountsByType(type);
         /*
         List<Account> accounts = (List<Account>) accountRepository.findAll();
         return (List<Account>) accounts.stream()
@@ -24,7 +24,9 @@ public class AccountService {
                 .orElse(null);*/
     }
 
-    public Iterable<Account> getAllAccountsByType(){return accountRepository.findAll();}
+    public Iterable<Account> getAllAccountsByType() {
+        return accountRepository.findAll();
+    }
 
     public List<Account> getAccountsByUserId(Integer id) {
         return accountRepository.getAccountsById(id);
