@@ -4,9 +4,12 @@ package io.swagger.service;
 
 import io.swagger.api.AccountsApiController;
 import io.swagger.api.ApiException;
+import io.swagger.api.SecurityController;
 import io.swagger.model.Account;
 import io.swagger.model.Transaction;
+import io.swagger.model.User;
 import io.swagger.repository.AccountRepository;
+import io.swagger.repository.UserRepository;
 import io.swagger.service.AccountService;
 import io.swagger.repository.AccountRepository;
 import io.swagger.repository.TransactionRepository;
@@ -24,14 +27,18 @@ public class TransactionService {
 
     private TransactionRepository transactionRepository;
     private AccountRepository accountRepository;
+    private SecurityController securityController;
+    private UserRepository userRepository;
     private final Double maxAmount = 100.0;
     private final Integer dayLimit = 2;
     private final Double amountLimit = 10.00;
     private Integer test = 0;
 
-    public TransactionService(TransactionRepository transactionRepository, AccountRepository accountRepository) {
+    public TransactionService(TransactionRepository transactionRepository, AccountRepository accountRepository, SecurityController securityController, UserRepository userRepository) {
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
+        this.securityController = securityController;
+        this.userRepository = userRepository;
     }
 
     public void addToAccount(String iban, Double amount) {
@@ -114,11 +121,26 @@ public class TransactionService {
         }
     }
 
-    public Iterable<Transaction> getAllTransactions() {
-        return transactionRepository.findAll();
+    public Iterable<Transaction> getAllTransactions() throws ApiException {
+        if (userRepository.getUserByName(
+                securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
+                ||userRepository.getUserByName(
+                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)){
+            return transactionRepository.findAll();
+        }throw  new ApiException(403, "You are not authorized for this request");
+
     }
 
-    public Iterable<Transaction> getTransactionByIban(String iban) {
-        return transactionRepository.getTransactionByIban(iban);
+    public Iterable<Transaction> getTransactionByIban(String iban) throws ApiException {
+        Account account = accountRepository.findById(iban).orElse(null);
+        if (userRepository.getUserByName(
+                securityController.currentUserName()).getId() == account.getUserId()
+                || userRepository.getUserByName(
+                securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
+                || userRepository.getUserByName(
+                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)){
+            return (List<Transaction>) transactionRepository.getTransactionByIban(iban);
+            }
+       else throw new ApiException(403, "You are not authorized for this request");
     }
 }
