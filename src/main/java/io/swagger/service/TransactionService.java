@@ -29,17 +29,23 @@ public class TransactionService {
         accountRepository.save(account);
     }
 
-    public void reductFromAccount (String iban, Double amount){
+    public boolean reductFromAccount (String iban, Double amount){
         Account account = accountRepository.findById(iban).orElse(null);
-        account.setBalance(account.getBalance() - amount);
-        accountRepository.save(account);
+        if (account.getBalance() > amount) {
+            account.setBalance(account.getBalance() - amount);
+            accountRepository.save(account);
+            return true;
+        } else{
+            throw new IllegalArgumentException("Balance can't be below zero");
+        }
     }
 
     public void createTransaction (Transaction newTransaction) {
         if(maxAmount > newTransaction.getAmount()) {
             transactionRepository.save(newTransaction);
-            addToAccount(newTransaction.getTo(), newTransaction.getAmount());
-            reductFromAccount(newTransaction.getFromIban(), newTransaction.getAmount());
+            if(reductFromAccount(newTransaction.getFromIban(), newTransaction.getAmount())){
+                addToAccount(newTransaction.getTo(), newTransaction.getAmount());
+            }
         }
     }
     public Iterable<Transaction> getAllTransactions(){return transactionRepository.findAll();}

@@ -1,14 +1,10 @@
 package io.swagger.config;
 
-import io.swagger.model.Account;
-import io.swagger.model.ApiKey;
-import io.swagger.model.Transaction;
-import io.swagger.model.User;
-import io.swagger.repository.AccountRepository;
-import io.swagger.repository.ApiKeyRepository;
-import io.swagger.repository.TransactionRepository;
-import io.swagger.repository.UserRepository;
+import io.swagger.model.*;
+import io.swagger.repository.*;
+import io.swagger.service.DepositsService;
 import io.swagger.service.TransactionService;
+import io.swagger.service.WithdrawalsService;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -22,16 +18,16 @@ public class MyApplicationRunner implements ApplicationRunner {
     private UserRepository userRepository;
     private ApiKeyRepository keyRepository;
     private AccountRepository accountRepository;
-    private TransactionRepository transactionRepository;
-    private TransactionService transactionService;
+    private WithdrawalsRepository withdrawalsRepository;
+    private WithdrawalsService withdrawalsService;
 
-    public MyApplicationRunner(UserRepository userRepository, AccountRepository accountRepository, ApiKeyRepository keyRepository, TransactionRepository transactionRepository, TransactionService transactionService){
+    public MyApplicationRunner(UserRepository userRepository, AccountRepository accountRepository, ApiKeyRepository keyRepository, WithdrawalsService withdrawalsService, WithdrawalsRepository withdrawalsRepository){
 
         this.userRepository = userRepository;
         this.accountRepository = accountRepository;
         this.keyRepository = keyRepository;
-        this.transactionRepository = transactionRepository;
-        this.transactionService = transactionService;
+        this.withdrawalsRepository = withdrawalsRepository;
+        this.withdrawalsService = withdrawalsService;
     }
 
     @Override
@@ -75,25 +71,11 @@ public class MyApplicationRunner implements ApplicationRunner {
         keyRepository.findAll()
                 .forEach(System.out::println);
 
-        //Transactions
+        withdrawalsService.createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 50.00));
+        withdrawalsService.createNewWithdrawal(new Withdrawal("NL01INHO0000000003", 12.00));
+        withdrawalsService.createNewWithdrawal(new Withdrawal("NL01INHO0000000002", 404.00));
 
-        /*Files.lines(Paths.get("src/main/resources/transactions.csv"))
-                .forEach(
-                        line -> transactionRepository.save(
-                                new Transaction(
-                                        //Integer.parseInt(line.split(",")[0]),
-                                        line.split(",")[1],
-                                        line.split(",")[2],
-                                        Double.parseDouble(line.split( ",")[3]),
-                                        //Transaction.parseStringToTimeStamp(line.split(",")[4]),
-                                        Integer.parseInt(line.split(",")[5]))
-                        ));*/
-
-        transactionService.createTransaction(new Transaction("NL01INHO0000000004", "NL01INHO0000000003", 50.0, 1));
-        transactionService.createTransaction(new Transaction("NL01INHO0000000003", "NL01INHO0000000004", 100.1, 2));
-        transactionService.createTransaction(new Transaction("NL01INHO0000000004", "NL01INHO0000000003", 50.0, 3));
-
-        transactionRepository.findAll()
+        withdrawalsRepository.findAll()
                 .forEach(System.out::println);
 
         accountRepository.findAll()
