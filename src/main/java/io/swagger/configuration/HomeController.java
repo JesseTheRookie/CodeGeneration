@@ -12,7 +12,7 @@ public class HomeController {
 
 
     //@ResponseBody
-    @RequestMapping(value = "/")
+    @RequestMapping(value = "/login")
     public String index() {
         //System.out.println("swagger-ui.html");
         //return "redirect:swagger-ui.html";

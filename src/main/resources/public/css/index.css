@@ -1,4 +1,8 @@
- /* Bordered form */
+  .logo {
+    text-align: center;
+    margin: 24px 0;
+  }
+  /* Bordered form */
 
  /* form {
     border: 3px solid #f1f1f1;
@@ -42,12 +46,12 @@
   } */
 
  /* Center the avatar image inside this container */
-
+/*
  .logo {
    text-align: center;
    margin: 24px 0;
  }
-
+*/
  /* Avatar image */
 
  .logo img {
