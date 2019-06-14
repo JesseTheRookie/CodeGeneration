@@ -1,6 +1,5 @@
 package io.swagger.service;
 
-import com.sun.xml.internal.ws.api.message.ExceptionHasMessage;
 import io.swagger.api.SecurityController;
 import io.swagger.model.Account;
 import io.swagger.model.User;
@@ -27,21 +26,39 @@ public class UserService {
     }
 
     public Iterable<User> getAllUsers() {
-        return userRepository.findAll();
+        if (userRepository.getUserByName(
+                securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
+                ||userRepository.getUserByName(
+                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)){
+            return userRepository.findAll();
+        } else return null;
     }
 
     public void createUser(User newUser) {
+
         userRepository.save(newUser);
     }
 
     public User getUserById(Integer userId) {
-        return userRepository.findById(userId).orElseThrow(IllegalArgumentException::new);
+        if (userRepository.getUserByName(
+                securityController.currentUserName())
+                .getId() == userId
+                || userRepository.getUserByName(
+                securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
+                ||userRepository.getUserByName(
+                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)){
+            return userRepository.findById(userId).orElseThrow(IllegalArgumentException::new);
+        } else return null;
     }
 
     public List<Account> getAccountsByUserId(Integer userId) {
         if (userRepository.getUserByName(
-                        securityController.currentUserName())
-                .getId() == userId){
+                securityController.currentUserName())
+                .getId() == userId
+                || userRepository.getUserByName(
+                securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
+                ||userRepository.getUserByName(
+                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)){
             return accountService.getAccountsByUserId(userId);
         }else return null;
     }
