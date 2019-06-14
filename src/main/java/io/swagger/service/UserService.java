@@ -1,5 +1,6 @@
 package io.swagger.service;
 
+import io.swagger.api.ApiException;
 import io.swagger.api.SecurityController;
 import io.swagger.model.Account;
 import io.swagger.model.User;
@@ -21,20 +22,20 @@ public class UserService {
         this.securityController = securityController;
     }
 
-    public Iterable<User> getAllUsers() {
+    public Iterable<User> getAllUsers() throws ApiException {
         if (userRepository.getUserByName(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
                 ||userRepository.getUserByName(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)){
             return userRepository.findAll();
-        } else return null;
+        } else throw new ApiException(403, "You are not authorized for this request");
     }
 
     public void createUser(User newUser) {
         userRepository.save(newUser);
     }
 
-    public User getUserById(Integer userId) {
+    public User getUserById(Integer userId) throws ApiException {
         if (userRepository.getUserByName(
                 securityController.currentUserName())
                 .getId() == userId
@@ -43,10 +44,10 @@ public class UserService {
                 ||userRepository.getUserByName(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)){
             return userRepository.findById(userId).orElseThrow(IllegalArgumentException::new);
-        } else return null;
+        } else throw new ApiException(403, "You are not authorized for this request");
     }
 
-    public List<Account> getAccountsByUserId(Integer userId) {
+    public List<Account> getAccountsByUserId(Integer userId) throws ApiException {
         if (userRepository.getUserByName(
                 securityController.currentUserName())
                 .getId() == userId
@@ -55,6 +56,6 @@ public class UserService {
                 ||userRepository.getUserByName(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)){
             return accountService.getAccountsByUserId(userId);
-        }else return null;
+        } else throw new ApiException(403, "You are not authorized for this request");
     }
 }

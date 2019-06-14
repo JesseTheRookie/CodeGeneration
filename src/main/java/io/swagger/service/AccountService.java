@@ -1,5 +1,6 @@
 package io.swagger.service;
 
+import io.swagger.api.ApiException;
 import io.swagger.api.SecurityController;
 import io.swagger.model.Account;
 import io.swagger.model.User;
@@ -22,25 +23,25 @@ public class AccountService {
         this.securityController = securityController;
     }
 
-    public List<Account> getAllAccountsByType(String type) {
+    public List<Account> getAllAccountsByType(String type) throws ApiException {
         if (userRepository.getUserByName(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
                 ||userRepository.getUserByName(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
             return accountRepository.getAccountsByType(type);
-        }else return null;
+        } else throw new ApiException(403, "You are not authorized for this request");
     }
 
-    public Iterable<Account> getAllAccountsByType() {
+    public Iterable<Account> getAllAccountsByType() throws ApiException {
         if (userRepository.getUserByName(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
                 || userRepository.getUserByName(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
             return accountRepository.findAll();
-        } else return null;
+        } else throw new ApiException(403, "You are not authorized for this request");
     }
 
-    public List<Account> getAccountsByUserId(Integer id) {
+    public List<Account> getAccountsByUserId(Integer id) throws ApiException {
         if (userRepository.getUserByName(
                 securityController.currentUserName())
                 .getId() == id
@@ -49,7 +50,7 @@ public class AccountService {
                 ||userRepository.getUserByName(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
             return accountRepository.getAccountsById(id);
-        } else return null;
+        }  else throw new ApiException(403, "You are not authorized for this request");
     }
 
     public void createAccount(Account body) {
@@ -61,23 +62,23 @@ public class AccountService {
         }
     }
 
-    public Account getAccountByIban(String iban) {
+    public Account getAccountByIban(String iban) throws ApiException {
         if (userRepository.getUserByName(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
                 ||userRepository.getUserByName(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)){
             return accountRepository.findById(iban).orElseThrow(IllegalArgumentException::new);
-        }else return null;
+        } else throw new ApiException(403, "You are not authorized for this request");
     }
 
-    public void deleteAccount(String iban) {
+    public void deleteAccount(String iban) throws ApiException {
         if (userRepository.getUserByName(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
                 ||userRepository.getUserByName(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
             Account account = accountRepository.findById(iban).orElseThrow(IllegalArgumentException::new);
             if (account.getBalance()!= 0){
-                return;
+                 throw new ApiException(405, "This account still has money in it, and can't be deleted");
             }else accountRepository.delete(account);
         }
     }

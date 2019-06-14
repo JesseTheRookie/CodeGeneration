@@ -49,7 +49,7 @@ public interface AccountsApi {
         @ApiResponse(code = 500, message = "Server says no") })
     @RequestMapping(value = "/accounts/{iban}",
         method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteAccount(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban);
+    ResponseEntity<Void> deleteAccount(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban) throws ApiException;
 
 
     @ApiOperation(value = "Returns the specified account", nickname = "getAccountByIban", notes = "Returns the specified account", response = Account.class, authorizations = {
@@ -62,7 +62,7 @@ public interface AccountsApi {
     @RequestMapping(value = "/accounts/{iban}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<Account> getAccountByIban(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban);
+    ResponseEntity<Account> getAccountByIban(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban) throws ApiException;
 
 
     @ApiOperation(value = "Returns all accounts", nickname = "getAccounts", notes = "Returns a list of all accounts, if the logged in user is an employee", response = Account.class, responseContainer = "List", authorizations = {
@@ -74,7 +74,7 @@ public interface AccountsApi {
     @RequestMapping(value = "/accounts",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<Account>> getAccounts(@ApiParam(value = "The type of accounts that need to be considered to filter", allowableValues = "current, savings") @Valid @RequestParam(value = "type", required = false) String type);
+    ResponseEntity<List<Account>> getAccounts(@ApiParam(value = "The type of accounts that need to be considered to filter", allowableValues = "current, savings") @Valid @RequestParam(value = "type", required = false) String type) throws ApiException;
 
 
     @ApiOperation(value = "Toggles the status of the specified account", nickname = "toggleAccountStatus", notes = "Toggles the status of the specified account, active or frozen", authorizations = {
