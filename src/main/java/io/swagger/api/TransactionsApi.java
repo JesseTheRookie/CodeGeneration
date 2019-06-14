@@ -35,7 +35,7 @@ public interface TransactionsApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<Integer> createTransaction(@ApiParam(value = ""  )  @Valid @RequestBody Transaction body);
+    ResponseEntity<Integer> createTransaction(@ApiParam(value = ""  )  @Valid @RequestBody Transaction body) throws ApiException;
 
 
     @ApiOperation(value = "Get transactions depending on the optional parameters; the abstinence of any parameters results in all transactions.", nickname = "getTransactions", notes = "", response = Transaction.class, responseContainer = "List", authorizations = {
@@ -46,6 +46,6 @@ public interface TransactionsApi {
     @RequestMapping(value = "/transactions",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<Transaction>> getTransactions(@ApiParam(value = "The id of a transaction") @Valid @RequestParam(value = "transactionID", required = false) Integer transactionID,@ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "from", required = false) String from,@ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "to", required = false) String to,@ApiParam(value = "The userId of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy);
+    ResponseEntity<List<Transaction>> getTransactions(@ApiParam(value = "The id of a transaction") @Valid @RequestParam(value = "transactionID", required = false) Integer transactionID,@ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "from", required = false) String from,@ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "to", required = false) String to,@ApiParam(value = "The userId of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) throws ApiException;
 
 }
