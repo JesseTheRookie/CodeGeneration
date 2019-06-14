@@ -22,41 +22,42 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
+
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
 @Api(value = "Withdrawals", description = "the Withdrawals API")
 public interface WithdrawalsApi {
 
     @ApiOperation(value = "Create a new Withdrawal", nickname = "createNewWithdrawal", notes = "Creates a new Withdrawal", response = Withdrawal.class, authorizations = {
-        @Authorization(value = "ApiKeyAuth")    }, tags={ "withdrawal", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Withdrawal successfully created!", response = Withdrawal.class),
-        @ApiResponse(code = 400, message = "bad input parameter") })
+            @Authorization(value = "ApiKeyAuth")}, tags = {"withdrawal",})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Withdrawal successfully created!", response = Withdrawal.class),
+            @ApiResponse(code = 400, message = "bad input parameter")})
     @RequestMapping(value = "/withdrawals",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.POST)
-    ResponseEntity<Withdrawal> createNewWithdrawal(@ApiParam(value = ""  )  @Valid @RequestBody Withdrawal body);
+            produces = {"application/json"},
+            consumes = {"application/json"},
+            method = RequestMethod.POST)
+    ResponseEntity<Withdrawal> createNewWithdrawal(@ApiParam(value = "") @Valid @RequestBody Withdrawal body);
 
 
     @ApiOperation(value = "gets all Withdrawals", nickname = "getAllWithdrawals", notes = "Gets a list with all Withdrawal transactions", response = Withdrawal.class, responseContainer = "List", authorizations = {
-        @Authorization(value = "ApiKeyAuth")    }, tags={ "withdrawal", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "The list with all Withdrawals is successfully fetched", response = Withdrawal.class, responseContainer = "List"),
-        @ApiResponse(code = 200, message = "Oops, it looks like it didn't do what it was supposed to be doing..") })
+            @Authorization(value = "ApiKeyAuth")}, tags = {"withdrawal",})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "The list with all Withdrawals is successfully fetched", response = Withdrawal.class, responseContainer = "List"),
+            @ApiResponse(code = 200, message = "Oops, it looks like it didn't do what it was supposed to be doing..")})
     @RequestMapping(value = "/withdrawals",
-        produces = { "application/json" }, 
-        method = RequestMethod.GET)
+            produces = {"application/json"},
+            method = RequestMethod.GET)
     ResponseEntity<List<Withdrawal>> getAllWithdrawals();
 
 
     @ApiOperation(value = "Get all withdrawals for a specific account", nickname = "getAllWithdrawalsConnectedToSpecifiedAccount", notes = "Gets a list of all withdraw transactions of the specified account", response = Withdrawal.class, responseContainer = "List", authorizations = {
-        @Authorization(value = "ApiKeyAuth")    }, tags={ "withdrawal", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "The list with all Withdrawals for the specified account is successfully fetched", response = Withdrawal.class, responseContainer = "List"),
-        @ApiResponse(code = 400, message = "bad input parameter") })
+            @Authorization(value = "ApiKeyAuth")}, tags = {"withdrawal",})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "The list with all Withdrawals for the specified account is successfully fetched", response = Withdrawal.class, responseContainer = "List"),
+            @ApiResponse(code = 400, message = "bad input parameter")})
     @RequestMapping(value = "/withdrawals/{iban}",
-        produces = { "application/json" }, 
-        method = RequestMethod.GET)
-    ResponseEntity<List<Withdrawal>> getAllWithdrawalsConnectedToSpecifiedAccount(@ApiParam(value = "The IBAN",required=true) @PathVariable("iban") String iban);
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    ResponseEntity<List<Withdrawal>> getAllWithdrawalsConnectedToSpecifiedAccount(@ApiParam(value = "The IBAN", required = true) @PathVariable("iban") String iban);
 
 }

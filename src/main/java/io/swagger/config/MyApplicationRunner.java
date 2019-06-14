@@ -8,6 +8,7 @@ import io.swagger.repository.AccountRepository;
 import io.swagger.repository.ApiKeyRepository;
 import io.swagger.repository.TransactionRepository;
 import io.swagger.repository.UserRepository;
+import io.swagger.service.TransactionService;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -29,13 +30,15 @@ public class MyApplicationRunner implements ApplicationRunner {
     private ApiKeyRepository keyRepository;
     private AccountRepository accountRepository;
     private TransactionRepository transactionRepository;
+    private TransactionService transactionService;
 
-    public MyApplicationRunner(UserRepository userRepository, AccountRepository accountRepository, ApiKeyRepository keyRepository, TransactionRepository transactionRepository){
+    public MyApplicationRunner(UserRepository userRepository, AccountRepository accountRepository, ApiKeyRepository keyRepository, TransactionRepository transactionRepository, TransactionService transactionService){
 
         this.userRepository = userRepository;
         this.accountRepository = accountRepository;
         this.keyRepository = keyRepository;
         this.transactionRepository = transactionRepository;
+        this.transactionService = transactionService;
     }
 
     @Override
@@ -80,23 +83,29 @@ public class MyApplicationRunner implements ApplicationRunner {
                 .forEach(System.out::println);
 
         //Transactions
-        /*
-        Files.lines(Paths.get("src/main/resources/transactions.csv"))
+
+        /*Files.lines(Paths.get("src/main/resources/transactions.csv"))
                 .forEach(
                         line -> transactionRepository.save(
                                 new Transaction(
-                                        Integer.parseInt(line.split(",")[0]),
+                                        //Integer.parseInt(line.split(",")[0]),
                                         line.split(",")[1],
                                         line.split(",")[2],
-                                        new BigDecimal(line.split( ",")[3]),
-                                        Transaction.parseStringToTimeStamp(line.split(",")[4]),
+                                        Double.parseDouble(line.split( ",")[3]),
+                                        //Transaction.parseStringToTimeStamp(line.split(",")[4]),
                                         Integer.parseInt(line.split(",")[5]))
-                        ));
+                        ));*/
+
+        transactionService.createTransaction(new Transaction("NL01INHO0000000004", "NL01INHO0000000003", 50.0, 1));
+        transactionService.createTransaction(new Transaction("NL01INHO0000000003", "NL01INHO0000000004", 100.1, 2));
+        transactionService.createTransaction(new Transaction("NL01INHO0000000004", "NL01INHO0000000003", 50.0, 3));
 
         transactionRepository.findAll()
                 .forEach(System.out::println);
 
-         */
+        accountRepository.findAll()
+                .forEach(System.out::println);
+
     }
 }
 
