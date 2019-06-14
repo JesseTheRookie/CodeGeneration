@@ -12,16 +12,9 @@ import io.swagger.service.TransactionService;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-
-import java.math.BigDecimal;
-import java.nio.file.AccessDeniedException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.Optional;
-
 
 @Component
 public class MyApplicationRunner implements ApplicationRunner {

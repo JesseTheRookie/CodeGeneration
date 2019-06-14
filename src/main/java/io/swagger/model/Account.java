@@ -1,18 +1,13 @@
 package io.swagger.model;
 
 import java.util.Objects;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.math.BigDecimal;
 import java.util.Optional;
-
 import org.springframework.validation.annotation.Validated;
-
 import javax.persistence.Entity;
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -29,10 +24,8 @@ public class Account   {
     @Id
     @JsonProperty("Iban")
     private String iban = null;
-    /*
-      @JsonProperty("id")
-      private Long id = null;
-    */
+
+
     @JsonProperty("User")
     @ManyToOne(targetEntity = User.class)
     private User user;
@@ -119,15 +112,6 @@ public class Account   {
         this.iban = iban;
         return this;
     }
-/*
-  public Account(String iban, Long id, String name, BigDecimal balance, AccounttypeEnum type, StatusEnum status){
-    this.iban = iban;
-    this.id = id;
-    this.name = name;
-    this.balance = balance;
-    this.accounttype = type;
-    this.status = status;
-  }*/
 
 
     public Account(String iban, Optional<User> user, String name, Double balance, AccounttypeEnum type, StatusEnum status){
@@ -141,7 +125,6 @@ public class Account   {
         this.status = status;
         this.typeValue = this.accounttype.toString();
     }
-
 
     public Account(String iban, User user, String name, Double balance, AccounttypeEnum type, StatusEnum status){
         this.iban = iban;
@@ -170,28 +153,14 @@ public class Account   {
     public void setIban(String iban) {
         this.iban = iban;
     }
-/*
-  public Account id(Long id) {
-    this.id = id;
-    return this;
-  }*/
+
 
     @JsonIgnore
     /**
      * Get userId
      * @return userId
      **/
-//  @ApiModelProperty(required = true, value = "")
-//  @NotNull
-/*
-  @Valid
-  public Long getId() {
-    return id;
-  }
 
-  public void setId(Long userId) {
-    this.id = userId;
-  }*/
 
     public Integer getUserId(){
         return this.user.getId();
