@@ -72,7 +72,7 @@ public class MyApplicationRunner implements ApplicationRunner {
         keyRepository.findAll()
                 .forEach(System.out::println);
 
-        transactionService.createTransaction(new Transaction("NL01INHO0000000004", "NL01INHO0000000003", 50.0, 1));
+        transactionService.createTransaction(new Transaction("NL01INHO0000000003", "NL01INHO0000000002", 50.0, 1));
         transactionService.createTransaction(new Transaction("NL01INHO0000000003", "NL01INHO0000000004", 50.0, 2));
         transactionService.createTransaction(new Transaction("NL01INHO0000000004", "NL01INHO0000000003", 50.0, 3));
 

@@ -1,6 +1,9 @@
 package io.swagger.service;
 
+//import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import io.swagger.api.AccountsApiController;
+import io.swagger.api.ApiException;
 import io.swagger.model.Account;
 import io.swagger.model.Transaction;
 import io.swagger.repository.AccountRepository;
@@ -23,31 +26,32 @@ public class TransactionService {
     private AccountRepository accountRepository;
     private final Double maxAmount = 100.0;
     private final Integer dayLimit = 2;
+    private final Double amountLimit = 10.00;
     private Integer test = 0;
 
-    public TransactionService(TransactionRepository transactionRepository, AccountRepository accountRepository){
+    public TransactionService(TransactionRepository transactionRepository, AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
     }
 
-    public void addToAccount (String iban, Double amount){
+    public void addToAccount(String iban, Double amount) {
         Account account = accountRepository.findById(iban).orElse(null);
         account.setBalance(account.getBalance() + amount);
         accountRepository.save(account);
     }
 
-    public boolean reductFromAccount (String iban, Double amount){
+    public boolean reductFromAccount(String iban, Double amount) {
         Account account = accountRepository.findById(iban).orElse(null);
-        if (account.getBalance() > amount) {
+        if ((account.getBalance() > amount) && ((account.getBalance() - amount) > amountLimit)) {
             account.setBalance(account.getBalance() - amount);
             accountRepository.save(account);
             return true;
-        } else{
+        } else {
             throw new IllegalArgumentException("Balance can't be below zero");
         }
     }
 
-    public Integer getNumberOfTransactionToday(String iban){
+    public Integer getNumberOfTransactionToday(String iban) {
 
         Timestamp timestamp = new Timestamp(new Date().getTime());
         Iterable<Transaction> transactions = transactionRepository.findAll();
@@ -66,37 +70,55 @@ public class TransactionService {
             boolean sameDay = cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR) &&
                     cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR);
 
-             if(sameDay){
-                 test++;
-             }
+            if (sameDay) {
+                test++;
+            }
         }
         return test;
     }
 
-    public Boolean checkIfSavingsToSameUser(String iban){
-        Iterable<Account> acounts = accountRepository.findAll();
-        
+    public Boolean checkForInvalidTransactions(String ibanFrom, String ibanTo) {
+        Account accountFrom = accountRepository.findById(ibanFrom).orElse(null);
+        Account accountTo = accountRepository.findById(ibanTo).orElse(null);
+
+        if (accountFrom.getUser().getId() == accountTo.getUser().getId()) {
+            return true;
+        }
+        if (accountTo.getAccounttype().equals(Account.AccounttypeEnum.CURRENT) && accountFrom.getAccounttype().equals(Account.AccounttypeEnum.CURRENT)) {
+            return true;
+        }
         return false;
     }
-    public void createTransaction (Transaction newTransaction) {
-        //Only executed if the transaction count is lower than or equal to 10
-        if (getNumberOfTransactionToday(newTransaction.getFromIban()) <= dayLimit) {
-            //Only executed if the amount of transaction is lower than 100.00
-            if (maxAmount > newTransaction.getAmount()) {
-                transactionRepository.save(newTransaction);
-                //Only add amount to account if a reduction from the sender account is possible
-                if (reductFromAccount(newTransaction.getFromIban(), newTransaction.getAmount())) {
-                    addToAccount(newTransaction.getTo(), newTransaction.getAmount());
-                } else{
-                    //exception =>
+
+    public void createTransaction(Transaction newTransaction) throws ApiException {
+        if (checkForInvalidTransactions(newTransaction.getFromIban(), newTransaction.getTo())) {
+            //Only executed if the transaction count is lower than or equal to 10
+            if (getNumberOfTransactionToday(newTransaction.getFromIban()) <= dayLimit) {
+                //Only executed if the amount of transaction is lower than 100.00
+                if (maxAmount > newTransaction.getAmount()) {
+                    transactionRepository.save(newTransaction);
+                    //Only add amount to account if a reduction from the sender account is possible
+                    if (reductFromAccount(newTransaction.getFromIban(), newTransaction.getAmount())) {
+                        addToAccount(newTransaction.getTo(), newTransaction.getAmount());
+                    } else {
+                        throw new ApiException(412, "reduction from account is invalid (amount is to high)");
+                    }
+                } else {
+                    throw new ApiException(406, "Can't transfer more than " + maxAmount);
                 }
-            } else{
-                //exception => amount > maxAmount
+            } else {
+                throw new ApiException(406, "Can't create more transactions than day limit" + dayLimit);
             }
-        } else{
-            //throw new IllegalArgumentException("You have reached your maximum transaction quota for today");
+        } else {
+            throw new ApiException(406, "Can't create a transaction to another savings than your own nor from a savings acount to another user's current account");
         }
     }
-    public Iterable<Transaction> getAllTransactions(){return transactionRepository.findAll();}
-    public Iterable<Transaction> getTransactionByIban(String iban){return transactionRepository.getTransactionByIban(iban);}
+
+    public Iterable<Transaction> getAllTransactions() {
+        return transactionRepository.findAll();
+    }
+
+    public Iterable<Transaction> getTransactionByIban(String iban) {
+        return transactionRepository.getTransactionByIban(iban);
+    }
 }
