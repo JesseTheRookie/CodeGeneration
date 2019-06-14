@@ -16,13 +16,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                .withUser("user")
-                .password("{noop}password")
+                .withUser("bank")
+                .password("{noop}bank123")
+                .roles("USER_EMPLOYEE")
+                .and()
+                .withUser("stefan")
+                .password("{noop}admin123")
+                .roles("USER_EMPLOYEE")
+                .and()
+                .withUser("bert")
+                .password("{noop}user123")
                 .roles("USER")
                 .and()
-                .withUser("admin")
-                .password("{noop}password")
-                .roles("ADMIN");
+                .withUser("ernie")
+                .password("{noop}user123")
+                .roles("EMPLOYEE");
     }
 
     @Override
@@ -30,7 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests()
 
-                .antMatchers("/users/**", "/accounts","/transactions").hasRole("ADMIN")
+                .antMatchers("/accounts","/transactions","/deposits","/withdrawals").hasAnyRole("USER_EMPLOYEE","EMPLOYEE")
+                .antMatchers("/users/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
