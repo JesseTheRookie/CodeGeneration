@@ -4,6 +4,7 @@ import io.swagger.model.Account;
 import io.swagger.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import io.swagger.repository.UserRepository;
 import io.swagger.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +48,7 @@ public class UsersApiController implements UsersApi {
     // Werkt
     public ResponseEntity<List<Account>> getAccountsByUserId(@ApiParam(value = "The user Id",required=true) @PathVariable("userId") Integer userId) {
         String accept = request.getHeader("Accept");
+
         return new ResponseEntity<List<Account>>(service.getAccountsByUserId(userId), HttpStatus.OK);
     }
 

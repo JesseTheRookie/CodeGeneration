@@ -1,5 +1,7 @@
 package io.swagger.service;
 
+import com.sun.xml.internal.ws.api.message.ExceptionHasMessage;
+import io.swagger.api.SecurityController;
 import io.swagger.model.Account;
 import io.swagger.model.User;
 import io.swagger.repository.AccountRepository;
@@ -16,10 +18,12 @@ public class UserService {
 
     private UserRepository userRepository;
     private AccountService accountService;
+    private SecurityController securityController;
 
-    public UserService(UserRepository userRepository, AccountService accountService) {
+    public UserService(UserRepository userRepository, AccountService accountService, SecurityController securityController) {
         this.userRepository = userRepository;
         this.accountService = accountService;
+        this.securityController = securityController;
     }
 
     public Iterable<User> getAllUsers() {
@@ -35,6 +39,10 @@ public class UserService {
     }
 
     public List<Account> getAccountsByUserId(Integer userId) {
-        return accountService.getAccountsByUserId(userId);
+        if (userRepository.getUserByName(
+                        securityController.currentUserName())
+                .getId() == userId){
+            return accountService.getAccountsByUserId(userId);
+        }else return null;
     }
 }
