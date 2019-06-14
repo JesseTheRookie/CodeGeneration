@@ -1,9 +1,11 @@
 package io.swagger.service;
 
+import io.swagger.api.SecurityController;
 import io.swagger.model.Account;
 import io.swagger.repository.AccountRepository;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -29,6 +31,7 @@ public class AccountService {
     }
 
     public List<Account> getAccountsByUserId(Integer id) {
+
         return accountRepository.getAccountsById(id);
     }
 
