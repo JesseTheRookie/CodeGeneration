@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -19,10 +21,10 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script type='text/javascript'>
         $(document).ready(function () {
-            var url = "users/login/";
+            var url = "/users/login";
 
             $(".submit").click(function (e) {
-                e.preventDefault();
+            e.preventDefault();
                 var user = {
                     "name": $("#username").val(),
                     "password": $("#password").val()
@@ -33,9 +35,8 @@
                     url: url,
                     data: JSON.stringify(user),
                     contentType: "application/json",
-                    success: function (success) {
-                        $("#result").text((success));
-                    }
+                    success: console.log(success)
+
                 })
             });
         });
@@ -55,16 +56,17 @@
                         <div class="logo">
                             <img src="img/swag.png" alt="Avatar" class="">
                         </div>
-                        <form>
+<!--                        <form action="/users/login" method="POST">-->
+                        <form >
                             <div class="form-group">
                                 <label for="username">Username:</label>
-                                <input type="text" class="form-control" id="username" name="uname"
+                                <input type="text" class="form-control" id="username" name="username"
                                     placeholder="Enter Username" required>
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
                                 <input type="password" class="form-control" id="password" placeholder="Enter Password"
-                                    name="psw" required>
+                                    name="password" required>
                             </div>
                             <!-- <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="">
