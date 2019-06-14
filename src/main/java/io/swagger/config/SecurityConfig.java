@@ -39,7 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
 
                 .antMatchers("/accounts","/transactions","/deposits","/withdrawals").hasAnyRole("USER_EMPLOYEE","EMPLOYEE")
-                .antMatchers("/users/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/users/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/users/**").hasAnyRole("USER_EMPLOYEE","ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -47,16 +48,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll();
-
-                /*
-                .antMatchers("/").permitAll()// Everybody can see root
-                .antMatchers(HttpMethod.POST, "/users/**").hasRole("ADMIN") // Only Admin can POST
-                .antMatchers(HttpMethod.PUT, "/accounts/**").hasRole("ADMIN") // Only Admin can POST
-                .antMatchers(HttpMethod.GET,"/users/**").permitAll() // All users can GET
-                .antMatchers(HttpMethod.GET,"/accounts/**").permitAll() // All users can GET
-                .antMatchers(HttpMethod.GET,"/transactions/**").permitAll() // All users can GET
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().permitAll(); // The login page can be seen by everybody*/
     }
 }

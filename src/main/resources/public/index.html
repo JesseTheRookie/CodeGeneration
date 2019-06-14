@@ -15,7 +15,31 @@
     <link rel="stylesheet" type="text/css" media="screen" href="css/generic.css">
 
     <script src='https://unpkg.com/swagger-client' type='text/javascript'></script>
-    <script src='js/main.js' type='text/javascript'></script>
+<!--    <script src='js/main.js' type='text/javascript'></script>-->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script type='text/javascript'>
+        $(document).ready(function () {
+            var url = "users/login/";
+
+            $(".submit").click(function (e) {
+                e.preventDefault();
+                var user = {
+                    "name": $("#username").val(),
+                    "password": $("#password").val()
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: JSON.stringify(user),
+                    contentType: "application/json",
+                    success: function (success) {
+                        $("#result").text((success));
+                    }
+                })
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -46,7 +70,7 @@
                     <input type="checkbox" class="form-check-input" id="">
                     <label class="form-check-label" for="exampleCheck1">Check me out</label>
                 </div> -->
-                            <button type="submit" class="btn btn-primary w-100">Submit</button>
+                            <button type="submit" class="btn btn-primary w-100">Login</button>
                         </form>
                     </div>
                 </section>

@@ -23,7 +23,7 @@ import javax.validation.constraints.*;
  */
 @Entity
 @Validated
-@Table(name = "accounts")
+@Table(name = "accounts", uniqueConstraints = {@UniqueConstraint(columnNames = {"iban"})})
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
 public class Account   {
     @Id

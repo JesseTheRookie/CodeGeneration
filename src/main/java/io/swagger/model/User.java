@@ -20,7 +20,7 @@ import javax.validation.constraints.*;
  */
 @Entity
 @Validated
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
 public class User   {
   @Id
