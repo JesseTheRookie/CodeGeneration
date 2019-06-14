@@ -1,10 +1,11 @@
 package io.swagger.config;
 
-import io.swagger.model.*;
+import io.swagger.model.Account;
+import io.swagger.model.ApiKey;
+import io.swagger.model.Transaction;
+import io.swagger.model.User;
 import io.swagger.repository.*;
-import io.swagger.service.DepositsService;
 import io.swagger.service.TransactionService;
-import io.swagger.service.WithdrawalsService;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -25,16 +26,16 @@ public class MyApplicationRunner implements ApplicationRunner {
     private UserRepository userRepository;
     private ApiKeyRepository keyRepository;
     private AccountRepository accountRepository;
-    private WithdrawalsRepository withdrawalsRepository;
-    private WithdrawalsService withdrawalsService;
+    private TransactionRepository transactionRepository;
+    private TransactionService transactionService;
 
-    public MyApplicationRunner(UserRepository userRepository, AccountRepository accountRepository, ApiKeyRepository keyRepository, WithdrawalsService withdrawalsService, WithdrawalsRepository withdrawalsRepository){
+    public MyApplicationRunner(UserRepository userRepository, AccountRepository accountRepository, ApiKeyRepository keyRepository, TransactionRepository transactionRepository, TransactionService transactionService){
 
         this.userRepository = userRepository;
         this.accountRepository = accountRepository;
         this.keyRepository = keyRepository;
-        this.withdrawalsRepository = withdrawalsRepository;
-        this.withdrawalsService = withdrawalsService;
+        this.transactionRepository = transactionRepository;
+        this.transactionService = transactionService;
     }
 
     @Override
@@ -78,11 +79,11 @@ public class MyApplicationRunner implements ApplicationRunner {
         keyRepository.findAll()
                 .forEach(System.out::println);
 
-        withdrawalsService.createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 50.00));
-        withdrawalsService.createNewWithdrawal(new Withdrawal("NL01INHO0000000003", 12.00));
-        withdrawalsService.createNewWithdrawal(new Withdrawal("NL01INHO0000000002", 404.00));
+        transactionService.createTransaction(new Transaction("NL01INHO0000000004", "NL01INHO0000000003", 50.0, 1));
+        transactionService.createTransaction(new Transaction("NL01INHO0000000003", "NL01INHO0000000004", 50.0, 2));
+        transactionService.createTransaction(new Transaction("NL01INHO0000000004", "NL01INHO0000000003", 50.0, 3));
 
-        withdrawalsRepository.findAll()
+        transactionRepository.findAll()
                 .forEach(System.out::println);
 
         accountRepository.findAll()
