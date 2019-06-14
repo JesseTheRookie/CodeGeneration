@@ -44,20 +44,20 @@ public class AccountsApiController implements AccountsApi {
     }
 
     // Werkt
-    public ResponseEntity<Void> deleteAccount(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban) {
+    public ResponseEntity<Void> deleteAccount(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban) throws ApiException {
         String accept = request.getHeader("Accept");
         service.deleteAccount(iban);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     // Werkt
-    public ResponseEntity<Account> getAccountByIban(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban) {
+    public ResponseEntity<Account> getAccountByIban(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban) throws ApiException {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Account>(service.getAccountByIban(iban),HttpStatus.OK);
     }
 
     // Werkt
-    public ResponseEntity<List<Account>> getAccounts(@ApiParam(value = "The type of accounts that need to be considered to filter", allowableValues = "current, savings") @Valid @RequestParam(value = "type", required = false) String type) {
+    public ResponseEntity<List<Account>> getAccounts(@ApiParam(value = "The type of accounts that need to be considered to filter", allowableValues = "current, savings") @Valid @RequestParam(value = "type", required = false) String type) throws ApiException {
         String accept = request.getHeader("Accept");
         if(type != null){
             return new ResponseEntity<List<Account>>(service.getAllAccountsByType(type), HttpStatus.OK);

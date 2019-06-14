@@ -46,20 +46,20 @@ public class UsersApiController implements UsersApi {
     }
 
     // Werkt
-    public ResponseEntity<List<Account>> getAccountsByUserId(@ApiParam(value = "The user Id",required=true) @PathVariable("userId") Integer userId) {
+    public ResponseEntity<List<Account>> getAccountsByUserId(@ApiParam(value = "The user Id",required=true) @PathVariable("userId") Integer userId) throws ApiException {
         String accept = request.getHeader("Accept");
 
         return new ResponseEntity<List<Account>>(service.getAccountsByUserId(userId), HttpStatus.OK);
     }
 
     // Werkt
-    public ResponseEntity<User> getUserById(@Min(1)@ApiParam(value = "The user ID",required=true, allowableValues = "") @PathVariable("userId") Integer userId) {
+    public ResponseEntity<User> getUserById(@Min(1)@ApiParam(value = "The user ID",required=true, allowableValues = "") @PathVariable("userId") Integer userId) throws ApiException {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<User>(service.getUserById(userId), HttpStatus.OK);
     }
 
     // Werkt
-    public ResponseEntity<List<User>> getUsers() {
+    public ResponseEntity<List<User>> getUsers() throws ApiException {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<List<User>>((List<User>)service.getAllUsers(), HttpStatus.OK);
     }
