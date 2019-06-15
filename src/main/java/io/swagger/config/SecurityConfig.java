@@ -35,18 +35,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.authorizeRequests()
 
-                .antMatchers("/accounts","/transactions","/deposits","/withdrawals").hasAnyRole("USER_EMPLOYEE","EMPLOYEE")
-                .antMatchers(HttpMethod.GET,"/users/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/users/**").hasAnyRole("USER_EMPLOYEE","ADMIN")
+        http.authorizeRequests()
+                .antMatchers("/accounts", "/transactions", "/deposits", "/withdrawals").hasAnyRole("USER_EMPLOYEE", "EMPLOYEE")
+                .antMatchers(HttpMethod.GET, "/users/**","/css/**", "/img/**", "/js/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/users/**").hasAnyRole("USER_EMPLOYEE", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .permitAll()
+                .formLogin().loginPage("/login").defaultSuccessUrl("/swagger-ui.html", true).permitAll()
                 .and()
-                .logout()
-                .permitAll();
+                .logout().permitAll();
+       http.csrf().disable();
+
+//       http.headers().contentTypeOptions().disable();
+//       http.headers().httpStrictTransportSecurity().disable();//.includeSubDomains(true).maxAgeInSeconds(31536000);//.includeSubdomains(true).maxAgeSeconds(31536000);
     }
+
 }
