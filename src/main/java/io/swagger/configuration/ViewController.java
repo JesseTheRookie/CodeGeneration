@@ -11,15 +11,33 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * Home redirection to swagger api documentation 
+ * Handles views
  */
 @Controller
-public class HomeController{
+public class ViewController{
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    /**
+     * redirects to landing / welcome / home page
+     */
+    @RequestMapping(value = {"", "/"})
     public String index() {
+        return "redirect:/dashboard"; // change the url after the  '/' to change the index page
+    }
 
-        String string =  "/index.html";
-        return string;
+    /**
+     * Dashboard
+     */
+    @RequestMapping(value = {"/dashboard"})
+    public String dashboard() {
+        return "/dashboard.html";
+    }
+
+    /**
+     * Login
+     */
+    @RequestMapping(value = {"/login"})
+    public String login() {
+        //ToDo check if user is logged in
+        return "/login.html";
     }
 }
