@@ -16,7 +16,7 @@ public class DepositsService {
     private AccountRepository accountRepository;
     private AccountService accountService;
 
-    public DepositsService(DepositsRepository depositsRepository, AccountRepository accountRepository, AccountService accountService) throws ApiException {
+    public DepositsService(DepositsRepository depositsRepository, AccountRepository accountRepository, AccountService accountService){
         this.accountRepository = accountRepository;
         this.depositsRepository = depositsRepository;
         this.accountService =  accountService;

@@ -19,7 +19,7 @@ public class WithdrawalsService {
     private AccountRepository accountRepository;
     private AccountService accountService;
 
-    public WithdrawalsService(WithdrawalsRepository withdrawalsRepository, AccountRepository accountRepository, AccountService accountService) throws Exception{
+    public WithdrawalsService(WithdrawalsRepository withdrawalsRepository, AccountRepository accountRepository, AccountService accountService){
         this.accountRepository = accountRepository;
         this.withdrawalsRepository = withdrawalsRepository;
         this.accountService = accountService;

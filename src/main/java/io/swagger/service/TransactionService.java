@@ -133,7 +133,6 @@ public class TransactionService {
         return false;
     }
 
-
     public void createTransaction(Transaction newTransaction) throws ApiException{
         String fromAccountIban = newTransaction.getFromIban();
         String toAccountIban = newTransaction.getTo();
