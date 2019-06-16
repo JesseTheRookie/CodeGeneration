@@ -1,6 +1,8 @@
 package io.swagger.model;
 
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -28,7 +30,7 @@ public class User   {
   @JsonProperty("Name")
   private String name = null;
 
-  @JsonProperty("Password")
+  @JsonIgnore
   private String password = null;
 
   /**
@@ -133,10 +135,12 @@ public class User   {
   @ApiModelProperty(required = true, value = "")
   @NotNull
 
+  @JsonIgnore
   public String getPassword() {
     return password;
   }
 
+  @JsonProperty("password")
   public void setPassword(String password) {
     this.password = password;
   }
