@@ -13,7 +13,7 @@ nav{
     background-color: bisque;
     float: left;
 }
-section{
+.rightSection{
     height: 100%;
     width: 75%;
     float: right;
