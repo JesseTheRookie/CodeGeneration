@@ -29,17 +29,30 @@ public class WithdrawalsService {
       //  createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 89.00));
     }
 
-    public Withdrawal createNewWithdrawal(Withdrawal newWithdrawal) throws Exception{
+    public Withdrawal createNewWithdrawal(Withdrawal newWithdrawal) throws ApiException{
         reductFromAccount(newWithdrawal.getSenderIban(), newWithdrawal.getAmount());
         return withdrawalsRepository.save(newWithdrawal);
     }
 
-    public boolean reductFromAccount (String iban, Double amount) throws Exception{
+    /*public boolean reductFromAccount (String iban, Double amount) throws ApiException{
         Account account = accountRepository.findById(iban).orElse(null);
         if (account == null){
             throw new ApiException(406, "no account found that corresponds with the IBAN: "+ iban);
         }
-        if (account.getBalance() > amount){
+        if (account.getBalance() < amount){
+            throw new ApiException(406, "Balance can't be below zero on: "+ iban);
+        }
+
+        account.setBalance(account.getBalance() - amount);
+        accountRepository.save(account);
+        return true;
+    }*/
+    public boolean reductFromAccount (String iban, Double amount) throws ApiException{
+        Account account = accountRepository.findById(iban).orElse(null);
+        if (account == null){
+            throw new ApiException(406, "no account found that corresponds with the IBAN: "+ iban);
+        }
+        if (account.getBalance() < amount){
             throw new ApiException(406, "Balance can't be below zero on: "+ iban);
         }
 

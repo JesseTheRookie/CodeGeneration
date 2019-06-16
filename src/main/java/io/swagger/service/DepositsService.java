@@ -17,13 +17,13 @@ public class DepositsService {
     private DepositsRepository depositsRepository;
     private AccountRepository accountRepository;
 
-    public DepositsService(DepositsRepository depositsRepository, AccountRepository accountRepository) throws Exception {
+    public DepositsService(DepositsRepository depositsRepository, AccountRepository accountRepository) throws ApiException {
         this.accountRepository = accountRepository;
         this.depositsRepository = depositsRepository;
         //createTestDeposits();
     }
 
-    public void createDeposit(Deposit newDeposit) throws Exception{
+    public void createDeposit(Deposit newDeposit) throws ApiException{
         addToAccount(newDeposit.getTo(), newDeposit.getAmount());
         depositsRepository.save(newDeposit);
     }
@@ -36,7 +36,7 @@ public class DepositsService {
         return depositsRepository.getDepositsByIban(iban);
     }
 
-    public void addToAccount (String iban, Double amount) throws Exception{
+    public void addToAccount (String iban, Double amount) throws ApiException{
         Account account = accountRepository.findById(iban).orElse(null);
         if (account == null){
             throw new ApiException(406, "no account found that corresponds with the IBAN: "+ iban);
