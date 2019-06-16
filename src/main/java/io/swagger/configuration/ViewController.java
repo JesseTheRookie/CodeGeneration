@@ -69,6 +69,16 @@ public class ViewController{
 
 
     /**
+     * Get users
+     */
+    @RequestMapping(value = {"/get-users"})
+    public String getAllUsers() {
+        return "/get-user.html";
+    }
+
+
+
+    /**
      * Login
      */
     @RequestMapping(value = {"/login"})
