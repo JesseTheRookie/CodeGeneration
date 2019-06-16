@@ -74,6 +74,8 @@ public class MyApplicationRunner implements ApplicationRunner {
         transactionRepository.save(new Transaction("NL01INHO0000000004", "NL01INHO0000000002", 50.0, 1 ));
         transactionRepository.save(new Transaction("NL01INHO0000000002", "NL01INHO0000000004", 150.0, 1 ));
 
+        transactionRepository.save(new Transaction("NL01INHO0000000004", "NL01INHO0000000002", 50.0, 1 ));
+
         transactionRepository.findAll()
                 .forEach(System.out::println);
 
@@ -83,8 +85,8 @@ public class MyApplicationRunner implements ApplicationRunner {
         depositsRepository.save(new Deposit("NL01INHO0000000003", 12.00));
         depositsRepository.save(new Deposit("NL01INHO0000000002", 404.00));
 
-        depositsRepository.findAll()
-                .forEach(System.out::println);
+//        depositsRepository.findAll()
+//                .forEach(System.out::println);
 
 
 

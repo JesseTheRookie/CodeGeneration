@@ -24,6 +24,7 @@ public class ViewController{
         return "redirect:/dashboard"; // change the url after the  '/' to change the index page
     }
 
+
     /**
      * Dashboard
      */
@@ -36,7 +37,7 @@ public class ViewController{
     /**
      * Create accounts
      */
-    @RequestMapping(value = {"/createAccount"})
+    @RequestMapping(value = {"/create-account"})
     public String createAccount() {
         return "/create-account.html";
     }
@@ -58,6 +59,15 @@ public class ViewController{
     }
 
     
+    /**
+     * Create users
+     */
+    @RequestMapping(value = {"/create-user"})
+    public String createUser() {
+        return "/create-user.html";
+    }
+
+
     /**
      * Login
      */

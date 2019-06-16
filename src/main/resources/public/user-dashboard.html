@@ -69,7 +69,7 @@
         //     });
         // });
         //zou ook via on document ready kunnen 
-        function loadPage() {
+        $(document).ready(function () {
             $.ajax({
                 type: "GET",
                 url: "/userinfo",
@@ -77,6 +77,7 @@
                 contentType: "application/json",
                 success: function (data) {
                     $("#contentPlaceholder").html(data);
+                    console.log(data);
                 }
 
             });
@@ -90,7 +91,7 @@
             // xhttp.send();
             //$("#contentPlaceholder").html =  sessionStorage.getItem("lastname"); 
             //console.log(sessionStorage.getItem("userName"));
-        }
+        });
     </script>
 
 
@@ -100,7 +101,9 @@
     <h1>Hello, world!</h1>
     <a type="button" class="btn btn-primary" href="/logout">Logout</a>
     <a type="button" class="btn btn-primary" href="/withdrawals">withdrawals</a>
-    <span id="contentPlaceholder"></span>
+    <a type="button" class="btn btn-primary" href="/deposits">Deposits</a>
+    <a type="button" class="btn btn-primary" href="/transactions">Transactions</a>
+    <span id="contentPlaceholder"> </span>
     <!--Nieuwe shit hieronder-->
     <header class="">
         <h1>User dashboard</h1>
@@ -110,6 +113,8 @@
         <ul>
             <li class="active">Manage accounts</li>
             <br>
+            <a type="button" class="btn btn-primary" href="/employee-user-new-deposit.html">Create Deposit</a>
+            <a type="button" class="btn btn-primary" href="/employee-user-new-withdrawal.html">Create Withdrawal</a>
             <li>Create Deposit</li>
             <li>Create Withdrawal</li>
         </ul>

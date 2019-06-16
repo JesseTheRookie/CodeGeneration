@@ -16,7 +16,7 @@
       crossorigin="anonymous"
     />
 
-    <title>Accounts</title>
+    <title>Deposit</title>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -36,22 +36,19 @@
 
     <script>
       $(document).ready(function() {
-        var url = "/accounts";
+        var url = "/deposits";
 
         $("#submit").click(function(e) {
           //  e.preventDefault();
-          var account = {
-            Iban: $("#iban").val(),
-            Name: $("#name").val(),
-            Balance: $("#balance").val(),
-            Accounttype: $("#accounttype").val(),
-            Status: $("#status").val()
+          var deposit = {
+            To: $("#iban").val(),
+            Amount: $("#amount").val()
           };
 
           $.ajax({
             type: "POST",
             url: url,
-            data: JSON.stringify(account),
+            data: JSON.stringify(deposit),
             contentType: "application/json",
             success: function(data) {
               $("#result").html(data);
@@ -63,7 +60,7 @@
     </script>
   </head>
   <body>
-    <h1>Create Account</h1>
+    <h1>Create Deposit</h1>
 
     <section id="create">
       <div class="container">
@@ -73,43 +70,18 @@
             type="text"
             class="form-control"
             id="iban"
+            aria-describedby="ibanHelp"
             placeholder="NL01INHO0000000001"
           />
         </div>
+
         <div class="form-group">
-          <label for="name">Name</label>
+          <label for="balance">Amount</label>
           <input
             type="text"
             class="form-control"
-            id="name"
-            placeholder="John Doe"
-          />
-        </div>
-        <div class="form-group">
-          <label for="balance">Balance</label>
-          <input
-            type="text"
-            class="form-control"
-            id="balance"
-            placeholder="0.0"
-          />
-        </div>
-        <div class="form-group">
-          <label for="accounttype">Accounttype</label>
-          <input
-            type="text"
-            class="form-control"
-            id="accounttype"
-            placeholder="Current or Savings"
-          />
-        </div>
-        <div class="form-group">
-          <label for="status">Status</label>
-          <input
-            type="text"
-            class="form-control"
-            id="status"
-            placeholder="Active or Frozen"
+            id="amount"
+            placeholder="00.00"
           />
         </div>
 

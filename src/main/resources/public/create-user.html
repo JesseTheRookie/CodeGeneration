@@ -36,16 +36,14 @@
 
     <script>
       $(document).ready(function() {
-        var url = "/accounts";
+        var url = "/users";
 
         $("#submit").click(function(e) {
           //  e.preventDefault();
           var account = {
-            Iban: $("#iban").val(),
             Name: $("#name").val(),
-            Balance: $("#balance").val(),
-            Accounttype: $("#accounttype").val(),
-            Status: $("#status").val()
+            Password: $("#password").val(),
+            Role: $("#role").val()
           };
 
           $.ajax({
@@ -68,49 +66,32 @@
     <section id="create">
       <div class="container">
         <div class="form-group">
-          <label for="iban">IBan</label>
-          <input
-            type="text"
-            class="form-control"
-            id="iban"
-            placeholder="NL01INHO0000000001"
-          />
-        </div>
-        <div class="form-group">
           <label for="name">Name</label>
           <input
             type="text"
             class="form-control"
             id="name"
-            placeholder="John Doe"
+            placeholder="JohnDoe"
           />
         </div>
         <div class="form-group">
-          <label for="balance">Balance</label>
+          <label for="password">Password</label>
           <input
-            type="text"
+            type="password"
             class="form-control"
-            id="balance"
-            placeholder="0.0"
+            id="password"
+            placeholder="Choose a password"
           />
         </div>
         <div class="form-group">
-          <label for="accounttype">Accounttype</label>
+          <label for="Role">Role</label>
           <input
             type="text"
             class="form-control"
-            id="accounttype"
-            placeholder="Current or Savings"
-          />
-        </div>
-        <div class="form-group">
-          <label for="status">Status</label>
-          <input
-            type="text"
-            class="form-control"
-            id="status"
-            placeholder="Active or Frozen"
-          />
+            id="role"
+            aria-describedby="roleHelp"
+            placeholder="user, employee or user_employee"
+          /><span id="roleHelp">Lower case letters only</span>
         </div>
 
         <button type="submit" class="btn btn-primary" id="submit">
