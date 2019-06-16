@@ -57,9 +57,17 @@ public class ViewController{
      */
     @RequestMapping(value = {"/get-users"})
     public String getAllUsers() {
-        return "/get-user.html";
+        return "/get-users.html";
     }
 
+
+    /**
+     * Get accounts
+     */
+    @RequestMapping(value = {"/get-accounts"})
+    public String getAllAccounts() {
+        return "/get-accounts.html";
+    }
 
 
     /**
