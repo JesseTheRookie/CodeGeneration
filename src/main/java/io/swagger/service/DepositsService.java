@@ -6,8 +6,6 @@ import io.swagger.model.Account;
 import io.swagger.repository.DepositsRepository;
 import io.swagger.repository.AccountRepository;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -20,7 +18,6 @@ public class DepositsService {
     public DepositsService(DepositsRepository depositsRepository, AccountRepository accountRepository) throws ApiException {
         this.accountRepository = accountRepository;
         this.depositsRepository = depositsRepository;
-        //createTestDeposits();
     }
 
     public void createDeposit(Deposit newDeposit) throws ApiException{
@@ -43,9 +40,5 @@ public class DepositsService {
         }
         account.setBalance(account.getBalance() + amount);
         accountRepository.save(account);
-    }
-
-    public void createTestDeposits() throws Exception{
-
     }
 }

@@ -19,8 +19,9 @@ public class MyApplicationRunner implements ApplicationRunner {
     private TransactionRepository transactionRepository;
     private DepositsRepository depositsRepository;
     private WithdrawalsRepository withdrawalsRepository;
+    private TransactionService transactionService;
 
-    public MyApplicationRunner(UserRepository userRepository, AccountRepository accountRepository, ApiKeyRepository keyRepository, TransactionRepository transactionRepository, DepositsRepository depositsRepository, WithdrawalsRepository withdrawalsRepository){
+    public MyApplicationRunner(UserRepository userRepository, AccountRepository accountRepository, ApiKeyRepository keyRepository, TransactionRepository transactionRepository, DepositsRepository depositsRepository, WithdrawalsRepository withdrawalsRepository, TransactionService transactionService){
 
         this.userRepository = userRepository;
         this.accountRepository = accountRepository;
@@ -28,6 +29,7 @@ public class MyApplicationRunner implements ApplicationRunner {
         this.transactionRepository = transactionRepository;
         this.depositsRepository = depositsRepository;
         this.withdrawalsRepository = withdrawalsRepository;
+        this.transactionService = transactionService;
     }
 
     @Override
@@ -70,10 +72,14 @@ public class MyApplicationRunner implements ApplicationRunner {
         keyRepository.findAll()
                 .forEach(System.out::println);
 
-                transactionRepository.save(new Transaction("NL01INHO0000000003", "NL01INHO0000000002", 50.0, 1 ));
+                transactionService.createTransaction(new Transaction("NL01INHO0000000003", "NL01INHO0000000002", 120.0, 1 ));
 
         transactionRepository.findAll()
                 .forEach(System.out::println);
+
+        accountRepository.findAll()
+                .forEach(System.out::println);
+
 
         depositsRepository.save(new Deposit("NL01INHO0000000004", 50.00));
         depositsRepository.save(new Deposit("NL01INHO0000000003", 12.00));

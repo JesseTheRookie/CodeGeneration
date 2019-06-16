@@ -16,14 +16,13 @@ import java.util.List;
 @Service
 public class WithdrawalsService {
     private WithdrawalsRepository withdrawalsRepository;
-
     private AccountRepository accountRepository;
+    private AccountService accountService;
 
-    public WithdrawalsService(WithdrawalsRepository withdrawalsRepository, AccountRepository accountRepository) throws Exception{
+    public WithdrawalsService(WithdrawalsRepository withdrawalsRepository, AccountRepository accountRepository, AccountService accountService) throws Exception{
         this.accountRepository = accountRepository;
         this.withdrawalsRepository = withdrawalsRepository;
-
-
+        this.accountService = accountService;
     }
 
     public Withdrawal createNewWithdrawal(Withdrawal newWithdrawal) throws ApiException{
@@ -44,20 +43,28 @@ public class WithdrawalsService {
         accountRepository.save(account);
         return true;
     }*/
-    public boolean reductFromAccount (String iban, Double amount) throws ApiException{
+    public void reductFromAccount (String iban, Double amount) throws ApiException{
         Account account = accountRepository.findById(iban).orElse(null);
-        if (account == null){
-            throw new ApiException(406, "no account found that corresponds with the IBAN: "+ iban);
+        if(withdrawIsValid(iban, amount)){
+            account.setBalance(account.getBalance() - amount);
+            accountRepository.save(account);
         }
-        if (account.getBalance() < amount){
+    }
+    public Boolean withdrawIsValid(String iban, Double amount) throws ApiException{
+        if(accountService.accountIsNotNull(iban) && balanceIsHigherThanAmount(iban, amount)){
+            return true;
+        } else{
+            throw new ApiException(406, "Something has gone wrong: ");
+        }
+    }
+    private Boolean balanceIsHigherThanAmount(String iban, Double amount) throws ApiException{
+        Account account = accountRepository.findById(iban).orElse(null);
+        if (account.getBalance() > amount){
+            return true;
+        } else{
             throw new ApiException(406, "Balance can't be below zero on: "+ iban);
         }
-
-        account.setBalance(account.getBalance() - amount);
-        accountRepository.save(account);
-        return true;
     }
-
     public Iterable<Withdrawal> getAllWithdrawals(){
         return withdrawalsRepository.findAll();
     }

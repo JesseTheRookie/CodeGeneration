@@ -78,7 +78,7 @@ public class TransactionService {
         return  false;
     }
 
-    private Boolean theAmountFromAccountDoesNotExceedTheMaxAmount(double amount){
+    private Boolean theAmountFromAccountDoesNotExceedTheMaxAmount(Double amount){
         if(amount < maxAmount){
             return true;
         }
@@ -130,10 +130,7 @@ public class TransactionService {
         }
         return false;
     }
-    //Afhandelen in withdraw, en uit elkaar trekken
-    private Boolean isWithdrawValid(String iban, double amount) throws ApiException{
-        return withdrawalsService.reductFromAccount(iban, amount);
-    }
+
 
     public void createTransaction(Transaction newTransaction) throws ApiException{
         String fromAccountIban = newTransaction.getFromIban();
@@ -144,7 +141,8 @@ public class TransactionService {
             if (checkForInvalidTransactions(fromAccountIban, toAccountIban)) {
                 if (theTransactionDoesNotExceedTheDailyLimit(fromAccountIban)) {
                     if (theAmountFromAccountDoesNotExceedTheMaxAmount(amount)) {
-                        if(isWithdrawValid(fromAccountIban, amount)) {
+                        if(withdrawalsService.withdrawIsValid(fromAccountIban, amount)) {
+                            withdrawalsService.reductFromAccount(fromAccountIban, amount);
                             depositsService.addToAccount(toAccountIban, amount);
                             transactionRepository.save(newTransaction);
                         }
@@ -158,7 +156,8 @@ public class TransactionService {
                 throw new ApiException(406, "Can't create a transaction to another savings than your own nor from a savings acount to another user's current account");
             }
         } else{
-            if(withdrawalsService.reductFromAccount(fromAccountIban, amount)) {
+            if(withdrawalsService.withdrawIsValid(fromAccountIban, amount)) {
+                withdrawalsService.reductFromAccount(fromAccountIban, amount);
                 depositsService.addToAccount(toAccountIban, amount);
                 transactionRepository.save(newTransaction);
             }

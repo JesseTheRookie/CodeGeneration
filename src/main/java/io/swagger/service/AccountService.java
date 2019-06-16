@@ -101,4 +101,11 @@ public class AccountService {
             accountRepository.save(updatedAccount);
         }
     }
+    public Boolean accountIsNotNull(String iban){
+        Account account = accountRepository.findById(iban).orElse(null);
+        if(account != null){
+            return true;
+        }
+        return false;
+    }
 }
