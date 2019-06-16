@@ -23,10 +23,10 @@ public class WithdrawalsService {
         this.accountRepository = accountRepository;
         this.withdrawalsRepository = withdrawalsRepository;
 
-        createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 50.00));
-        createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 4.00));
-        createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 6.00));
-        createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 89.00));
+        //createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 50.00));
+       // createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 4.00));
+      //  createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 6.00));
+      //  createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 89.00));
     }
 
     public Withdrawal createNewWithdrawal(Withdrawal newWithdrawal) throws Exception{

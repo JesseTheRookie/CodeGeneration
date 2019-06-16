@@ -20,7 +20,7 @@ public class DepositsService {
     public DepositsService(DepositsRepository depositsRepository, AccountRepository accountRepository) throws Exception {
         this.accountRepository = accountRepository;
         this.depositsRepository = depositsRepository;
-        createTestDeposits();
+        //createTestDeposits();
     }
 
     public void createDeposit(Deposit newDeposit) throws Exception{
