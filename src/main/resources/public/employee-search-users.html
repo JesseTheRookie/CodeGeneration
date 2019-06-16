@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Employee dashboard</title>
-<link rel="stylesheet" type="text/css" media="screen" href="css/generic.css">
-<link rel="stylesheet" type="text/css" media="screen" href="css/reset.css">
+    <title>Employee dashboard</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/generic.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css">
 
 </head>
+
 <body>
-    <header class=""><h1>Employee dashboard</h1></header>    
-    <nav>
+    <header id="header">
+        <h1>Employee dashboard</h1>
+    </header>
+    <nav id="sideMenu">
         <h1>Employee tools</h1>
         <ul>
             <li class="active">Manage users</li>
@@ -19,13 +23,13 @@
         </ul>
     </nav>
     <section class="rightSection">
-        <div class= "formWrapper">
+        <div class="formWrapper">
             <form action="">
                 Search user: <input type="text" name="fname"><br>
                 <input type="submit" value="Submit">
-                </form>
+            </form>
         </div>
-        <ul id="users"class="list">
+        <ul id="users" class="list">
             <a href="#">
                 <li>
                     <p>username</p>
@@ -53,4 +57,5 @@
         </ul>
     </section>
 </body>
-</html> 
+
+</html>

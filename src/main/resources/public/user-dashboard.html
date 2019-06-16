@@ -133,36 +133,43 @@
     </script>
 </head>
 
-
 </head>
 
 <body>
-    <h1 id="welcomeMsg"></h1>
-    <a type="button" class="btn btn-primary" href="/logout">Logout</a>
-    <a type="button" class="btn btn-primary" href="/withdrawals">withdrawals</a>
-    <a type="button" class="btn btn-primary" href="/deposits">Deposits</a>
-    <a type="button" class="btn btn-primary" href="/transactions">Transactions</a>
-    <a type="button" class="btn btn-primary" href="/get-users">Users</a>
-    <a type="button" class="btn btn-primary" href="/create-users">Create users</a>
-    <a type="button" class="btn btn-primary" href="/get-accounts">Accounts</a>
-    <a type="button" class="btn btn-primary" href="/create-accounts">Create accounts</a>
-    <span id="contentPlaceholder"> </span>
-    <!--Nieuwe shit hieronder-->
-    <header class="">
+    <header id="header">
+        <a type="button" class="btn btn-primary float-right m-2" href="/logout">Logout</a>
         <h1>User dashboard</h1>
+        
+
     </header>
-    <nav>
-        <h1>User tools</h1>
-        <ul>
-            <li class="active">Manage accounts</li>
-            <br />
-            <a type="button" class="btn btn-primary" href="/employee-user-new-deposit.html">Create Deposit</a>
-            <a type="button" class="btn btn-primary" href="/employee-user-new-withdrawal.html">Create Withdrawal</a>
-            <li>Create Deposit</li>
-            <li>Create Withdrawal</li>
-        </ul>
-    </nav>
-    <section class="rightSection">
+    <aside id="sideMenu">
+        <h2 id="welcomeMsg" class="mt-2"></h2>
+        <h3 >User tools</h3>
+        <nav >
+            <!-- <ul> -->
+                <!-- <li class="active">Manage accounts</li> -->
+                <!-- <br /> -->
+
+                <!-- <li>Create Deposit</li> -->
+                <!-- <li>Create Withdrawal</li> -->
+            <!-- </ul> -->
+
+            <a type="button" class="btn btn-primary m-1" href="/employee-user-new-deposit.html">Create Deposit</a>
+            <a type="button" class="btn btn-primary m-1" href="/employee-user-new-withdrawal.html">Create Withdrawal</a>
+            <a type="button" class="btn btn-primary m-1" href="/withdrawals">withdrawals</a>
+            <a type="button" class="btn btn-primary m-1" href="/deposits">Deposits</a>
+            <a type="button" class="btn btn-primary m-1" href="/transactions">Transactions</a>
+            <a type="button" class="btn btn-primary m-1" href="/get-users">Users</a>
+            <a type="button" class="btn btn-primary m-1" href="/create-users">Create users</a>
+            <a type="button" class="btn btn-primary m-1" href="/get-accounts">Accounts</a>
+            <a type="button" class="btn btn-primary m-1" href="/create-accounts">Create accounts</a>
+        </nav>
+    </aside>
+
+    <main class="rightSection">
+
+        <span id="contentPlaceholder"> </span>
+
         <ul id="currents" class="list">
             <h1>current accounts</h1>
             <a href="#">
@@ -193,7 +200,7 @@
                 </li>
             </a><br />
         </ul>
-    </section>
+    </main>
 </body>
 
 </html>
