@@ -95,6 +95,9 @@ public class ViewController{
      */
     @RequestMapping(value = {"/all-users"})
     public String allUsers() {
+        if (((User)securityController.currentUser()).getRole().equals(User.RoleEnum.USER)){
+            return "/user-dashboard.html";
+        }
         return "/employee-search-users.html";
     }
 }
