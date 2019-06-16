@@ -10,34 +10,52 @@
 
     <title>Hello, world!</title>
 
-    <script type='text/javascript' >
-<!--        $(document).ready(function () {-->
-<!--&lt;!&ndash;            var url = ;&ndash;&gt;-->
+    <script type='text/javascript'>
+        // $(document).ready(function () {
+        //     var url = ;
 
-<!--            $("#submit").click(function (e) {-->
-<!--            e.preventDefault();-->
-<!--&lt;!&ndash;                var data = {&ndash;&gt;-->
-<!--&lt;!&ndash;                    "username": $("#username").val(),&ndash;&gt;-->
-<!--&lt;!&ndash;                    "password": $("#password").val()&ndash;&gt;-->
-<!--&lt;!&ndash;                };&ndash;&gt;-->
+        //     $("#submit").click(function (e) {
+        //         e.preventDefault();
+        //         // var data = {
+        //         //     "username": $("#username").val(),
+        //         //     "password": $("#password").val()
+        //         // };
 
-<!--                var data = {-->
-<!--                    "username": "stefan",-->
-<!--                    "password": "admin123"-->
-<!--                };-->
+        //         var data = {
+        //             "username": "stefan",
+        //             "password": "admin123"
+        //         };
 
-<!--                $.ajax({-->
-<!--                    type: "POST",-->
-<!--                    url: "/login",-->
-<!--                    data: data,-->
-<!--                    contentType: "application/json",-->
-<!--                    success: function( data ) {-->
-<!--                       console.log(data)-->
-<!--                    }-->
+        //         $.ajax({
+        //             type: "POST",
+        //             url: "/login",
+        //             data: data,
+        //             contentType: "application/json",
+        //             success: function (data) {
+        //                 console.log(data)
+        //             }
 
-<!--                })-->
-<!--            });-->
-<!--        });-->
+        //         })
+        //     });
+        // });
+
+$(document).ready(function () {
+
+            $(".btn").val("withdrawals").click(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/withdrawals",
+                    data: "",
+                    contentType: "application/json",
+                    success: function (data) {
+                        console.log(data)
+                    }
+
+                })
+            });
+        });
     </script>
 
 
@@ -46,6 +64,9 @@
 <body>
 <h1>Hello, world!</h1>
 <a type="button" class="btn btn-primary"  href="/logout">Logout</a>
+<a type="button" class="btn btn-primary"  href="/withdrawals">withdrawals</a>
+
+<span id="contentPlaceholder"></span>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
