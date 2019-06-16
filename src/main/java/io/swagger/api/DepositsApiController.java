@@ -45,8 +45,12 @@ public class DepositsApiController implements DepositsApi {
     //werkt
     public ResponseEntity<Void> createDeposit(@ApiParam(value = "Account details", required = true) @Valid @RequestBody Deposit body) {
         String accept = request.getHeader("Accept");
-        service.createDeposit(body);
-        return new ResponseEntity<Void>((HttpStatus.CREATED));
+        try {
+            service.createDeposit(body);
+            return new ResponseEntity<Void>((HttpStatus.CREATED));
+        }catch (Exception e){
+            return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        }
     }
 
     //werkt

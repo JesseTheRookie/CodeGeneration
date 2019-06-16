@@ -1,5 +1,6 @@
 package io.swagger.service;
 
+import io.swagger.api.ApiException;
 import io.swagger.model.Account;
 import io.swagger.model.Withdrawal;
 import io.swagger.repository.WithdrawalsRepository;
@@ -18,29 +19,32 @@ public class WithdrawalsService {
 
     private AccountRepository accountRepository;
 
-    public WithdrawalsService(WithdrawalsRepository withdrawalsRepository, AccountRepository accountRepository) {
+    public WithdrawalsService(WithdrawalsRepository withdrawalsRepository, AccountRepository accountRepository) throws Exception{
         this.accountRepository = accountRepository;
         this.withdrawalsRepository = withdrawalsRepository;
 
-//        this.createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 50.00));
-//        this.createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 4.00));
-//        this.createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 6.00));
-//        this.createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 89.00));
+        createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 50.00));
+        createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 4.00));
+        createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 6.00));
+        createNewWithdrawal(new Withdrawal("NL01INHO0000000004", 89.00));
     }
 
-    public Withdrawal createNewWithdrawal(Withdrawal newWithdrawal){
+    public Withdrawal createNewWithdrawal(Withdrawal newWithdrawal) throws Exception{
         reductFromAccount(newWithdrawal.getSenderIban(), newWithdrawal.getAmount());
         return withdrawalsRepository.save(newWithdrawal);
     }
 
-    public void reductFromAccount (String iban, Double amount){
+    public void reductFromAccount (String iban, Double amount) throws Exception{
         Account account = accountRepository.findById(iban).orElse(null);
-        if (account.getBalance() > amount){
-            account.setBalance(account.getBalance() - amount);
-            accountRepository.save(account);
-        } else{
-            throw new IllegalArgumentException("Balance can't be below zero");
+        if (account == null){
+            throw new ApiException(406, "no account found that corresponds with the IBAN: "+ iban);
         }
+        if (account.getBalance() > amount){
+            throw new ApiException(406, "Balance can't be below zero");
+        }
+
+        account.setBalance(account.getBalance() - amount);
+        accountRepository.save(account);
 
     }
 

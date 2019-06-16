@@ -44,7 +44,11 @@ public class WithdrawalsApiController implements WithdrawalsApi {
 
     public ResponseEntity<Withdrawal> createNewWithdrawal(@ApiParam(value = "") @Valid @RequestBody Withdrawal body) {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<Withdrawal>(service.createNewWithdrawal(body), HttpStatus.CREATED);
+        try{
+            return new ResponseEntity<Withdrawal>(service.createNewWithdrawal(body), HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<Withdrawal>(HttpStatus.NO_CONTENT);
+        }
     }
 
     public ResponseEntity<List<Withdrawal>> getAllWithdrawals() {
