@@ -1,69 +1,94 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
 
     <!--Nieuwe stylesheets-->
-    <link rel="stylesheet" type="text/css" media="screen" href="css/generic.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="css/generic.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="css/reset.css"
+    />
 
     <title>Hello, world!</title>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> <!-- THIS IS THE RIGHT JQUERY-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- THIS IS THE RIGHT JQUERY-->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
 
-    <script type='text/javascript'>
-        // $(document).ready(function () {
-        //     var url = ;
+    <script type="text/javascript">
+      // $(document).ready(function () {
+      //     var url = ;
 
-        //     $("#submit").click(function (e) {
-        //         e.preventDefault();
-        //         // var data = {
-        //         //     "username": $("#username").val(),
-        //         //     "password": $("#password").val()
-        //         // };
+      //     $("#submit").click(function (e) {
+      //         e.preventDefault();
+      //         // var data = {
+      //         //     "username": $("#username").val(),
+      //         //     "password": $("#password").val()
+      //         // };
 
-        //         var data = {
-        //             "username": "stefan",
-        //             "password": "admin123"
-        //         };
+      //         var data = {
+      //             "username": "stefan",
+      //             "password": "admin123"
+      //         };
 
-        //         $.ajax({
-        //             type: "POST",
-        //             url: "/login",
-        //             data: data,
-        //             contentType: "application/json",
-        //             success: function (data) {
-        //                 console.log(data)
-        //             }
+      //         $.ajax({
+      //             type: "POST",
+      //             url: "/login",
+      //             data: data,
+      //             contentType: "application/json",
+      //             success: function (data) {
+      //                 console.log(data)
+      //             }
 
-        //         })
-        //     });
-        // });
+      //         })
+      //     });
+      // });
 
-        // $(document).ready(function () {
+      // $(document).ready(function () {
 
-        //     $(".btn").val("withdrawals").click(function (e) {
-        //         e.preventDefault();
+      //     $(".btn").val("withdrawals").click(function (e) {
+      //         e.preventDefault();
 
-        //         $.ajax({
-        //             type: "GET",
-        //             url: "/withdrawals",
-        //             data: "",
-        //             contentType: "application/json",
-        //             success: function (data) {
-        //                 console.log(data)
-        //             }
+      //         $.ajax({
+      //             type: "GET",
+      //             url: "/withdrawals",
+      //             data: "",
+      //             contentType: "application/json",
+      //             success: function (data) {
+      //                 console.log(data)
+      //             }
 
         //         })
         //     });
@@ -108,7 +133,19 @@
 
             
         });
+        // var xhttp = new XMLHttpRequest();
+        // xhttp.onreadystatechange = function () {
+        //     if (this.readyState == 4 && this.status == 200) {
+        //         $("#contentPlaceholder").html(this.responseText);
+        //     }
+        // };
+        // xhttp.open("GET", "/userinfo/", true);
+        // xhttp.send();
+        //$("#contentPlaceholder").html =  sessionStorage.getItem("lastname");
+        //console.log(sessionStorage.getItem("userName"));
+      });
     </script>
+  </head>
 
 
 </head>
@@ -118,57 +155,74 @@
     <a type="button" class="btn btn-primary" href="/logout">Logout</a>
     <a type="button" class="btn btn-primary" href="/withdrawals">withdrawals</a>
     <a type="button" class="btn btn-primary" href="/deposits">Deposits</a>
-    <a type="button" class="btn btn-primary" href="/transactions">Transactions</a>
+    <a type="button" class="btn btn-primary" href="/transactions"
+      >Transactions</a
+    >
+    <a type="button" class="btn btn-primary" href="/get-users">Users</a>
+    <a type="button" class="btn btn-primary" href="/create-users"
+      >Create users</a
+    >
+    <a type="button" class="btn btn-primary" href="/get-accounts">Accounts</a>
+    <a type="button" class="btn btn-primary" href="/create-accounts"
+      >Create accounts</a
+    >
     <span id="contentPlaceholder"> </span>
     <!--Nieuwe shit hieronder-->
     <header class="">
-        <h1>User dashboard</h1>
+      <h1>User dashboard</h1>
     </header>
     <nav>
-        <h1>User tools</h1>
-        <ul>
-            <li class="active">Manage accounts</li>
-            <br>
-            <a type="button" class="btn btn-primary" href="/employee-user-new-deposit.html">Create Deposit</a>
-            <a type="button" class="btn btn-primary" href="/employee-user-new-withdrawal.html">Create Withdrawal</a>
-            <li>Create Deposit</li>
-            <li>Create Withdrawal</li>
-        </ul>
+      <h1>User tools</h1>
+      <ul>
+        <li class="active">Manage accounts</li>
+        <br />
+        <a
+          type="button"
+          class="btn btn-primary"
+          href="/employee-user-new-deposit.html"
+          >Create Deposit</a
+        >
+        <a
+          type="button"
+          class="btn btn-primary"
+          href="/employee-user-new-withdrawal.html"
+          >Create Withdrawal</a
+        >
+        <li>Create Deposit</li>
+        <li>Create Withdrawal</li>
+      </ul>
     </nav>
     <section class="rightSection">
-        <ul id="currents" class="list">
-            <h1>current accounts</h1>
-            <a href="#">
-                <li>
-                    <p>iban</p>
-                    <p>amount</p>
-                </li>
-            </a><br>
-            <a href="#">
-                <li>
-                    <p>iban</p>
-                    <p>amount</p>
-                </li>
-            </a><br>
-
-        </ul>
-        <ul id="savings" class="list">
-            <h1>savings accounts</h1>
-            <a href="#">
-                <li>
-                    <p>iban</p>
-                    <p>amount</p>
-                </li>
-            </a><br>
-            <a href="#">
-                <li>
-                    <p>iban</p>
-                    <p>amount</p>
-                </li>
-            </a><br>
-
-        </ul>
+      <ul id="currents" class="list">
+        <h1>current accounts</h1>
+        <a href="#">
+          <li>
+            <p>iban</p>
+            <p>amount</p>
+          </li> </a
+        ><br />
+        <a href="#">
+          <li>
+            <p>iban</p>
+            <p>amount</p>
+          </li> </a
+        ><br />
+      </ul>
+      <ul id="savings" class="list">
+        <h1>savings accounts</h1>
+        <a href="#">
+          <li>
+            <p>iban</p>
+            <p>amount</p>
+          </li> </a
+        ><br />
+        <a href="#">
+          <li>
+            <p>iban</p>
+            <p>amount</p>
+          </li> </a
+        ><br />
+      </ul>
     </section>
-</body>
-
+  </body>
 </html>

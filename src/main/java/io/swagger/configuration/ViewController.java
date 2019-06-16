@@ -46,7 +46,7 @@ public class ViewController{
     /**
      * Create accounts
      */
-    @RequestMapping(value = {"/create-account"})
+    @RequestMapping(value = {"/create-accounts"})
     public String createAccount() {
         return "/create-account.html";
     }
@@ -55,9 +55,27 @@ public class ViewController{
     /**
      * Create users
      */
-    @RequestMapping(value = {"/create-user"})
+    @RequestMapping(value = {"/create-users"})
     public String createUser() {
         return "/create-user.html";
+    }
+
+
+    /**
+     * Get users
+     */
+    @RequestMapping(value = {"/get-users"})
+    public String getAllUsers() {
+        return "/get-users.html";
+    }
+
+
+    /**
+     * Get accounts
+     */
+    @RequestMapping(value = {"/get-accounts"})
+    public String getAllAccounts() {
+        return "/get-accounts.html";
     }
 
 
