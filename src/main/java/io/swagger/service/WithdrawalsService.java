@@ -30,19 +30,6 @@ public class WithdrawalsService {
         return withdrawalsRepository.save(newWithdrawal);
     }
 
-    /*public boolean reductFromAccount (String iban, Double amount) throws ApiException{
-        Account account = accountRepository.findById(iban).orElse(null);
-        if (account == null){
-            throw new ApiException(406, "no account found that corresponds with the IBAN: "+ iban);
-        }
-        if (account.getBalance() < amount){
-            throw new ApiException(406, "Balance can't be below zero on: "+ iban);
-        }
-
-        account.setBalance(account.getBalance() - amount);
-        accountRepository.save(account);
-        return true;
-    }*/
     public void reductFromAccount (String iban, Double amount) throws ApiException{
         Account account = accountRepository.findById(iban).orElse(null);
         if(withdrawIsValid(iban, amount)){

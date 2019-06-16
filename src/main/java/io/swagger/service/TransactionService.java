@@ -31,9 +31,8 @@ public class TransactionService {
     private DepositsService depositsService;
     private WithdrawalsService withdrawalsService;
     private UserRepository userRepository;
-    private final Double maxAmount = 100.0;
+    private final Double maxAmount = 500.0;
     private final Integer dailyTransactionsLimit = 2;
-    private final Double amountLimit = 10.00;
     private Integer transactionsDoneThisDay = 0;
 
     public TransactionService(TransactionRepository transactionRepository, AccountRepository accountRepository, SecurityController securityController, UserRepository userRepository, DepositsService depositsService, WithdrawalsService withdrawalsService) {
@@ -71,18 +70,20 @@ public class TransactionService {
         return transactionsDoneThisDay;
     }
 
-    private Boolean theTransactionDoesNotExceedTheDailyLimit(String iban){
+    private Boolean theTransactionDoesNotExceedTheDailyLimit(String iban) throws ApiException{
         if(getNumberOfTransactionToday(iban) < dailyTransactionsLimit){
             return true;
+        } else {
+            throw new ApiException(406, "Can't create more transactions than day limit" + dailyTransactionsLimit);
         }
-        return  false;
     }
 
-    private Boolean theAmountFromAccountDoesNotExceedTheMaxAmount(Double amount){
+    private Boolean theAmountFromAccountDoesNotExceedTheMaxAmount(Double amount) throws ApiException{
         if(amount < maxAmount){
             return true;
+        } else{
+            throw new ApiException(406, "Can't transfer more than " + maxAmount);
         }
-        return false;
     }
 
     private Boolean areAccountsSameUser(String ibanFrom, String ibanTo){
@@ -110,18 +111,19 @@ public class TransactionService {
         }
         return false;
     }
-    private Boolean checkForInvalidTransactions(String ibanFrom, String ibanTo) {
+    private Boolean theTransactionIsValid(String ibanFrom, String ibanTo) throws ApiException {
 
         if (areAccountsSameUser(ibanFrom, ibanTo)) {
             return true;
         }
         if (areAccountsBothOfTypeCurrent(ibanFrom, ibanTo)) {
             return true;
+        } else{
+            throw new ApiException(406, "Can't create a transaction to another savings account than your own nor from a savings acount to another user's current account or vice versa");
         }
-        return false;
     }
 
-    private Boolean isCustomer(String iban){
+    private Boolean theAccountIsCustomer(String iban){
         Account account = accountRepository.findById(iban).orElse(null);
         User user = account.getUser();
 
@@ -137,8 +139,8 @@ public class TransactionService {
         String toAccountIban = newTransaction.getTo();
         double amount = newTransaction.getAmount();
 
-        if(isCustomer(fromAccountIban)){
-            if (checkForInvalidTransactions(fromAccountIban, toAccountIban)) {
+        if(theAccountIsCustomer(fromAccountIban)){
+            if (theTransactionIsValid(fromAccountIban, toAccountIban)) {
                 if (theTransactionDoesNotExceedTheDailyLimit(fromAccountIban)) {
                     if (theAmountFromAccountDoesNotExceedTheMaxAmount(amount)) {
                         if(withdrawalsService.withdrawIsValid(fromAccountIban, amount)) {
@@ -146,14 +148,8 @@ public class TransactionService {
                             depositsService.addToAccount(toAccountIban, amount);
                             transactionRepository.save(newTransaction);
                         }
-                    } else {
-                        throw new ApiException(406, "Can't transfer more than " + maxAmount);
                     }
-                } else {
-                    throw new ApiException(406, "Can't create more transactions than day limit" + dailyTransactionsLimit);
                 }
-            } else {
-                throw new ApiException(406, "Can't create a transaction to another savings than your own nor from a savings acount to another user's current account");
             }
         } else{
             if(withdrawalsService.withdrawIsValid(fromAccountIban, amount)) {
