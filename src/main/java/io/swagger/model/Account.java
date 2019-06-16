@@ -25,7 +25,6 @@ public class Account   {
     @JsonProperty("Iban")
     private String iban = null;
 
-
     @JsonProperty("User")
     @ManyToOne(targetEntity = User.class)
     private User user;
