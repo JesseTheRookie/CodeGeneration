@@ -68,20 +68,8 @@
         //         })
         //     });
         // });
-        //zou ook via on document ready kunnen 
-        $(document).ready(function () {
-            $.ajax({
-                type: "GET",
-                url: "/userinfo",
-                data: "",
-                contentType: "application/json",
-                success: function (data) {
-                    $("#contentPlaceholder").html(data);
-                    console.log(data);
-                }
 
-            });
-            // var xhttp = new XMLHttpRequest();
+        // var xhttp = new XMLHttpRequest();
             // xhttp.onreadystatechange = function () {
             //     if (this.readyState == 4 && this.status == 200) {
             //         $("#contentPlaceholder").html(this.responseText);
@@ -91,6 +79,34 @@
             // xhttp.send();
             //$("#contentPlaceholder").html =  sessionStorage.getItem("lastname"); 
             //console.log(sessionStorage.getItem("userName"));
+
+        $(document).ready(function () {
+            var userInfo;
+
+            $.ajax({
+                type: "GET",
+                url: "/userinfo",
+                data: "",
+                contentType: "application/json",
+                success: function (data) {
+                    userInfo = data;
+                    $("#welcomeMsg").text("Welcome, " + data.Name + "!");
+                }
+            });
+
+            // $.ajax({
+            //     type: "GET",
+            //     url: "/userinfo",
+            //     data: "",
+            //     contentType: "application/json",
+            //     success: function (data) {
+            //         userInfo = data;
+            //         $("#welcomeMsg").text("Welcome, " + data.Name + "!");
+            //     }
+            // });
+
+
+            
         });
     </script>
 
@@ -98,7 +114,7 @@
 </head>
 
 <body>
-    <h1>Hello, world!</h1>
+    <h1 id="welcomeMsg"></h1>
     <a type="button" class="btn btn-primary" href="/logout">Logout</a>
     <a type="button" class="btn btn-primary" href="/withdrawals">withdrawals</a>
     <a type="button" class="btn btn-primary" href="/deposits">Deposits</a>
