@@ -1,9 +1,6 @@
 package io.swagger.config;
 
-import io.swagger.model.Account;
-import io.swagger.model.ApiKey;
-import io.swagger.model.Transaction;
-import io.swagger.model.User;
+import io.swagger.model.*;
 import io.swagger.repository.*;
 import io.swagger.service.TransactionService;
 import org.springframework.boot.ApplicationArguments;
@@ -20,15 +17,17 @@ public class MyApplicationRunner implements ApplicationRunner {
     private ApiKeyRepository keyRepository;
     private AccountRepository accountRepository;
     private TransactionRepository transactionRepository;
-    private TransactionService transactionService;
+    private DepositsRepository depositsRepository;
+    private WithdrawalsRepository withdrawalsRepository;
 
-    public MyApplicationRunner(UserRepository userRepository, AccountRepository accountRepository, ApiKeyRepository keyRepository, TransactionRepository transactionRepository, TransactionService transactionService){
+    public MyApplicationRunner(UserRepository userRepository, AccountRepository accountRepository, ApiKeyRepository keyRepository, TransactionRepository transactionRepository, DepositsRepository depositsRepository, WithdrawalsRepository withdrawalsRepository){
 
         this.userRepository = userRepository;
         this.accountRepository = accountRepository;
         this.keyRepository = keyRepository;
         this.transactionRepository = transactionRepository;
-        this.transactionService = transactionService;
+        this.depositsRepository = depositsRepository;
+        this.withdrawalsRepository = withdrawalsRepository;
     }
 
     @Override
@@ -64,7 +63,6 @@ public class MyApplicationRunner implements ApplicationRunner {
         accountRepository.findAll()
                 .forEach(System.out::println);
 
-
         for (String s : Arrays.asList(new String[]{"e800eff2-846c-4334-9168-bcc14bdf0a9c","ebace734-4b2c-4791-aaac-e076cb3c221e","0449e978-5e4e-40bb-8af2-c29478bc3a98"})){
             keyRepository.save(new ApiKey(s));
         }
@@ -72,14 +70,24 @@ public class MyApplicationRunner implements ApplicationRunner {
         keyRepository.findAll()
                 .forEach(System.out::println);
 
-        transactionService.createTransaction(new Transaction("NL01INHO0000000003", "NL01INHO0000000002", 50.0, 1));
-        //transactionService.createTransaction(new Transaction("NL01INHO0000000003", "NL01INHO0000000004", 50.0, 2));
-        //transactionService.createTransaction(new Transaction("NL01INHO0000000004", "NL01INHO0000000003", 50.0, 3));
+                transactionRepository.save(new Transaction("NL01INHO0000000003", "NL01INHO0000000002", 50.0, 1 ));
 
         transactionRepository.findAll()
                 .forEach(System.out::println);
 
-        accountRepository.findAll()
+        depositsRepository.save(new Deposit("NL01INHO0000000004", 50.00));
+        depositsRepository.save(new Deposit("NL01INHO0000000003", 12.00));
+        depositsRepository.save(new Deposit("NL01INHO0000000002", 404.00));
+
+        depositsRepository.findAll()
+                .forEach(System.out::println);
+
+        withdrawalsRepository.save(new Withdrawal("NL01INHO0000000004", 50.00));
+        withdrawalsRepository.save(new Withdrawal("NL01INHO0000000004", 4.00));
+        withdrawalsRepository.save(new Withdrawal("NL01INHO0000000004", 6.00));
+        withdrawalsRepository.save(new Withdrawal("NL01INHO0000000004", 6.00));
+
+        withdrawalsRepository.findAll()
                 .forEach(System.out::println);
 
     }

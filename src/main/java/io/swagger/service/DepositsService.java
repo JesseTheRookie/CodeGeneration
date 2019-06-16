@@ -46,8 +46,6 @@ public class DepositsService {
     }
 
     public void createTestDeposits() throws Exception{
-        this.createDeposit(new Deposit("NL01INHO0000000004", 50.00));
-        this.createDeposit(new Deposit("NL01INHO0000000003", 12.00));
-        this.createDeposit(new Deposit("NL01INHO0000000002", 404.00));
+
     }
 }
