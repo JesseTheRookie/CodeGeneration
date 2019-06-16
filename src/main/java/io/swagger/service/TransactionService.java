@@ -169,7 +169,7 @@ public class TransactionService {
 
     }
 
-    public Iterable<Transaction> getTransactionByIban(String iban) throws ApiException {
+    public Iterable<Transaction> getTransactionsByFromIban(String iban) throws ApiException {
         Account account = accountRepository.findById(iban).orElse(null);
         if (userRepository.getUserByName(
                 securityController.currentUserName()).getId() == account.getUserId()
@@ -177,8 +177,26 @@ public class TransactionService {
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
                 || userRepository.getUserByName(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)){
-            return transactionRepository.getTransactionByIban(iban);
+            return transactionRepository.getTransactionsByFromIban(iban);
             }
        else throw new ApiException(403, "You are not authorized for this request");
+    }
+    public Iterable<Transaction> getTransactionsByToIban(String iban) throws ApiException {
+        Account account = accountRepository.findById(iban).orElse(null);
+        if (userRepository.getUserByName(
+                securityController.currentUserName()).getId() == account.getUserId()
+                || userRepository.getUserByName(
+                securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
+                || userRepository.getUserByName(
+                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)){
+            return transactionRepository.getTransactionsByToIban(iban);
+        }
+        else throw new ApiException(403, "You are not authorized for this request");
+    }
+    public Transaction getTransactionById(Integer id) {
+            return transactionRepository.getTransactionById(id);
+    }
+    public Transaction getTransactionByPerformedBy(Integer userId) {
+        return transactionRepository.getTransactionByPerformedBy(userId);
     }
 }

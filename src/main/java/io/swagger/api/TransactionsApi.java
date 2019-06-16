@@ -37,7 +37,6 @@ public interface TransactionsApi {
         method = RequestMethod.POST)
     ResponseEntity<Integer> createTransaction(@ApiParam(value = ""  )  @Valid @RequestBody Transaction body) throws ApiException;
 
-
     @ApiOperation(value = "Get transactions depending on the optional parameters; the abstinence of any parameters results in all transactions.", nickname = "getTransactions", notes = "", response = Transaction.class, responseContainer = "List", authorizations = {
         @Authorization(value = "ApiKeyAuth")    }, tags={ "transaction", })
     @ApiResponses(value = { 
