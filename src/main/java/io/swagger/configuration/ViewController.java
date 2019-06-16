@@ -41,7 +41,23 @@ public class ViewController{
         return "/create-account.html";
     }
 
+    /**
+     * Create transaction
+     */
+    @RequestMapping(value = {"/createTransaction"})
+    public String createTransaction() {
+        return "/create-transaction.html";
+    }
 
+    /**
+     * Create transaction
+     */
+    @RequestMapping(value = {"/getTransactions"})
+    public String getTransaction() {
+        return "/get-transactions.html";
+    }
+
+    
     /**
      * Login
      */
