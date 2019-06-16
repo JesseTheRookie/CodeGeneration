@@ -16,11 +16,11 @@ request.onload = function() {
       card.setAttribute("class", "card");
 
       const h1 = document.createElement("h1");
-      h1.textContent = "user id: " + user.Id;
+      h1.textContent = "User ID: " + user.Id;
 
       const p = document.createElement("p");
       const p2 = document.createElement("p");
-      //user.Name = user.Name.substring(0, 300);
+
       p.textContent = `Username: ${user.Name}`;
       p2.textContent = `Role: ${user.Role}`;
 
