@@ -38,16 +38,13 @@
       $(document).ready(function() {
         var url = "/transactions";
 
-        $("#submit").click(function(e) {
+        $("#findByIbanFrom").click(function(e) {
           var transaction = {
             IbanFrom: $("#ibanFrom").val(),
-            IbanTo: $("#ibanTo").val(),
-            Amount: $("#amount").val(),
-            performedById: $("#performedById").val(),
           };
 
           $.ajax({
-            type: "POST",
+            type: "GET",
             url: url,
             data: JSON.stringify(transaction),
             contentType: "application/json",
@@ -61,52 +58,52 @@
     </script>
   </head>
   <body>
-    <h1>Create Account</h1>
+    <h1>Find transactions</h1>
 
     <section id="create">
-      <div class="container">
-        <div class="form-group">
-          <label for="ibanFrom">Iban from user</label>
-          <input
-            type="text"
-            class="form-control"
-            id="ibanFrom"
-            aria-describedby="ibanHelp"
-            placeholder="NL01INHO0000000001"
-          />
-        </div>
-        <div class="form-group">
-          <label for="ibanTo">Iban to user</label>
-          <input
-            type="text"
-            class="form-control"
-            id="ibanTo"
-            placeholder="NL01INHO0000000002"
-          />
-        </div>
-        <div class="form-group">
-          <label for="amount">Amount to be send</label>
-          <input
-            type="text"
-            class="form-control"
-            id="amount"
-            placeholder="0.0"
-          />
-        </div>
-        <!--Should be given by a session-->
-        <div class="form-group">
-          <label for="performedById">Your user ID</label>
-          <input
-            type="text"
-            class="form-control"
-            id="performedById"
-            placeholder="Current or Savings"
-          />
-        </div>
+        <div class="container">
+          <div class="form-group">
+            <label for="getTransactionsByIbanFrom">Iban from user</label>
+            <input
+              type="text"
+              class="form-control"
+              id="ibanFrom"
+              aria-describedby="ibanHelp"
+              placeholder="NL01INHO0000000001"
+            />
+            
+        <button type="submit" class="btn btn-primary" id="findByIbanFrom">
+            Find
+          </button>
 
-        <button type="submit" class="btn btn-primary" id="submit">
-          Submit
-        </button>
+          </div>
+
+          <div class="form-group">
+            <label for="getTransactionsByIbanTo">Iban to user</label>
+            <input
+              type="text"
+              class="form-control"
+              id="ibanTo"
+              placeholder="NL01INHO0000000002"
+            />
+            <button type="submit" class="btn btn-primary" id="findByIbanTo">
+                Find
+              </button>
+          </div>
+
+          <div class="form-group">
+            <label for="getTransactionsPerformedBy">FindByPerformedBy</label>
+            <input
+              type="text"
+              class="form-control"
+              id="PerformedBy"
+              placeholder="2"
+            />
+            <button type="submit" class="btn btn-primary" id="findByPerformedBy">
+                Find
+              </button>
+          </div>
+
       </div>
     </section>
 
