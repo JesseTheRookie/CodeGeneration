@@ -6,8 +6,6 @@ import io.swagger.model.Account;
 import io.swagger.repository.DepositsRepository;
 import io.swagger.repository.AccountRepository;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -16,14 +14,15 @@ public class DepositsService {
 
     private DepositsRepository depositsRepository;
     private AccountRepository accountRepository;
+    private AccountService accountService;
 
-    public DepositsService(DepositsRepository depositsRepository, AccountRepository accountRepository) throws Exception {
+    public DepositsService(DepositsRepository depositsRepository, AccountRepository accountRepository, AccountService accountService){
         this.accountRepository = accountRepository;
         this.depositsRepository = depositsRepository;
-        //createTestDeposits();
+        this.accountService =  accountService;
     }
 
-    public void createDeposit(Deposit newDeposit) throws Exception{
+    public void createDeposit(Deposit newDeposit) throws ApiException{
         addToAccount(newDeposit.getTo(), newDeposit.getAmount());
         depositsRepository.save(newDeposit);
     }
@@ -36,16 +35,11 @@ public class DepositsService {
         return depositsRepository.getDepositsByIban(iban);
     }
 
-    public void addToAccount (String iban, Double amount) throws Exception{
+    public void addToAccount (String iban, Double amount) throws ApiException{
         Account account = accountRepository.findById(iban).orElse(null);
-        if (account == null){
-            throw new ApiException(406, "no account found that corresponds with the IBAN: "+ iban);
+        if (accountService.accountIsNotNull(iban)){
+            account.setBalance(account.getBalance() + amount);
+            accountRepository.save(account);
         }
-        account.setBalance(account.getBalance() + amount);
-        accountRepository.save(account);
-    }
-
-    public void createTestDeposits() throws Exception{
-
     }
 }

@@ -101,4 +101,12 @@ public class AccountService {
             accountRepository.save(updatedAccount);
         }
     }
+    public Boolean accountIsNotNull(String iban) throws ApiException{
+        Account account = accountRepository.findById(iban).orElse(null);
+        if(account != null){
+            return true;
+        } else{
+            throw new ApiException(406, "no account found that corresponds with the IBAN: "+ iban);
+        }
+    }
 }
