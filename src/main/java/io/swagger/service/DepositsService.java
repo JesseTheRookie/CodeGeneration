@@ -1,5 +1,6 @@
 package io.swagger.service;
 
+import io.swagger.api.ApiException;
 import io.swagger.model.Deposit;
 import io.swagger.model.Account;
 import io.swagger.repository.DepositsRepository;
@@ -16,13 +17,13 @@ public class DepositsService {
     private DepositsRepository depositsRepository;
     private AccountRepository accountRepository;
 
-    public DepositsService(DepositsRepository depositsRepository, AccountRepository accountRepository) {
+    public DepositsService(DepositsRepository depositsRepository, AccountRepository accountRepository) throws Exception {
         this.accountRepository = accountRepository;
         this.depositsRepository = depositsRepository;
-        //createTestDeposits();
+        createTestDeposits();
     }
 
-    public void createDeposit(Deposit newDeposit) {
+    public void createDeposit(Deposit newDeposit) throws Exception{
         addToAccount(newDeposit.getTo(), newDeposit.getAmount());
         depositsRepository.save(newDeposit);
     }
@@ -35,13 +36,16 @@ public class DepositsService {
         return depositsRepository.getDepositsByIban(iban);
     }
 
-    public void addToAccount (String iban, Double amount){
+    public void addToAccount (String iban, Double amount) throws Exception{
         Account account = accountRepository.findById(iban).orElse(null);
+        if (account == null){
+            throw new ApiException(406, "no account found that corresponds with the IBAN: "+ iban);
+        }
         account.setBalance(account.getBalance() + amount);
         accountRepository.save(account);
     }
 
-    public void createTestDeposits(){
+    public void createTestDeposits() throws Exception{
         this.createDeposit(new Deposit("NL01INHO0000000004", 50.00));
         this.createDeposit(new Deposit("NL01INHO0000000003", 12.00));
         this.createDeposit(new Deposit("NL01INHO0000000002", 404.00));
