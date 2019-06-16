@@ -32,6 +32,16 @@ public class ViewController{
         return "/dashboard.html";
     }
 
+
+    /**
+     * Create accounts
+     */
+    @RequestMapping(value = {"/createAccount"})
+    public String createAccount() {
+        return "/create-account.html";
+    }
+
+
     /**
      * Login
      */
