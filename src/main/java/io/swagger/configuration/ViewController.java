@@ -29,7 +29,7 @@ public class ViewController{
      */
     @RequestMapping(value = {"/dashboard"})
     public String dashboard() {
-        return "/dashboard.html";
+        return "/user-dashboard.html";
     }
 
 
