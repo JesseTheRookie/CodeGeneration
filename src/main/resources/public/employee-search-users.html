@@ -2,31 +2,54 @@
 <html>
 
 <head>
-    <title>Employee dashboard</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="css/generic.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css">
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+
+    <!--Nieuwe stylesheets-->
+    <link rel="stylesheet" type="text/css" media="screen" href="css/generic.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css" />
+
+    <title>Hello, world!</title>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- THIS IS THE RIGHT JQUERY-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
 </head>
 
 <body>
     <header id="header">
-        <h1>Employee dashboard</h1>
+            <title>Search Useraccounts</title>
+            <a type="button" class="btn btn-primary float-right m-2" href="/logout">Logout</a>
+            <a type="button" class="btn btn-primary float-right m-2" href="/withdrawals">withdrawals</a>
+            <a type="button" class="btn btn-primary float-right m-2" href="/deposits">Deposits</a>
+            <a type="button" class="btn btn-primary float-right m-2" href="/transactions">Transactions</a>
+            <a type="button" class="btn btn-primary float-right m-2" href="/get-users">Users</a>
+            <a type="button" class="btn btn-primary float-right m-2" href="/get-accounts">Accounts</a>
     </header>
-    <a type="button" class="btn btn-primary" href="/logout">Logout</a>
-    <a type="button" class="btn btn-primary" href="/withdrawals">withdrawals</a>
-    <a type="button" class="btn btn-primary" href="/deposits">Deposits</a>
-    <a type="button" class="btn btn-primary" href="/transactions">Transactions</a>
-    <a type="button" class="btn btn-primary" href="/get-users">Users</a>
-    <a type="button" class="btn btn-primary" href="/get-accounts">Accounts</a>
+   
     <nav id="sideMenu">
         <h1>Employee tools</h1>
         <ul>
-            <li class="active">Manage users</li>
-            <li>Transactions</li>
-            <br>
+            <a type="button" class="btn btn-primary active" href="/employeeTools">Manage Users</a>
+            <br><br>
             <a type="button" class="btn btn-primary" href="/employee-user-new-deposit.html">Create Deposit</a>
             <a type="button" class="btn btn-primary" href="/employee-user-new-withdrawal.html">Create Withdrawal</a>
-            <br>
+            <br><br>
+            <a type="button" class="btn btn-primary" href="/create-transaction">Make Transaction</a>
+            <br><br>
             <a type="button" class="btn btn-primary" href="/create-users">Create users</a>
             <a type="button" class="btn btn-primary" href="/create-accounts">Create accounts</a>
         </ul>

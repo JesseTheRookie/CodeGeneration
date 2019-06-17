@@ -1,40 +1,47 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Employee dashboard</title>
-<link rel="stylesheet" type="text/css" media="screen" href="css/generic.css">
-<link rel="stylesheet" type="text/css" media="screen" href="css/reset.css">
+    <title>Employee dashboard</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/generic.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css">
 
 </head>
+
 <body>
-    <header id="header"><h1>Employee dashboard</h1></header>    
+    <header id="header">
+        <h1>Employee dashboard</h1>
+    </header>
     <nav id="sideMenu">
-            <h1>Employee tools</h1>
-            <a type="button" class="btn btn-primary" href="/logout">Logout</a>
-            <a type="button" class="btn btn-primary" href="/withdrawals">withdrawals</a>
-            <a type="button" class="btn btn-primary" href="/deposits">Deposits</a>
-            <a type="button" class="btn btn-primary" href="/transactions">Transactions</a>
-            <a type="button" class="btn btn-primary" href="/get-users">Users</a>
-            <a type="button" class="btn btn-primary" href="/get-accounts">Accounts</a>
-            <ul>
-                <li class="active">Manage users</li>
-                <li>Transactions</li>
-                <br>
-                <a type="button" class="btn btn-primary" href="/employee-user-new-deposit.html">Create Deposit</a>
+        <h1>Employee tools</h1>
+        <a type="button" class="btn btn-primary" href="/logout">Logout</a>
+        <a type="button" class="btn btn-primary" href="/withdrawals">withdrawals</a>
+        <a type="button" class="btn btn-primary" href="/deposits">Deposits</a>
+        <a type="button" class="btn btn-primary" href="/transactions">Transactions</a>
+        <a type="button" class="btn btn-primary" href="/get-users">Users</a>
+        <a type="button" class="btn btn-primary" href="/get-accounts">Accounts</a>
+        <ul>
+            <li class="active">Manage users</li>
+            <li>Transactions</li>
+            <br>
+            <a type="button" class="btn btn-primary" href="/employee-user-new-deposit.html">Create Deposit</a>
             <a type="button" class="btn btn-primary" href="/employee-user-new-withdrawal.html">Create Withdrawal</a>
+            <br>
+            <a type="button" class="btn btn-primary" href="/create-transaction">Make Transaction</a>
             <br>
             <a type="button" class="btn btn-primary" href="/create-users">Create users</a>
             <a type="button" class="btn btn-primary" href="/create-accounts">Create accounts</a>
-            </ul>
-        </nav>
+        </ul>
+    </nav>
     <section class="rightSection">
-        <div class= "formWrapper">
+        <div class="formWrapper">
             <form action="">
                 bedrag: <input type="text" name="fname"><br>
                 IBAN-ontvanger: <input type="text" name="fname"><br>
                 <input type="submit" value="Make transaction">
-                </form>
-            </div>
+            </form>
+        </div>
     </section>
 </body>
-</html> 
+
+</html>

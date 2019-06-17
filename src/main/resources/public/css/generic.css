@@ -32,13 +32,15 @@
 .list li {
     margin-bottom: 10px;
     height: 50px;
-    border: 1px solid black;
-    background-color: red;
+    border: 2px solid black;
+    background-color: grey;
 }
 
 .list li p {
     float: left;
+    color: white;
     margin-left: 5%;
+    line-height: 50px;
 }
 
 .list li input {
