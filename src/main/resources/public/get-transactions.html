@@ -27,24 +27,23 @@
 	<script type="text/javascript">
 
 		function showTransactions(transactions) {
+			console.log(transactions);
+			console.time('showTransactions');
 			var iban = findGetParameter("iban");
 			
 			if (transactions.length > 0) {
-				console.time('showTransactions')
-				
 				$("#transactionTitle").text("Transactions of: " + iban);
-
 
 				for (let index = 0; index < transactions.length; index++) {
 					const element = transactions[index];
-					$("#transactionsList").append('<li class=""><p>IBAN: ' + element.Iban + ', Balance: €' + element.Balance + '</p></li>');
+					$("#transactionsList").append('<li class=""><p>From IBAN: ' + element.FromIban + ', To IBAN: '+ element.To +',  Amount: €' + element.Amount + ', Performed by: '+ element.PerformedBy +'</p></li>');
 				}
 
-				console.timeEnd('showTransactions')
 			} else {
 				$("#transactionTitle").text("There are no transactions for: " + iban);
 				
 			}
+			console.timeEnd('showTransactions');
 		}
 
 
@@ -54,6 +53,9 @@
 			var userInfo;
 			var userAccounts;
 			var iban;
+			var transactionFromIban;
+			var transactionToIban;
+			//var AlltransactionsList = [];
 
 			if (findGetParameter("iban")) {
 				console.log(findGetParameter("iban"));
@@ -77,11 +79,32 @@
 					data: "",
 					contentType: "application/json",
 					success: function (data) {
-						
-						console.log(data);
-						
+						transactionFromIban = data
+						console.log("from"+ data);
+						//AlltransactionsList.push(data);//first push
+						showTransactions(data);
 					}
 				});
+
+				$.ajax({
+					async: false,
+					type: "GET",
+					url: "/transactions?to=" + iban,
+					data: "",
+					contentType: "application/json",
+					success: function (data) {
+						transactionToIban = data
+						console.log("to"+ data);
+						//AlltransactionsList.push(data);//then concat
+						showTransactions(data);
+					}
+				});
+
+				//console.log(AlltransactionsList);
+				//don't forget the most important part..
+				// showTransactions(AlltransactionsList);
+
+
 			}
 		});
 
