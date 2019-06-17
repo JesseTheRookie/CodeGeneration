@@ -1,116 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Transactions</title>
 
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- THIS IS THE RIGHT JQUERY-->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-      crossorigin="anonymous"
-    ></script>
-
-    <!-- Optional JavaScript -->
-
-    <script>
-      $(document).ready(function() {
-        var url = "/transactions";
-
-        $("#findByIbanFrom").click(function(e) {
-          var transaction = {
-            IbanFrom: $("#ibanFrom").val(),
-          };
-
-          $.ajax({
-            type: "GET",
-            url: url,
-            data: JSON.stringify(transaction),
-            contentType: "application/json",
-            success: function(data) {
-              $("#result").html(data);
-              console.log(data);
-            }
-          });
-        });
-      });
-    </script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Dosis:400,700"
+      rel="stylesheet"
+    />
+    <link href="css/get-transactions-style.css" rel="stylesheet" />
   </head>
+
   <body>
-    <h1>Find transactions</h1>
-
-    <section id="create">
-        <div class="container">
-          <div class="form-group">
-            <label for="getTransactionsByIbanFrom">Iban from user</label>
-            <input
-              type="text"
-              class="form-control"
-              id="ibanFrom"
-              aria-describedby="ibanHelp"
-              placeholder="NL01INHO0000000001"
-            />
-            
-        <button type="submit" class="btn btn-primary" id="findByIbanFrom">
-            Find
-          </button>
-
-          </div>
-
-          <div class="form-group">
-            <label for="getTransactionsByIbanTo">Iban to user</label>
-            <input
-              type="text"
-              class="form-control"
-              id="ibanTo"
-              placeholder="NL01INHO0000000002"
-            />
-            <button type="submit" class="btn btn-primary" id="findByIbanTo">
-                Find
-              </button>
-          </div>
-
-          <div class="form-group">
-            <label for="getTransactionsPerformedBy">FindByPerformedBy</label>
-            <input
-              type="text"
-              class="form-control"
-              id="PerformedBy"
-              placeholder="2"
-            />
-            <button type="submit" class="btn btn-primary" id="findByPerformedBy">
-                Find
-              </button>
-          </div>
-
-      </div>
-    </section>
-
-    <section id="result-success">
-      <h2>
-        <div id="result" class="col-lg-12 text-center"></div>
-      </h2>
-    </section>
+    <div id="root">
+      Search for iban from: <input type="text" id="ibanFrom" name="fname"><br>
+      <input type="submit" onclick="getTransactionsByFromIban()" id="ibanFromButton" value="Find">
+    </br>
+      Search for iban to: <input type="text" id="ibanTo" name="fname"><br>
+      <input type="submit" id="ibanToButton" value="Find">
+    </br>
+      Search for performed by: <input type="text" id="performedBy" name="fname"><br>
+      <input type="submit" id="performedByButton" value="Find">
+    </div>
+    <script src="js/get-transactions-script.js"></script>
   </body>
 </html>
+
