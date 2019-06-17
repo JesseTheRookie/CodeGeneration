@@ -17,25 +17,26 @@ import java.security.Principal;
 public class SecurityController {
 
 
-   @Autowired private IAuthenticationFacade authenticationFacade;
-   @Autowired private UserRepository userRepository;
+    @Autowired
+    private IAuthenticationFacade authenticationFacade;
+    @Autowired
+    private UserRepository userRepository;
 
-    public String currentUserName(){
+    public String currentUserName() {
         Authentication authentication = authenticationFacade.getAuthentication();
         return authentication.getName();
     }
 
-    @RequestMapping(value = "/userinfo",method = RequestMethod.GET)
+    @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
     @ResponseBody
-    public Object currentUser(){
-        String principal = ((User)authenticationFacade.getAuthentication().getPrincipal()).getUsername();
-        Object user = userRepository.getUserByName(principal);
-        return user;
-
-//        userName = ((Principal)authentication.getPrincipal()).getName();
-//
-//    }else {
-//        userName = ((User)authentication.getPrincipal()).getUsername();
-//    }
+    public Object currentUser() {
+        Object principal = authenticationFacade.getAuthentication().getPrincipal(); // get principal
+        if (principal.equals("anonymousUser")) { // check if principal is anonymousUser
+            return null; // return null
+        } else {
+            String username = ((User) principal).getUsername(); // get username from principal
+            Object user = userRepository.getUserByName(username); // get user by username from principal
+            return user; // return user
+        }
     }
 }

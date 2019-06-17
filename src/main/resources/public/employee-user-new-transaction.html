@@ -7,15 +7,24 @@
 
 </head>
 <body>
-    <header class=""><h1>Employee dashboard</h1></header>    
-    <nav>
+    <header id="header"><h1>Employee dashboard</h1></header>    
+    <nav id="sideMenu">
             <h1>Employee tools</h1>
+            <a type="button" class="btn btn-primary" href="/logout">Logout</a>
+            <a type="button" class="btn btn-primary" href="/withdrawals">withdrawals</a>
+            <a type="button" class="btn btn-primary" href="/deposits">Deposits</a>
+            <a type="button" class="btn btn-primary" href="/transactions">Transactions</a>
+            <a type="button" class="btn btn-primary" href="/get-users">Users</a>
+            <a type="button" class="btn btn-primary" href="/get-accounts">Accounts</a>
             <ul>
                 <li class="active">Manage users</li>
                 <li>Transactions</li>
                 <br>
-                <li>Create Deposit</li>
-                <li>Create Withdrawal</li>
+                <a type="button" class="btn btn-primary" href="/employee-user-new-deposit.html">Create Deposit</a>
+            <a type="button" class="btn btn-primary" href="/employee-user-new-withdrawal.html">Create Withdrawal</a>
+            <br>
+            <a type="button" class="btn btn-primary" href="/create-users">Create users</a>
+            <a type="button" class="btn btn-primary" href="/create-accounts">Create accounts</a>
             </ul>
         </nav>
     <section class="rightSection">
