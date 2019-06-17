@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <!--  metadata -->
     <meta charset="utf-8">
@@ -11,8 +12,8 @@
 
     <!--  stylesheets  -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"
-          type="text/css">
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"
+        type="text/css">
 
     <link rel="stylesheet" type="text/css" media="screen" href="css/index.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css">
@@ -31,7 +32,7 @@
 
             if (findGetParameter("logout")) {
                 $("#messagePlaceholder").html('<div class="alert alert-success" role="alert">Logout successful, cya next time!</div >');
-            }else  if (findGetParameter("error")) {
+            } else if (findGetParameter("error")) {
                 $("#messagePlaceholder").html('<div class="alert alert-danger" role="alert">Oops something went wrong, we think it\'s your username or password.</div >');
             }
 
@@ -60,43 +61,43 @@
 </head>
 
 <body>
-<main class="bg backgroundGif ">
-    <!-- <div class="backgroundWrapper">
+    <main class="bg backgroundGif ">
+        <!-- <div class="backgroundWrapper">
             <div class="backgroundGif"></div>
         </div> -->
-    <div class="row h-100">
-        <div id="col" class="col-md-12 my-auto">
-            <section class="container card ">
-                <!-- <div class="container-bg"></div> -->
-                <div class="card-body">
-                    <div class="logo">
-                        <img src="img/swag.png" alt="Avatar" class="">
-                    </div>
-                    <form action="/login" method="POST">
-                        <!--                        <form novalidate>-->
-                        <span id="messagePlaceholder"></span>
-                        <div class="form-group">
-                            <label for="username">Username:</label>
-                            <input type="text" class="form-control" id="username" name="username"
-                                   placeholder="Enter Username" required>
+        <div class="row h-100">
+            <div id="col" class="col-md-12 my-auto">
+                <section class="container card ">
+                    <!-- <div class="container-bg"></div> -->
+                    <div class="card-body">
+                        <div class="logo">
+                            <img src="img/swag.png" alt="Avatar" class="">
                         </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter Password"
-                                   name="password" required>
-                        </div>
-                        <!-- <div class="form-check">
+                        <form action="/login" method="POST">
+                            <!--                        <form novalidate>-->
+                            <span id="messagePlaceholder"></span>
+                            <div class="form-group">
+                                <label for="username">Username:</label>
+                                <input type="text" class="form-control" id="username" name="username"
+                                    placeholder="Enter Username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="Enter Password"
+                                    name="password" required>
+                            </div>
+                            <!-- <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="">
                 <label class="form-check-label" for="exampleCheck1">Check me out</label>
             </div> -->
-                        <button id="submit" type="submit" class="btn btn-primary w-100">Login</button>
-                    </form>
-                </div>
-            </section>
+                            <button id="submit" type="submit" class="btn btn-primary w-100">Login</button>
+                        </form>
+                    </div>
+                </section>
+            </div>
         </div>
-    </div>
-</main>
-<!-- <footer id="pageFooter"></footer> -->
+    </main>
+    <!-- <footer id="pageFooter"></footer> -->
 </body>
 
 </html>

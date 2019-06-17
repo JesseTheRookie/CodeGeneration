@@ -85,10 +85,61 @@
         //$("#contentPlaceholder").html =  sessionStorage.getItem("lastname"); 
         //console.log(sessionStorage.getItem("userName"));
 
+
+
+        function showAccount(accounts) {
+            console.time('showAccounts')
+            showCurrentAccount(accounts);
+            showSavingsAccount(accounts);
+            console.timeEnd('showAccounts')
+        }
+
+
+        function showCurrentAccount(account) {
+
+            currentAccountCount = 0;
+            for (let index = 0; index < account.length; index++) {
+                const element = account[index];
+
+                if (element.Accounttype == "current") {
+                    $("#currents").html('<a href="#"><li class=""><p>IBAN: ' + element.Iban +', Balance: €' + element.Balance +'</p></li></a>');
+                    currentAccountCount++;
+                }
+            }
+
+            if (currentAccountCount > 0) {
+                $("#currentTitle").css("display","block");
+            }
+        }
+
+        function showSavingsAccount(account) {
+
+            savingsAccountCount = 0;
+            for (let index = 0; index < account.length; index++) {
+                const element = account[index];
+                console.log(element);
+
+                if (element.Accounttype == "savings") {
+                    $("#savings").html('<a href="#"><li class=""><p>IBAN: ' + element.Iban + ', Balance: €' + element.Balance + '</p></li></a>');
+                    savingsAccountCount++;
+                    console.log("SAVING!");
+                }
+            }
+
+            if (savingsAccountCount > 0) {
+                $("#savingsTitle").css("display", "block");
+            }
+        }
+
+
+
+
         $(document).ready(function () {
             var userInfo;
+            var userAccounts;
 
             $.ajax({
+                async: false,
                 type: "GET",
                 url: "/userinfo",
                 data: "",
@@ -99,18 +150,18 @@
                 }
             });
 
-            // $.ajax({
-            //     type: "GET",
-            //     url: "/userinfo",
-            //     data: "",
-            //     contentType: "application/json",
-            //     success: function (data) {
-            //         userInfo = data;
-            //         $("#welcomeMsg").text("Welcome, " + data.Name + "!");
-            //     }
-            // });
-
-
+            $.ajax({
+                async: false,
+                type: "GET",
+                url: "/users/" + userInfo.Id + "/accounts",
+                data: "",
+                contentType: "application/json",
+                success: function (data) {
+                    userAccounts = data;
+                    console.log(data);
+                    showAccount(data);
+                }
+            });
 
 
 
@@ -139,19 +190,19 @@
     <header id="header">
         <a type="button" class="btn btn-primary float-right m-2" href="/logout">Logout</a>
         <h1>User dashboard</h1>
-        
+
 
     </header>
     <aside id="sideMenu">
         <h2 id="welcomeMsg" class="mt-2"></h2>
-        <h3 >User tools</h3>
-        <nav >
+        <h3>User tools</h3>
+        <nav>
             <!-- <ul> -->
-                <!-- <li class="active">Manage accounts</li> -->
-                <!-- <br /> -->
+            <!-- <li class="active">Manage accounts</li> -->
+            <!-- <br /> -->
 
-                <!-- <li>Create Deposit</li> -->
-                <!-- <li>Create Withdrawal</li> -->
+            <!-- <li>Create Deposit</li> -->
+            <!-- <li>Create Withdrawal</li> -->
             <!-- </ul> -->
 
             <a type="button" class="btn btn-primary m-1" href="/employee-user-new-deposit.html">Create Deposit</a>
@@ -170,35 +221,14 @@
 
         <span id="contentPlaceholder"> </span>
 
+        <h1 id="currentTitle" style="display: none;">Current accounts</h1>
         <ul id="currents" class="list">
-            <h1>current accounts</h1>
-            <a href="#">
-                <li>
-                    <p>iban</p>
-                    <p>amount</p>
-                </li>
-            </a><br />
-            <a href="#">
-                <li>
-                    <p>iban</p>
-                    <p>amount</p>
-                </li>
-            </a><br />
+
         </ul>
+
+        <h1 id="savingsTitle" style="display: none;">Savings accounts</h1>
         <ul id="savings" class="list">
-            <h1>savings accounts</h1>
-            <a href="#">
-                <li>
-                    <p>iban</p>
-                    <p>amount</p>
-                </li>
-            </a><br />
-            <a href="#">
-                <li>
-                    <p>iban</p>
-                    <p>amount</p>
-                </li>
-            </a><br />
+
         </ul>
     </main>
 </body>
