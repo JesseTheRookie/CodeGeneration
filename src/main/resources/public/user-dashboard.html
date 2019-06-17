@@ -102,7 +102,7 @@
                 const element = account[index];
 
                 if (element.Accounttype == "current") {
-                    $("#currents").html('<a href="#"><li class=""><p>IBAN: ' + element.Iban +', Balance: €' + element.Balance +'</p></li></a>');
+                    $("#currents").append('<a href="#"><li class=""><p>IBAN: ' + element.Iban +', Balance: €' + element.Balance +'</p></li></a>');
                     currentAccountCount++;
                 }
             }
@@ -115,14 +115,14 @@
         function showSavingsAccount(account) {
 
             savingsAccountCount = 0;
+            //savingStringBuilder = "";
             for (let index = 0; index < account.length; index++) {
                 const element = account[index];
                 console.log(element);
 
                 if (element.Accounttype == "savings") {
-                    $("#savings").html('<a href="#"><li class=""><p>IBAN: ' + element.Iban + ', Balance: €' + element.Balance + '</p></li></a>');
+                    $("#savings").append('<a href="#"><li class=""><p>IBAN: ' + element.Iban + ', Balance: €' + element.Balance + '</p></li></a>');
                     savingsAccountCount++;
-                    console.log("SAVING!");
                 }
             }
 
