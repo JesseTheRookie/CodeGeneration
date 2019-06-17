@@ -40,10 +40,10 @@
 
         $("#submit").click(function(e) {
           var transaction = {
-            IbanFrom: $("#ibanFrom").val(),
-            IbanTo: $("#ibanTo").val(),
+            FromIban: $("#ibanFrom").val(),
+            To: $("#ibanTo").val(),
             Amount: $("#amount").val(),
-            performedById: $("#performedById").val(),
+            performedBy: $("#performedById").val(),
           };
 
           $.ajax({
@@ -61,7 +61,7 @@
     </script>
   </head>
   <body>
-    <h1>Create Account</h1>
+    <h1>Create Transaction</h1>
 
     <section id="create">
       <div class="container">

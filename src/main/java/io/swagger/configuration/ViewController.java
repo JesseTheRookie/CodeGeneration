@@ -42,6 +42,17 @@ public class ViewController{
         return "/user-dashboard.html";
     }
 
+    /**
+     * Employee tools
+     */
+    @RequestMapping(value = {"/employeeTools"})
+    public String employeeTools() {
+        if (((User)securityController.currentUser()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)){
+            return "redirect:/all-users";
+        }
+        return "/user-dashboard.html";
+    }
+
 
     /**
      * Create accounts
