@@ -18,20 +18,17 @@ public class MyApplicationRunner implements ApplicationRunner {
     private ApiKeyRepository keyRepository;
     private AccountRepository accountRepository;
     private TransactionRepository transactionRepository;
-    private DepositsService depositsService;
-    private DepositsRepository depositsRepository;
     private WithdrawalsRepository withdrawalsRepository;
-    private TransactionService transactionService;
+    private DepositsRepository depositsRepository;
 
-    public MyApplicationRunner(UserRepository userRepository, AccountRepository accountRepository, ApiKeyRepository keyRepository, TransactionRepository transactionRepository, DepositsService depositsService, WithdrawalsRepository withdrawalsRepository, TransactionService transactionService, DepositsRepository depositsRepository){
+    public MyApplicationRunner(UserRepository userRepository, AccountRepository accountRepository, ApiKeyRepository keyRepository, TransactionRepository transactionRepository, DepositsRepository depositsRepository, WithdrawalsRepository withdrawalsRepository){
+
         this.userRepository = userRepository;
         this.accountRepository = accountRepository;
         this.keyRepository = keyRepository;
         this.transactionRepository = transactionRepository;
-        this.depositsService = depositsService;
-        this.withdrawalsRepository = withdrawalsRepository;
-        this.transactionService = transactionService;
         this.depositsRepository = depositsRepository;
+        this.withdrawalsRepository = withdrawalsRepository;
     }
 
     @Override
@@ -74,7 +71,8 @@ public class MyApplicationRunner implements ApplicationRunner {
         keyRepository.findAll()
                 .forEach(System.out::println);
 
-        //transactionService.createTransaction(new Transaction("NL01INHO0000000004", "NL01INHO0000000002", 50.0, 1 ));
+        transactionRepository.save(new Transaction("NL01INHO0000000004", "NL01INHO0000000002", 50.0, 1 ));
+        transactionRepository.save(new Transaction("NL01INHO0000000002", "NL01INHO0000000004", 150.0, 1 ));
 
         transactionRepository.save(new Transaction("NL01INHO0000000004", "NL01INHO0000000002", 50.0, 1 ));
 
@@ -92,14 +90,14 @@ public class MyApplicationRunner implements ApplicationRunner {
 
 
 
-     /*   withdrawalsRepository.save(new Withdrawal("NL01INHO0000000004", 50.00));
+       withdrawalsRepository.save(new Withdrawal("NL01INHO0000000004", 50.00));
         withdrawalsRepository.save(new Withdrawal("NL01INHO0000000004", 4.00));
         withdrawalsRepository.save(new Withdrawal("NL01INHO0000000004", 6.00));
         withdrawalsRepository.save(new Withdrawal("NL01INHO0000000004", 6.00));
 
         withdrawalsRepository.findAll()
                 .forEach(System.out::println);
-            */
+
     }
 }
 

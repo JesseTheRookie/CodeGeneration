@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Transactions</title>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Dosis:400,700"
+      rel="stylesheet"
+    />
+    <link href="css/get-transactions-style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div id="root">
+      Search for iban from: <input type="text" id="ibanFrom" name="fname"><br>
+      <input type="submit" onclick="getTransactionsByFromIban()" id="ibanFromButton" value="Find">
+    </br>
+      Search for iban to: <input type="text" id="ibanTo" name="fname"><br>
+      <input type="submit" id="ibanToButton" value="Find">
+    </br>
+      Search for performed by: <input type="text" id="performedBy" name="fname"><br>
+      <input type="submit" id="performedByButton" value="Find">
+    </div>
+    <script src="js/get-transactions-script.js"></script>
+  </body>
+</html>
+

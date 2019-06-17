@@ -51,7 +51,23 @@ public class ViewController{
         return "/create-account.html";
     }
 
+    /**
+     * Create transaction
+     */
+    @RequestMapping(value = {"/createTransaction"})
+    public String createTransaction() {
+        return "/create-transaction.html";
+    }
 
+    /**
+     * Create transaction
+     */
+    @RequestMapping(value = {"/getTransactions"})
+    public String getTransaction() {
+        return "/get-transactions.html";
+    }
+
+    
     /**
      * Create users
      */
@@ -95,6 +111,9 @@ public class ViewController{
      */
     @RequestMapping(value = {"/all-users"})
     public String allUsers() {
+        if (((User)securityController.currentUser()).getRole().equals(User.RoleEnum.USER)){
+            return "/user-dashboard.html";
+        }
         return "/employee-search-users.html";
     }
 }
