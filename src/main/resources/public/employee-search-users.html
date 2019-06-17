@@ -26,68 +26,117 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+    <script src="/js/findGetParameter.js" type='text/javascript'></script>
+    <script type="text/javascript">
 
+        function showUsers(users) {
+            console.time('showUsers');
+
+            var searchString = "";
+            if (findGetParameter("username")) {
+                var searchString = findGetParameter("username");
+            }
+
+            if (users.length > 0) {
+                $("#userTitle").text("User overview");
+
+                for (let index = 0; index < users.length; index++) {
+                    const element = users[index];
+
+                    if (searchString.length > 0 && searchString != element.Name) {
+                        continue;
+                    }else{
+                        $("#usersList").append('<a href="/users/' + element.Id + '/accounts"><li class=""><p>Username: ' + element.Name + ', Role: ' + element.Role + '</p></li></a>');
+                    }
+
+                }
+
+            } else {
+                $("#userTitle").text("There are no users found!");
+
+            }
+            console.timeEnd('showUsers');
+        }
+
+
+
+
+        $(document).ready(function () {
+            var userInfo;
+            var users;
+            var searchString = "";
+
+            if (findGetParameter("username")) {
+                searchString.concat("?username="+findGetParameter("username"));
+            } 
+
+            $.ajax({//get current logged in user info
+                async: false,
+                type: "GET",
+                url: "/userinfo",
+                data: "",
+                contentType: "application/json",
+                success: function (data) {
+                    userInfo = data;
+                }
+            });
+
+            $.ajax({
+                async: false,
+                type: "GET",
+                url: "/users/" + searchString,
+                data: "",
+                contentType: "application/json",
+                success: function (data) {
+                    users = data
+                    console.log(data);
+                    showUsers(data); //show them the users baby!
+                }
+            });
+
+
+        });
+
+    </script>
 </head>
 
 <body>
     <header id="header">
-            <title>Search Useraccounts</title>
-            <a type="button" class="btn btn-primary float-right m-2" href="/logout">Logout</a>
-            <a type="button" class="btn btn-primary float-right m-2" href="/withdrawals">withdrawals</a>
-            <a type="button" class="btn btn-primary float-right m-2" href="/deposits">Deposits</a>
-            <a type="button" class="btn btn-primary float-right m-2" href="/transactions">Transactions</a>
-            <a type="button" class="btn btn-primary float-right m-2" href="/get-users">Users</a>
-            <a type="button" class="btn btn-primary float-right m-2" href="/get-accounts">Accounts</a>
+        <title>Search Useraccounts</title>
+        <a type="button" class="btn btn-primary float-right m-2" href="/logout">Logout</a>
+        <a type="button" class="btn btn-primary float-right m-2" href="/withdrawals">withdrawals</a>
+        <a type="button" class="btn btn-primary float-right m-2" href="/deposits">Deposits</a>
+        <a type="button" class="btn btn-primary float-right m-2" href="/transactions">Transactions</a>
+        <a type="button" class="btn btn-primary float-right m-2" href="/get-users">Users</a>
+        <a type="button" class="btn btn-primary float-right m-2" href="/get-accounts">Accounts</a>
     </header>
-   
-    <nav id="sideMenu">
+    <aside id="sideMenu">
         <h1>Employee tools</h1>
-        <ul>
-            <a type="button" class="btn btn-primary active" href="/employeeTools">Manage Users</a>
-            <br><br>
-            <a type="button" class="btn btn-primary" href="/employee-user-new-deposit.html">Create Deposit</a>
-            <a type="button" class="btn btn-primary" href="/employee-user-new-withdrawal.html">Create Withdrawal</a>
-            <br><br>
-            <a type="button" class="btn btn-primary" href="/create-transaction">Make Transaction</a>
-            <br><br>
-            <a type="button" class="btn btn-primary" href="/create-users">Create users</a>
-            <a type="button" class="btn btn-primary" href="/create-accounts">Create accounts</a>
-        </ul>
-    </nav>
-    <section class="rightSection">
+        <nav>
+            <ul>
+                <a type="button" class="btn btn-primary active" href="/employeeTools">Manage Users</a>
+                <br><br>
+                <a type="button" class="btn btn-primary" href="/employee-user-new-deposit.html">Create Deposit</a>
+                <a type="button" class="btn btn-primary" href="/employee-user-new-withdrawal.html">Create Withdrawal</a>
+                <br><br>
+                <a type="button" class="btn btn-primary" href="/create-transaction">Make Transaction</a>
+                <br><br>
+                <a type="button" class="btn btn-primary" href="/create-users">Create users</a>
+                <a type="button" class="btn btn-primary" href="/create-accounts">Create accounts</a>
+            </ul>
+        </nav>
+    </aside>
+    <main class="rightSection">
         <div class="formWrapper">
-            <form action="">
-                Search user: <input type="text" name="fname"><br>
+            <form action="" method="GET">
+                Search user: <input type="text" name="username"><br>
                 <input type="submit" value="Submit">
             </form>
         </div>
-        <ul id="users" class="list">
-            <a href="#">
-                <li>
-                    <p>username</p>
-                    <p>userId</p>
-                </li>
-            </a><br>
-            <a href="#">
-                <li>
-                    <p>username</p>
-                    <p>userId</p>
-                </li>
-            </a><br>
-            <a href="#">
-                <li>
-                    <p>username</p>
-                    <p>userId</p>
-                </li>
-            </a><br>
-            <a href="#">
-                <li>
-                    <p>username</p>
-                    <p>userId</p>
-                </li>
-            </a><br>
-        </ul>
-    </section>
+
+        <h1 id="userTitle"></h1>
+        <ul id="usersList" class="list"></ul>
+    </main>
 </body>
 
 </html>
