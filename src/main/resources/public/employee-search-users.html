@@ -46,8 +46,7 @@
                     if (searchString.length > 0 && searchString != element.Name) {
                         continue;
                     }else{
-                        $("#usersList").append('<a href="/users/' + element.Id + '/accounts"><li class=""><p>Username: ' + element.Name + ', Role: ' + element.Role + '</p></li></a>');
-                    }
+                        $("#usersList").append('<a href="/employee-get-accounts?user-id=' + element.Id + '"><li class=""><p>Username: ' + element.Name + ', Role: ' + element.Role + '</p></li></a>');                    }
 
                 }
 

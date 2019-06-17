@@ -126,4 +126,12 @@ public class ViewController{
         }
         return "/employee-search-users.html";
     }
+
+    /**
+     * Get accounts in employee interface
+     */
+    @RequestMapping(value = {"/employee-get-accounts"})
+    public String employeeGetAllAccounts() {
+        return "/employee-user-accounts.html";
+    }
 }
