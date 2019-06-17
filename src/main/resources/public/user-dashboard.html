@@ -102,13 +102,13 @@
                 const element = account[index];
 
                 if (element.Accounttype == "current") {
-                    $("#currents").append('<a href="#"><li class=""><p>IBAN: ' + element.Iban +', Balance: €' + element.Balance +'</p></li></a>');
+                    $("#currents").append('<a href="/get-transactions?iban=' + element.Iban + '"><li class=""><p>IBAN: ' + element.Iban + ', Balance: €' + element.Balance + '</p></li></a>');
                     currentAccountCount++;
                 }
             }
 
             if (currentAccountCount > 0) {
-                $("#currentTitle").css("display","block");
+                $("#currentTitle").css("display", "block");
             }
         }
 
@@ -121,7 +121,7 @@
                 console.log(element);
 
                 if (element.Accounttype == "savings") {
-                    $("#savings").append('<a href="#"><li class=""><p>IBAN: ' + element.Iban + ', Balance: €' + element.Balance + '</p></li></a>');
+                    $("#savings").append('<a href="/get-transactions?iban=' + element.Iban + '"><li class=""><p>IBAN: ' + element.Iban + ', Balance: €' + element.Balance + '</p></li></a>');
                     savingsAccountCount++;
                 }
             }

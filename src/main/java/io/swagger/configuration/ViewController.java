@@ -54,7 +54,7 @@ public class ViewController{
     /**
      * Create transaction
      */
-    @RequestMapping(value = {"/createTransaction"})
+    @RequestMapping(value = {"/create-transaction"})
     public String createTransaction() {
         return "/create-transaction.html";
     }
@@ -62,12 +62,11 @@ public class ViewController{
     /**
      * Create transaction
      */
-    @RequestMapping(value = {"/getTransactions"})
+    @RequestMapping(value = {"/get-transactions"})
     public String getTransaction() {
         return "/get-transactions.html";
     }
 
-    
     /**
      * Create users
      */

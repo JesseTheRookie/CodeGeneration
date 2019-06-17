@@ -36,7 +36,6 @@ public class TransactionsApiController implements TransactionsApi {
     private final TransactionService transactionService;
 
 
-
     @org.springframework.beans.factory.annotation.Autowired
     public TransactionsApiController(ObjectMapper objectMapper, HttpServletRequest request, TransactionService transactionService) {
         this.objectMapper = objectMapper;
@@ -44,28 +43,25 @@ public class TransactionsApiController implements TransactionsApi {
         this.transactionService = transactionService;
     }
 
-    public ResponseEntity<Integer> createTransaction(@ApiParam(value = "")  @Valid @RequestBody Transaction body) throws ApiException {
+    public ResponseEntity<Integer> createTransaction(@ApiParam(value = "") @Valid @RequestBody Transaction body) throws ApiException {
         String accept = request.getHeader("Accept");
         transactionService.createTransaction(body);
         return new ResponseEntity<Integer>(Integer.valueOf(body.getId()), HttpStatus.CREATED);
     }
+
     //Get allTransactions werkt
-    public ResponseEntity<List<Transaction>> getTransactions(@ApiParam(value = "The id of a transaction") @Valid @RequestParam(value = "transactionID", required = false) Integer transactionID, @ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "fromIban", required = false) String fromIban, @ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "to", required = false) String to,@ApiParam(value = "The userId of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) throws ApiException {
+    public ResponseEntity<List<Transaction>> getTransactions(@ApiParam(value = "The id of a transaction") @Valid @RequestParam(value = "transactionID", required = false) Integer transactionID, @ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "fromIban", required = false) String fromIban, @ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "to", required = false) String to, @ApiParam(value = "The userId of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) throws ApiException {
         String accept = request.getHeader("Accept");
-        if(fromIban != null){
-            return new ResponseEntity<List<Transaction>>((List<Transaction>)transactionService.getTransactionsByFromIban(fromIban), HttpStatus.OK);
-        }
-        else if(to != null){
-            return new ResponseEntity<List<Transaction>>((List<Transaction>)transactionService.getTransactionsByToIban(to), HttpStatus.OK);
-        }
-        else if(transactionID != null){
-            return new ResponseEntity<List<Transaction>>((List<Transaction>)transactionService.getTransactionById(transactionID), HttpStatus.OK);
-        }
-        else if(performedBy != null){
-            return new ResponseEntity<List<Transaction>>((List<Transaction>)transactionService.getTransactionByPerformedBy(performedBy), HttpStatus.OK);
-        }
-        else{
-            return new ResponseEntity<List<Transaction>>((List<Transaction>)transactionService.getAllTransactions(), HttpStatus.OK);
+        if (fromIban != null) {
+            return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getTransactionsByFromIban(fromIban), HttpStatus.OK);
+        } else if (to != null) {
+            return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getTransactionsByToIban(to), HttpStatus.OK);
+        } else if (transactionID != null) {
+            return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getTransactionById(transactionID), HttpStatus.OK);
+        } else if (performedBy != null) {
+            return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getTransactionByPerformedBy(performedBy), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getAllTransactions(), HttpStatus.OK);
         }
     }
 
