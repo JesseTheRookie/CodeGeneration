@@ -171,15 +171,7 @@ public class TransactionService {
 
     public Iterable<Transaction> getTransactionsByFromIban(String iban) throws ApiException {
         Account account = accountRepository.findById(iban).orElse(null);
-        if (userRepository.getUserByName(
-                securityController.currentUserName()).getId() == account.getUserId()
-                || userRepository.getUserByName(
-                securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
-                || userRepository.getUserByName(
-                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)){
-            return transactionRepository.getTransactionsByFromIban(iban);
-            }
-       else throw new ApiException(403, "You are not authorized for this request");
+        return transactionRepository.getTransactionsByFromIban(iban);
     }
     public Iterable<Transaction> getTransactionsByToIban(String iban) throws ApiException {
         Account account = accountRepository.findById(iban).orElse(null);

@@ -38,6 +38,7 @@ public class APISecurityConfig extends WebSecurityConfigurerAdapter {
             return authentication;
         });
 
+
         httpSecurity
                 .antMatcher("/users/**")
                 .csrf().disable()
