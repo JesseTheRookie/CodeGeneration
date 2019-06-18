@@ -193,10 +193,10 @@ public class TransactionService {
         }
         else throw new ApiException(403, "You are not authorized for this request");
     }
-    public Transaction getTransactionById(Integer id) {
+    public Iterable<Transaction> getTransactionById(Integer id) {
             return transactionRepository.getTransactionById(id);
     }
-    public Transaction getTransactionByPerformedBy(Integer userId) {
-        return transactionRepository.getTransactionByPerformedBy(userId);
+    public Iterable<Transaction> getTransactionsByPerformedBy(Integer userId) {
+        return transactionRepository.getTransactionsByPerformedBy(userId);
     }
 }

@@ -12,7 +12,8 @@ public interface TransactionRepository extends CrudRepository<Transaction, Integ
     @Query("select t from Transaction t where t.to = ?1")
     List<Transaction> getTransactionsByToIban(String iban);
     @Query("select t from Transaction t where t.id = ?1")
-    Transaction getTransactionById(Integer id);
+    //Aanpassen naar Transaction
+    List<Transaction> getTransactionById(Integer id);
     @Query("select t from Transaction t where t.performedBy = ?1")
-    Transaction getTransactionByPerformedBy(Integer userId);
+    List<Transaction> getTransactionsByPerformedBy(Integer userId);
 }

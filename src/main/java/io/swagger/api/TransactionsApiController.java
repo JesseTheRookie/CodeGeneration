@@ -55,11 +55,11 @@ public class TransactionsApiController implements TransactionsApi {
         if (fromIban != null) {
             return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getTransactionsByFromIban(fromIban), HttpStatus.OK); // deze werkt
         } else if (to != null) {
-            return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getTransactionsByToIban(to), HttpStatus.OK); // deze dan weer niet..
+            return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getTransactionsByToIban(to), HttpStatus.OK); // deze dan weer niet.. Welles
         } else if (transactionID != null) {
-            return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getTransactionById(transactionID), HttpStatus.OK);
+            return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getTransactionById(transactionID), HttpStatus.OK); // Geeft één transaction terug, dus geen List terug geven
         } else if (performedBy != null) {
-            return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getTransactionByPerformedBy(performedBy), HttpStatus.OK);
+            return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getTransactionsByPerformedBy(performedBy), HttpStatus.OK);
         } else {
             return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getAllTransactions(), HttpStatus.OK);
         }

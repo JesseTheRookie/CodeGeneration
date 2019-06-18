@@ -85,11 +85,6 @@ public class MyApplicationRunner implements ApplicationRunner {
         depositsRepository.save(new Deposit("NL01INHO0000000003", 12.00));
         depositsRepository.save(new Deposit("NL01INHO0000000002", 404.00));
 
-//        depositsRepository.findAll()
-//                .forEach(System.out::println);
-
-
-
        withdrawalsRepository.save(new Withdrawal("NL01INHO0000000004", 50.00));
         withdrawalsRepository.save(new Withdrawal("NL01INHO0000000004", 4.00));
         withdrawalsRepository.save(new Withdrawal("NL01INHO0000000004", 6.00));

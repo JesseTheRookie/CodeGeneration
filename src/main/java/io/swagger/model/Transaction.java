@@ -38,7 +38,6 @@ public class Transaction   {
   private Double amount = null;
 
   @JsonProperty("TimeStamp")
-  //private Timestamp timeStamp = null;
   private Timestamp timeStamp = new Timestamp(new Date().getTime());
 
   @JsonProperty("PerformedBy")
@@ -48,15 +47,6 @@ public class Transaction   {
     this.id = id;
     return this;
   }
-
-  /*public Transaction(Integer id, String from, String to, BigDecimal amount, Timestamp timeStamp, Integer performedBy){
-    this.id = id;
-    this.from = from;
-    this.to = to;
-    this.amount = amount;
-    this.timeStamp = timeStamp;
-    this.performedBy = performedBy;
-  }*/
 
   public Transaction(String fromIban, String to, Double amount, Integer performedBy){
     this.fromIban = fromIban;
