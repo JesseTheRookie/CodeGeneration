@@ -24,7 +24,9 @@ request.onload = function() {
       const p4 = document.createElement("p");
       const p5 = document.createElement("p");
 
-      p.textContent = `User ID: ${account.User.Id}`;
+      if (account.User != null) {
+        p.textContent = `User ID: ${account.User.Id}`;
+      }
       p2.textContent = `Name: ${account.Name}`;
       p3.textContent = `Balance: ${account.Balance}`;
       p4.textContent = `Account type: ${account.Accounttype}`;
@@ -32,6 +34,9 @@ request.onload = function() {
 
       container.appendChild(card);
       card.appendChild(h1);
+      if (account.User != null) {
+        card.appendChild(p);
+      }
       card.appendChild(p);
       card.appendChild(p2);
       card.appendChild(p3);
