@@ -24,6 +24,8 @@ import java.util.Date;
 @Service
 public class TransactionService {
 
+
+    //fields
     private TransactionRepository transactionRepository;
     private AccountRepository accountRepository;
     private SecurityController securityController;
@@ -31,10 +33,15 @@ public class TransactionService {
     private AccountService accountService;
     private WithdrawalsService withdrawalsService;
     private UserRepository userRepository;
-    private final Double maxAmount = 500.0;
-    private final Integer dailyTransactionsLimit = 2;
+
+    private final Double MAX_AMOUNT = 500.0;
+    private final Integer DAILY_TRANSACTIONS_LIMIT = 2;
+
+    //properties
     private Integer transactionsDoneThisDay = 0;
 
+
+    //constructor
     public TransactionService(TransactionRepository transactionRepository, AccountRepository accountRepository, SecurityController securityController, UserRepository userRepository, DepositsService depositsService, WithdrawalsService withdrawalsService, AccountService accountService) {
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
@@ -44,6 +51,157 @@ public class TransactionService {
         this.userRepository = userRepository;
         this.accountService = accountService;
     }
+
+    //getter
+    public Integer getTransactionsDoneThisDay() {
+        return transactionsDoneThisDay;
+    }
+
+    public Iterable<Transaction> getAllTransactions() throws ApiException {
+        if (isEmployee()) {
+            return transactionRepository.findAll();
+        }
+        throw new ApiException(403, "You are not authorized for this request");
+    }
+
+    //get all send transactions
+    public Iterable<Transaction> getTransactionsByFromIban(String iban) throws ApiException {
+        Account account = accountRepository.findById(iban).orElse(null);
+        return transactionRepository.getTransactionsByFromIban(iban);
+    }
+
+    //get all received transactions
+    public Iterable<Transaction> getTransactionsByToIban(String iban) throws ApiException {
+        Account account = accountRepository.findById(iban).orElse(null);
+        if (userRepository.getUserByName(
+                securityController.currentUserName()).getId() == account.getUserId()
+                || userRepository.getUserByName(
+                securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
+                || userRepository.getUserByName(
+                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
+            return transactionRepository.getTransactionsByToIban(iban);
+        } else throw new ApiException(403, "You are not authorized for this request");
+    }
+
+    public Iterable<Transaction> getTransactionById(Integer id) {
+        return transactionRepository.getTransactionById(id);
+    }
+
+    public Iterable<Transaction> getTransactionsByPerformedBy(Integer userId) {
+        return transactionRepository.getTransactionsByPerformedBy(userId);
+    }
+
+    public Iterable<Transaction> getTransactionsByType(Transaction.TransactionType type) {
+        return transactionRepository.getTransactionsByType(type);
+    }
+
+
+
+    //methods
+
+    public void initiateTransaction(Transaction newTransaction) throws ApiException {
+
+        switch (newTransaction.getType()) {
+            case TRANSACTION:
+                validateTransaction(newTransaction);
+                createTransaction(newTransaction);
+                break;
+
+            case DEPOSIT:
+                validateDeposit(newTransaction);
+                createDeposit(newTransaction);
+                break;
+
+            case WITHDRAWAL:
+                validateWithdrawal(newTransaction);
+                createWithdrawal(newTransaction);
+                break;
+        }
+    }
+
+    //validators
+
+    private void validateTransaction(Transaction transaction) throws ApiException {
+
+        if (!areAccountsSameUser(transaction.getFromIban(), transaction.getToIban())) {
+            throw new ApiException(403, "You are not authorized for this request");
+        }
+        if (!areAccountsBothOfTypeCurrent(transaction.getFromIban(), transaction.getToIban())) {
+            throw new ApiException(406, "Can't create a transaction to another savings account than your own nor from a savings acount to another user's current account or vice versa");
+        }
+    }
+
+
+    private void validateDeposit(Transaction deposit) throws ApiException {
+        if (!isEmployee()) {
+            throw new ApiException(403, "You are not authorized for this request");
+        }
+    }
+
+    private void validateWithdrawal(Transaction withdrawal) throws ApiException {
+        if (!isEmployee()) {
+            throw new ApiException(403, "You are not authorized for this request");
+        }
+        if (!accountService.accountIsNotNull(withdrawal.getFromIban())) {
+            throw new ApiException(406, "Something has gone wrong: ");
+        }
+        if(balanceIsHigherThanAmount(withdrawal.getFromIban(), withdrawal.getAmount())){
+            throw new ApiException(406, "Balance is to low: ");
+        }
+    }
+
+
+    //creators
+    private void createTransaction(Transaction newTransaction) throws ApiException {
+        String fromAccountIban = newTransaction.getFromIban();
+        String toAccountIban = newTransaction.getToIban();
+        double amount = newTransaction.getAmount();
+
+        if (!theAccountIsCustomer(fromAccountIban)) {
+            throw new ApiException(403, "You are not authorized for this request");
+        }
+       // if (theTransactionIsValid(fromAccountIban, toAccountIban)) {
+            if (theTransactionDoesNotExceedTheDailyLimit(fromAccountIban)) {
+                if (theAmountFromAccountDoesNotExceedTheMaxAmount(amount)) {
+                    if (withdrawalsService.withdrawIsValid(fromAccountIban, amount)) {
+                        withdrawalsService.reductFromAccount(fromAccountIban, amount);
+                        depositsService.addToAccount(toAccountIban, amount);
+                        transactionRepository.save(newTransaction);
+                    }
+                }
+         //   }
+        } else if (withdrawalsService.withdrawIsValid(fromAccountIban, amount)) {
+            withdrawalsService.reductFromAccount(fromAccountIban, amount);
+            depositsService.addToAccount(toAccountIban, amount);
+            transactionRepository.save(newTransaction);
+        }
+    }
+
+
+    //create
+
+    private void createDeposit(Transaction newDeposit) throws ApiException {
+        Account account = accountRepository.findById(newDeposit.getToIban()).orElse(null);
+        if (accountService.accountIsNotNull(newDeposit.getToIban())) {
+            account.setBalance(account.getBalance() + newDeposit.getAmount());
+            accountRepository.save(account);
+        }
+        transactionRepository.save(newDeposit);
+    }
+
+    private void createWithdrawal(Transaction newWithdrawal) throws ApiException {
+        Account account = accountRepository.findById(newWithdrawal.getFromIban()).orElse(null);
+
+       // if (withdrawIsValid(newWithdrawal.getFromIban(), newWithdrawal.getAmount())) {
+            account.setBalance(account.getBalance() - newWithdrawal.getAmount());
+            accountRepository.save(account);
+       // }
+        transactionRepository.save(newWithdrawal);
+    }
+
+
+
+
 
     private Integer getNumberOfTransactionToday(String iban) {
 
@@ -72,18 +230,18 @@ public class TransactionService {
     }
 
     private Boolean theTransactionDoesNotExceedTheDailyLimit(String iban) throws ApiException {
-        if (getNumberOfTransactionToday(iban) < dailyTransactionsLimit) {
+        if (getNumberOfTransactionToday(iban) < DAILY_TRANSACTIONS_LIMIT) {
             return true;
         } else {
-            throw new ApiException(406, "Can't create more transactions than day limit" + dailyTransactionsLimit);
+            throw new ApiException(406, "Can't create more transactions than day limit" + DAILY_TRANSACTIONS_LIMIT);
         }
     }
 
     private Boolean theAmountFromAccountDoesNotExceedTheMaxAmount(Double amount) throws ApiException {
-        if (amount < maxAmount) {
+        if (amount < MAX_AMOUNT) {
             return true;
         } else {
-            throw new ApiException(406, "Can't transfer more than " + maxAmount);
+            throw new ApiException(406, "Can't transfer more than " + MAX_AMOUNT);
         }
     }
 
@@ -113,17 +271,24 @@ public class TransactionService {
         return false;
     }
 
-    private Boolean theTransactionIsValid(String ibanFrom, String ibanTo) throws ApiException {
-
-        if (areAccountsSameUser(ibanFrom, ibanTo)) {
-            return true;
-        }
-        if (areAccountsBothOfTypeCurrent(ibanFrom, ibanTo)) {
+    private Boolean balanceIsHigherThanAmount(String iban, Double amount) throws ApiException {
+        Account account = accountRepository.findById(iban).orElse(null);
+        if (account.getBalance() >= amount) {
             return true;
         } else {
-            // return false;
-            throw new ApiException(406, "Can't create a transaction to another savings account than your own nor from a savings acount to another user's current account or vice versa");
+            throw new ApiException(406, "Balance can't be below zero on: " + iban);
         }
+    }
+
+
+    public boolean isEmployee() throws ApiException {
+        if (userRepository.getUserByName(
+                securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
+                || userRepository.getUserByName(
+                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
+            return true;
+        }
+        return false;
     }
 
     private Boolean theAccountIsCustomer(String iban) {
@@ -136,123 +301,7 @@ public class TransactionService {
         return false;
     }
 
-    public void initiateTransaction(Transaction newTransaction) throws ApiException {
+/////////////// all filter functions
 
-        switch (newTransaction.getType()) {
-            case TRANSACTION:
-                createTransaction(newTransaction);
-                break;
-            case DEPOSIT:
-                createDeposit(newTransaction);
-                // create deposit
-                break;
-            case WITHDRAWAL:
-                createWithdrawal(newTransaction);
-                // create deposit
-                break;
-        }
-    }
 
-    public void createTransaction(Transaction newTransaction) throws ApiException {
-        if (newTransaction.getType() == Transaction.TransactionType.TRANSACTION) {
-            String fromAccountIban = newTransaction.getFromIban();
-            String toAccountIban = newTransaction.getTo();
-            double amount = newTransaction.getAmount();
-
-            if (theAccountIsCustomer(fromAccountIban)) {
-                if (theTransactionIsValid(fromAccountIban, toAccountIban)) {
-                    if (theTransactionDoesNotExceedTheDailyLimit(fromAccountIban)) {
-                        if (theAmountFromAccountDoesNotExceedTheMaxAmount(amount)) {
-                            if (withdrawalsService.withdrawIsValid(fromAccountIban, amount)) {
-                                withdrawalsService.reductFromAccount(fromAccountIban, amount);
-                                depositsService.addToAccount(toAccountIban, amount);
-                                transactionRepository.save(newTransaction);
-                            }
-                        }
-                    }
-                }
-            } else {
-                if (withdrawalsService.withdrawIsValid(fromAccountIban, amount)) {
-                    withdrawalsService.reductFromAccount(fromAccountIban, amount);
-                    depositsService.addToAccount(toAccountIban, amount);
-                    transactionRepository.save(newTransaction);
-                }
-            }
-        }
-    }
-
-    public void createDeposit(Transaction newDeposit) throws ApiException {
-        Account account = accountRepository.findById(newDeposit.getTo()).orElse(null);
-        if (accountService.accountIsNotNull(newDeposit.getTo())) {
-            account.setBalance(account.getBalance() + newDeposit.getAmount());
-            accountRepository.save(account);
-        }
-        transactionRepository.save(newDeposit);
-    }
-
-    public void createWithdrawal(Transaction newWithdrawal) throws ApiException{
-        Account account = accountRepository.findById(newWithdrawal.getFromIban()).orElse(null);
-        if(withdrawIsValid(newWithdrawal.getFromIban(), newWithdrawal.getAmount())){
-            account.setBalance(account.getBalance() - newWithdrawal.getAmount());
-            accountRepository.save(account);
-        }
-        transactionRepository.save(newWithdrawal);
-    }
-
-    public Boolean withdrawIsValid(String iban, Double amount) throws ApiException{
-        if(accountService.accountIsNotNull(iban) && balanceIsHigherThanAmount(iban, amount)){
-            return true;
-        } else{
-            throw new ApiException(406, "Something has gone wrong: ");
-        }
-    }
-
-    private Boolean balanceIsHigherThanAmount(String iban, Double amount) throws ApiException{
-        Account account = accountRepository.findById(iban).orElse(null);
-        if (account.getBalance() >= amount){
-            return true;
-        } else{
-            throw new ApiException(406, "Balance can't be below zero on: "+ iban);
-        }
-    }
-
-    public Iterable<Transaction> getAllTransactions() throws ApiException {
-        if (userRepository.getUserByName(
-                securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
-                || userRepository.getUserByName(
-                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
-            return transactionRepository.findAll();
-        }
-        throw new ApiException(403, "You are not authorized for this request");
-
-    }
-
-    public Iterable<Transaction> getTransactionsByFromIban(String iban) throws ApiException {
-        Account account = accountRepository.findById(iban).orElse(null);
-        return transactionRepository.getTransactionsByFromIban(iban);
-    }
-
-    public Iterable<Transaction> getTransactionsByToIban(String iban) throws ApiException {
-        Account account = accountRepository.findById(iban).orElse(null);
-        if (userRepository.getUserByName(
-                securityController.currentUserName()).getId() == account.getUserId()
-                || userRepository.getUserByName(
-                securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
-                || userRepository.getUserByName(
-                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
-            return transactionRepository.getTransactionsByToIban(iban);
-        } else throw new ApiException(403, "You are not authorized for this request");
-    }
-
-    public Iterable<Transaction> getTransactionById(Integer id) {
-        return transactionRepository.getTransactionById(id);
-    }
-
-    public Iterable<Transaction> getTransactionsByPerformedBy(Integer userId) {
-        return transactionRepository.getTransactionsByPerformedBy(userId);
-    }
-
-    public Iterable<Transaction> getTransactionsByType(Transaction.TransactionType type) {
-        return transactionRepository.getTransactionsByType(type);
-    }
 }
