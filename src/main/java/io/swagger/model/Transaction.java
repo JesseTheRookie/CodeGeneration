@@ -3,6 +3,7 @@ package io.swagger.model;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -83,12 +84,28 @@ public class Transaction   {
     return this;
   }
 
-  public Transaction(String fromIban, String to, Double amount, Integer performedBy){
+  //constructor for transactions
+  public Transaction(String fromIban, String to, Double amount, TransactionType type, Integer performedBy){
     this.fromIban = fromIban;
     this.to = to;
     this.amount = amount;
+    this.type = type;
     this.performedBy = performedBy;
   }
+
+  //constructor for deposits/withdrawals
+  public Transaction(String Iban, Double amount, TransactionType type, Integer performedBy){
+    this.amount = amount;
+    this.type = type;
+    this.performedBy = performedBy;
+
+    if(type == TransactionType.DEPOSIT){
+      this.to = Iban;
+    }else{
+      this.fromIban = Iban;
+    }
+  }
+
   public Transaction(){
 
   }
@@ -115,7 +132,7 @@ public class Transaction   {
    * @return from
   **/
   @ApiModelProperty(required = true, value = "the iban of the sending end")
-  @NotNull
+//  @NotNull
 
   public String getFromIban() {
     return fromIban;
@@ -135,7 +152,7 @@ public class Transaction   {
    * @return to
   **/
   @ApiModelProperty(required = true, value = "the iban of the receiving end")
-  @NotNull
+//  @NotNull
 
   public String getTo() {
     return to;
@@ -239,8 +256,12 @@ public class Transaction   {
     sb.append("class Transaction {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    from: ").append(toIndentedString(fromIban)).append("\n");
-    sb.append("    to: ").append(toIndentedString(to)).append("\n");
+    if(fromIban != null){
+      sb.append("    from: ").append(toIndentedString(fromIban)).append("\n");
+    }
+    if(to != null){
+      sb.append("    to: ").append(toIndentedString(to)).append("\n");
+    }
     sb.append("    amount: ").append(toIndentedString(amount)).append("\n");
     sb.append("    timeStamp: ").append(toIndentedString(timeStamp)).append("\n");
     sb.append("    performedBy: ").append(toIndentedString(performedBy)).append("\n");
