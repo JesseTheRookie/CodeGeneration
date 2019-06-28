@@ -23,7 +23,13 @@ public class DepositsService {
     }
 
     public void createDeposit(Deposit newDeposit) throws ApiException{
-        addToAccount(newDeposit.getTo(), newDeposit.getAmount());
+        double amount = newDeposit.getAmount();
+        String iban = newDeposit.getTo();
+        Account account = accountRepository.findById(iban).orElse(null);
+        if (accountService.accountIsNotNull(iban)){
+            account.setBalance(account.getBalance() + amount);
+            accountRepository.save(account);
+        }
         depositsRepository.save(newDeposit);
     }
 
@@ -36,10 +42,6 @@ public class DepositsService {
     }
 
     public void addToAccount (String iban, Double amount) throws ApiException{
-        Account account = accountRepository.findById(iban).orElse(null);
-        if (accountService.accountIsNotNull(iban)){
-            account.setBalance(account.getBalance() + amount);
-            accountRepository.save(account);
-        }
+
     }
 }

@@ -26,7 +26,11 @@ public class WithdrawalsService {
     }
 
     public Withdrawal createNewWithdrawal(Withdrawal newWithdrawal) throws ApiException{
-        reductFromAccount(newWithdrawal.getSenderIban(), newWithdrawal.getAmount());
+        Account account = accountRepository.findById(newWithdrawal.getSenderIban()).orElse(null);
+        if(withdrawIsValid(newWithdrawal.getSenderIban(), newWithdrawal.getAmount())){
+            account.setBalance(account.getBalance() - newWithdrawal.getAmount());
+            accountRepository.save(account);
+        }
         return withdrawalsRepository.save(newWithdrawal);
     }
 

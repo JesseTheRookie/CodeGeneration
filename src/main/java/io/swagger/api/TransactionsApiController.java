@@ -45,7 +45,7 @@ public class TransactionsApiController implements TransactionsApi {
 
     public ResponseEntity<Integer> createTransaction(@ApiParam(value = "") @Valid @RequestBody Transaction body) throws ApiException {
         String accept = request.getHeader("Accept");
-        transactionService.createTransaction(body);
+        transactionService.initiateTransaction(body);
         return new ResponseEntity<Integer>(Integer.valueOf(body.getId()), HttpStatus.CREATED);
     }
 

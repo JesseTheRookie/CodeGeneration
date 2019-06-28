@@ -4,12 +4,15 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
+
+import org.springframework.beans.factory.annotation.Required;
 import org.threeten.bp.OffsetDateTime;
 import org.springframework.validation.annotation.Validated;
 
@@ -26,13 +29,18 @@ import javax.validation.constraints.*;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
 public class Transaction   {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @JsonProperty("Id")
   private Integer id = null;
 
+  //optional
+  @JsonInclude(JsonInclude.Include.NON_NULL)
   @JsonProperty("FromIban")
   private String fromIban = null;
 
+
+  //optional
+  @JsonInclude(JsonInclude.Include.NON_NULL)
   @JsonProperty("To")
   private String to = null;
 
@@ -84,8 +92,18 @@ public class Transaction   {
     return this;
   }
 
+//  @JsonCreator
+//  //constructor for transactions
+//  public Transaction( @JsonProperty("FromIban") String fromIban, @JsonProperty("To") String to,  @JsonProperty("Amount") Double amount, @JsonProperty("Type") TransactionType type, @JsonProperty("PerformedBy") Integer performedBy){
+//    this.fromIban = fromIban;
+//    this.to = to;
+//    this.amount = amount;
+//    this.type = type;
+//    this.performedBy = performedBy;
+//  }
+
   //constructor for transactions
-  public Transaction(String fromIban, String to, Double amount, TransactionType type, Integer performedBy){
+  public Transaction(String fromIban, String to,  Double amount, TransactionType type, Integer performedBy){
     this.fromIban = fromIban;
     this.to = to;
     this.amount = amount;
@@ -119,6 +137,10 @@ public class Transaction   {
     return this.id;
   }
 
+  public TransactionType getType(){
+    return this.type;
+  }
+
   public void setId(Integer id) {
     this.id = id;
   }
@@ -131,7 +153,7 @@ public class Transaction   {
    * the iban of the sending end
    * @return from
   **/
-  @ApiModelProperty(required = true, value = "the iban of the sending end")
+  //@ApiModelProperty(required = true, value = "the iban of the sending end")
 //  @NotNull
 
   public String getFromIban() {
@@ -151,7 +173,7 @@ public class Transaction   {
    * the iban of the receiving end
    * @return to
   **/
-  @ApiModelProperty(required = true, value = "the iban of the receiving end")
+  //@ApiModelProperty(required = true, value = "the iban of the receiving end")
 //  @NotNull
 
   public String getTo() {
