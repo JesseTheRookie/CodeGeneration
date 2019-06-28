@@ -191,8 +191,8 @@ public class TransactionService {
     }
 
     public void createWithdrawal(Transaction newWithdrawal) throws ApiException{
-        Account account = accountRepository.findById(newWithdrawal.getTo()).orElse(null);
-        if(withdrawIsValid(newWithdrawal.getTo(), newWithdrawal.getAmount())){
+        Account account = accountRepository.findById(newWithdrawal.getFromIban()).orElse(null);
+        if(withdrawIsValid(newWithdrawal.getFromIban(), newWithdrawal.getAmount())){
             account.setBalance(account.getBalance() - newWithdrawal.getAmount());
             accountRepository.save(account);
         }
@@ -209,7 +209,7 @@ public class TransactionService {
 
     private Boolean balanceIsHigherThanAmount(String iban, Double amount) throws ApiException{
         Account account = accountRepository.findById(iban).orElse(null);
-        if (account.getBalance() > amount){
+        if (account.getBalance() >= amount){
             return true;
         } else{
             throw new ApiException(406, "Balance can't be below zero on: "+ iban);
