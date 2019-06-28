@@ -157,7 +157,7 @@ public class TransactionService {
         if (!accountService.accountIsNotNull(withdrawal.getFromIban())) {
             throw new ApiException(406, "Something has gone wrong: ");
         }
-        if(balanceIsHigherThanAmount(withdrawal.getFromIban(), withdrawal.getAmount())){
+        if(!balanceIsHigherThanAmount(withdrawal.getFromIban(), withdrawal.getAmount())){
             throw new ApiException(406, "Balance is to low: ");
         }
     }
