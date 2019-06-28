@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
@@ -36,6 +37,40 @@ public class Transaction   {
 
   @JsonProperty("Amount")
   private Double amount = null;
+
+  @JsonProperty("Type")
+  private TransactionType type = null;
+
+  /**
+   * Gets or Sets transaction type
+   */
+  public enum TransactionType {
+    TRANSACTION("transaction"),
+    DEPOSIT("deposit"),
+    WITHDRAWAL("withdrawal");
+
+    private String value;
+
+    TransactionType(String value) {
+      this.value = value;
+    }
+
+    @Override
+    @JsonValue
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static TransactionType fromValue(String text) {
+      for (TransactionType b : TransactionType.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+  }
 
   @JsonProperty("TimeStamp")
   private Timestamp timeStamp = new Timestamp(new Date().getTime());
