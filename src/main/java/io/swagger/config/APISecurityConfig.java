@@ -27,11 +27,6 @@ public class APISecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure (HttpSecurity httpSecurity) throws Exception{
-        //Need for Heroku
-        httpSecurity.requiresChannel()
-                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
-                .requiresSecure();
-
         ApiKeyAuthFilter filter = new ApiKeyAuthFilter(headerName);
         filter.setAuthenticationManager(authentication -> {
             String principal = (String) authentication.getPrincipal();
