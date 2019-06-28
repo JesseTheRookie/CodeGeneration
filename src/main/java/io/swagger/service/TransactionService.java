@@ -123,12 +123,15 @@ public class TransactionService {
 
     private void validateTransaction(Transaction transaction) throws ApiException {
 
-        if (!areAccountsSameUser(transaction.getFromIban(), transaction.getToIban())) {
-            throw new ApiException(403, "You are not authorized for this request");
+        if (areAccountsSameUser(transaction.getFromIban(), transaction.getToIban())) { // binnen dezelfde user mogen transacties plaats vinden.
+            return;
+            //            throw new ApiException(403, "You are not authorized for this request");
         }
-        if (!areAccountsBothOfTypeCurrent(transaction.getFromIban(), transaction.getToIban())) {
-            throw new ApiException(406, "Can't create a transaction to another savings account than your own nor from a savings acount to another user's current account or vice versa");
+        if (areAccountsBothOfTypeCurrent(transaction.getFromIban(), transaction.getToIban())) { // Niet dezelfde user, dan alleen als beide current zijn
+            return;
+
         }
+        throw new ApiException(406, "Can't create a transaction to another savings account than your own nor from a savings acount to another user's current account or vice versa");
     }
 
 

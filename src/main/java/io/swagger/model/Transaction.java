@@ -88,16 +88,17 @@ public class Transaction {
         }
     }
 
+/*
+  @JsonCreator
+  //constructor for transactions
+  public Transaction( @JsonProperty("FromIban") String fromIban, @JsonProperty("ToIban") String toIban,  @JsonProperty("Amount") Double amount, @JsonProperty("Type") TransactionType type, @JsonProperty("PerformedBy") Integer performedBy){
+    this.fromIban = fromIban;
+    this.toIban = toIban;
+    this.amount = amount;
+    this.type = type;
+    this.performedBy = performedBy;
+  }*/
 
-//  @JsonCreator
-//  //constructor for transactions
-//  public Transaction( @JsonProperty("FromIban") String fromIban, @JsonProperty("To") String to,  @JsonProperty("Amount") Double amount, @JsonProperty("Type") TransactionType type, @JsonProperty("PerformedBy") Integer performedBy){
-//    this.fromIban = fromIban;
-//    this.to = to;
-//    this.amount = amount;
-//    this.type = type;
-//    this.performedBy = performedBy;
-//  }
 
     //constructor for transactions
     public Transaction(String fromIban, String toIban, Double amount, TransactionType type, Integer performedBy) {
@@ -137,6 +138,7 @@ public class Transaction {
         return this.type;
     }
 
+
     public String getFromIban() {
         return fromIban;
     }
@@ -172,7 +174,7 @@ public class Transaction {
         this.id = id;
     }
 
-    public void setFromIban(String from) {
+    public void setFromIban(String fromIban) {
         this.fromIban = fromIban;
     }
 
@@ -207,7 +209,7 @@ public class Transaction {
     /**
      * the iban of the sending end
      *
-     * @return from
+     * @return fromIban
      **/
     //@ApiModelProperty(required = true, value = "the iban of the sending end")
 //  @NotNull
@@ -299,7 +301,7 @@ public class Transaction {
 
         sb.append("    id: ").append(toIndentedString(id)).append("\n");
         if (fromIban != null) {
-            sb.append("    from: ").append(toIndentedString(fromIban)).append("\n");
+            sb.append("    fromIban: ").append(toIndentedString(fromIban)).append("\n");
         }
         if (toIban != null) {
             sb.append("    toIban: ").append(toIndentedString(toIban)).append("\n");
