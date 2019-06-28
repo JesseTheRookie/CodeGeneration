@@ -49,7 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/accounts", "/transactions", "/deposits", "/withdrawals").hasAnyRole("USER_EMPLOYEE", "EMPLOYEE")
+                .antMatchers("/accounts").hasAnyRole("USER_EMPLOYEE", "EMPLOYEE")
+                .antMatchers("/transactions").permitAll()
                 .antMatchers(HttpMethod.GET, "/users/**","/css/**", "/img/**", "/js/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/users/**").hasAnyRole("USER_EMPLOYEE", "ADMIN")
                 .anyRequest().authenticated()
