@@ -50,7 +50,9 @@ public class TransactionsApiController implements TransactionsApi {
     }
 
     //Get allTransactions werkt
-    public ResponseEntity<List<Transaction>> getTransactions(@ApiParam(value = "The id of a transaction") @Valid @RequestParam(value = "transactionID", required = false) Integer transactionID, @ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "fromIban", required = false) String fromIban, @ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "to", required = false) String to, @ApiParam(value = "The userId of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) throws ApiException {
+    public ResponseEntity<List<Transaction>> getTransactions(@ApiParam(value = "The id of a transaction") @Valid @RequestParam(value = "transactionID", required = false) Integer transactionID, @ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "fromIban", required = false) String fromIban, @ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "to", required = false) String to, @ApiParam(value = "The type of the transaction") @Valid @RequestParam(value = "Type", required = false) Transaction.TransactionType type, @ApiParam(value = "The userId of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) throws ApiException{
+
+//     ResponseEntity<List<Transaction>> getTransactions(@ApiParam(value = "The id of a transaction") @Valid @RequestParam(value = "transactionID", required = false) Integer transactionID, @ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "fromIban", required = false) String fromIban, @ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "to", required = false) String to, @ApiParam(value = "The userId of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) throws ApiException {
         String accept = request.getHeader("Accept");
         if (fromIban != null) {
             return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getTransactionsByFromIban(fromIban), HttpStatus.OK); // deze werkt
@@ -60,7 +62,9 @@ public class TransactionsApiController implements TransactionsApi {
             return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getTransactionById(transactionID), HttpStatus.OK); // Geeft één transaction terug, dus geen List terug geven
         } else if (performedBy != null) {
             return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getTransactionsByPerformedBy(performedBy), HttpStatus.OK);
-        } else {
+        } else if (type != null){
+            return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getTransactionsByType(type), HttpStatus.OK);
+        }else{
             return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getAllTransactions(), HttpStatus.OK);
         }
     }

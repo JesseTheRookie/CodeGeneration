@@ -191,4 +191,8 @@ public class TransactionService {
     public Iterable<Transaction> getTransactionsByPerformedBy(Integer userId) {
         return transactionRepository.getTransactionsByPerformedBy(userId);
     }
+
+    public Iterable<Transaction> getTransactionsByType (Transaction.TransactionType type){
+        return transactionRepository.getTransactionsByType(type);
+    }
 }

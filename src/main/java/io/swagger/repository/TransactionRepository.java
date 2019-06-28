@@ -16,4 +16,8 @@ public interface TransactionRepository extends CrudRepository<Transaction, Integ
     List<Transaction> getTransactionById(Integer id);
     @Query("select t from Transaction t where t.performedBy = ?1")
     List<Transaction> getTransactionsByPerformedBy(Integer userId);
+
+
+    @Query("select t from Transaction t where t.type = ?1")
+    List<Transaction> getTransactionsByType(Transaction.TransactionType type);
 }
