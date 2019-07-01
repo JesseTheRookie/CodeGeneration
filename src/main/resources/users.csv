@@ -1,4 +1,4 @@
-bank,bank123,user_employee
-stefan,admin123,user_employee
-bert,user123,user
-ernie,user123,employee
+bank,bank123,USER_EMPLOYEE
+stefan,admin123,USER_EMPLOYEE
+bert,user123,USER
+ernie,user123,EMPLOYEE

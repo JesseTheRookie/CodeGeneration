@@ -1,5 +1,7 @@
 package io.swagger.config;
 
+import io.swagger.service.MyUserDetailsService;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
@@ -7,42 +9,55 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 @Order(1)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new MyUserDetailsService();
+    };
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    };
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("bank")
-                .password("{noop}bank123")
-                .roles("USER_EMPLOYEE")
-                .and()
-                .withUser("stefan")
-                .password("{noop}admin123")
-                .roles("USER_EMPLOYEE")
-                .and()
-                .withUser("jasper")
-                .password("{noop}appelmoes123")
-                .roles("USER_EMPLOYEE")
-                .and()
-                .withUser("gabie")
-                .password("{noop}frikandel123")
-                .roles("USER_EMPLOYEE")
-                .and()
-                .withUser("jesse")
-                .password("{noop}niks123")
-                .roles("USER_EMPLOYEE")
-                .and()
-                .withUser("bert")
-                .password("{noop}user123")
-                .roles("USER")
-                .and()
-                .withUser("ernie")
-                .password("{noop}user123")
-                .roles("EMPLOYEE");
+        auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
+//        auth.inMemoryAuthentication()
+//                .withUser("bank")
+//                .password("{noop}bank123")
+//                .roles("USER_EMPLOYEE")
+//                .and()
+//                .withUser("stefan")
+//                .password("{noop}admin123")
+//                .roles("USER_EMPLOYEE")
+//                .and()
+//                .withUser("jasper")
+//                .password("{noop}appelmoes123")
+//                .roles("USER_EMPLOYEE")
+//                .and()
+//                .withUser("gabie")
+//                .password("{noop}frikandel123")
+//                .roles("USER_EMPLOYEE")
+//                .and()
+//                .withUser("jesse")
+//                .password("{noop}niks123")
+//                .roles("USER_EMPLOYEE")
+//                .and()
+//                .withUser("bert")
+//                .password("{noop}user123")
+//                .roles("USER")
+//                .and()
+//                .withUser("ernie")
+//                .password("{noop}user123")
+//                .roles("EMPLOYEE");
     }
 
     @Override

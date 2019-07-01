@@ -113,26 +113,26 @@ public class Account   {
     }
 
 
-    public Account(String iban, Optional<User> user, String name, Double balance, AccounttypeEnum type, StatusEnum status){
+    public Account(String iban, Optional<User> user, String name, Double balance, String accounttype, String status){
         this.iban = iban;
         if(user.isPresent()){
             this.user = user.get();
         }
         this.name = name;
         this.balance = balance;
-        this.accounttype = type;
-        this.status = status;
-        this.typeValue = this.accounttype.toString();
+        this.accounttype = AccounttypeEnum.valueOf(accounttype);
+        this.status = StatusEnum.valueOf(status);
+        this.typeValue = accounttype;
     }
 
-    public Account(String iban, User user, String name, Double balance, AccounttypeEnum type, StatusEnum status){
+    public Account(String iban, User user, String name, Double balance, String accounttype, String status){
         this.iban = iban;
         this.user = user;
         this.name = name;
         this.balance = balance;
-        this.accounttype = type;
-        this.status = status;
-        this.typeValue = this.accounttype.toString();
+        this.accounttype = AccounttypeEnum.valueOf(accounttype);
+        this.status = StatusEnum.valueOf(status);
+        this.typeValue = accounttype;
     }
 
     public Account(){}
@@ -161,7 +161,7 @@ public class Account   {
      **/
 
 
-    public Integer getUserId(){
+    public Integer getUserId(){ //wat doet dit hier?
         return this.user.getId();
     }
 

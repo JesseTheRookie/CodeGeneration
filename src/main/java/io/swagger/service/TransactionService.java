@@ -63,11 +63,11 @@ public class TransactionService {
     //get all send transactions
     public Iterable<Transaction> getTransactionsByFromIban(String iban) throws ApiException {
         Account account = accountRepository.findById(iban).orElse(null);
-        if (userRepository.getUserByName(
+        if (userRepository.getUserByUsername(
                 securityController.currentUserName()).getId() == account.getUserId()
-                || userRepository.getUserByName(
+                || userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
-                || userRepository.getUserByName(
+                || userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
             return transactionRepository.getTransactionsByFromIban(iban);
         } else throw new ApiException(403, "You are not authorized for this request");
@@ -77,11 +77,11 @@ public class TransactionService {
     //get all received transactions
     public Iterable<Transaction> getTransactionsByToIban(String iban) throws ApiException {
         Account account = accountRepository.findById(iban).orElse(null);
-        if (userRepository.getUserByName(
+        if (userRepository.getUserByUsername(
                 securityController.currentUserName()).getId() == account.getUserId()
-                || userRepository.getUserByName(
+                || userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
-                || userRepository.getUserByName(
+                || userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
             return transactionRepository.getTransactionsByToIban(iban);
         } else throw new ApiException(403, "You are not authorized for this request");
@@ -254,9 +254,9 @@ public class TransactionService {
         int UserIdFrom = accountFrom.getUserId();
         int UserIdTo = accountTo.getUserId();
 
-        if(){
-
-        }
+//        if(){
+//
+//        }
 
         if (UserIdFrom == UserIdTo) {
             return true;
@@ -288,8 +288,7 @@ public class TransactionService {
 
     private Boolean accountIsOwnedByLoggedInUser(String iban){
         Account account = accountRepository.findById(iban).orElse(null);
-        userRepository.
-        return true;
+        return account.getUser().getId() == securityController.currentUserId();
     }
 
     private void checkIfAccountIsNull(String iban) throws ApiException {
@@ -307,9 +306,9 @@ public class TransactionService {
 
 
     public boolean isEmployee() {
-        return userRepository.getUserByName(
+        return userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
-                || userRepository.getUserByName(
+                || userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE);
     }
 

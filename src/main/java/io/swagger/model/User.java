@@ -18,7 +18,7 @@ import javax.validation.constraints.*;
  */
 @Entity
 @Validated
-@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
 public class User   {
     @Id
@@ -28,20 +28,21 @@ public class User   {
     private Integer id; // needs to be converted to Long
 
     @JsonProperty("Name")
-    private String name = null; // needs to be username
+    private String username = null; // needs to be username
 
     @JsonIgnore
     private String password = null;
+
 
     /**
      * Gets or Sets role
      */
     public enum RoleEnum {
-        USER("user"),
+        USER("USER"),
 
-        EMPLOYEE("employee"),
+        EMPLOYEE("EMPLOYEE"),
 
-        USER_EMPLOYEE("user_employee");
+        USER_EMPLOYEE("USER_EMPLOYEE");
 
         private String value;
 
@@ -74,17 +75,17 @@ public class User   {
         return this;
     }
 
-    public User(Integer id, String name, String password, RoleEnum role){
+    public User(Integer id, String username, String password, String role){
         this.id = id;
-        this.name = name;
+        this.username = username;
         this.password = password;
-        this.role = role;
+        this.role = RoleEnum.valueOf(role);
     }
 
-    public User(String name, String password, RoleEnum role){
-        this.name = name;
+    public User(String username, String password, String role){
+        this.username = username;
         this.password = password;
-        this.role = role;
+        this.role = RoleEnum.valueOf(role);;
     }
 
     public User(){}
@@ -103,24 +104,24 @@ public class User   {
         this.id = id;
     }
 
-    public User name(String name) {
-        this.name = name;
+    public User username(String username) {
+        this.username = username;
         return this;
     }
 
     /**
-     * Get name
-     * @return name
+     * Get username
+     * @return username
      **/
     @ApiModelProperty(required = true, value = "")
     @NotNull
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public User password(String password) {
@@ -176,14 +177,14 @@ public class User   {
         }
         User user = (User) o;
         return Objects.equals(this.id, user.id) &&
-                Objects.equals(this.name, user.name) &&
+                Objects.equals(this.username, user.username) &&
                 Objects.equals(this.password, user.password) &&
                 Objects.equals(this.role, user.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, password, role);
+        return Objects.hash(id, username, password, role);
     }
 
     @Override
@@ -192,7 +193,7 @@ public class User   {
         sb.append("class User {\n");
 
         sb.append("    id: ").append(toIndentedString(id)).append("\n");
-        sb.append("    name: ").append(toIndentedString(name)).append("\n");
+        sb.append("    username: ").append(toIndentedString(username)).append("\n");
         sb.append("    password: ").append(toIndentedString(password)).append("\n");
         sb.append("    role: ").append(toIndentedString(role)).append("\n");
         sb.append("}");

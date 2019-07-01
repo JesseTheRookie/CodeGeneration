@@ -15,8 +15,10 @@ import java.math.BigDecimal;
 
 import io.swagger.api.SecurityController;
 import io.swagger.repository.UserRepository;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.context.annotation.Bean;
 import org.threeten.bp.OffsetDateTime;
 import org.springframework.validation.annotation.Validated;
 
@@ -60,9 +62,8 @@ public class Transaction {
     @JsonProperty("PerformedBy")
     private Integer performedBy = null;
 
-    @Autowired
+    @Autowired(required = false)
     private SecurityController securityController;
-
 
     /**
      * Gets or Sets transaction type
@@ -108,21 +109,21 @@ public class Transaction {
 
 
     //constructor for transactions
-    public Transaction(String fromIban, String toIban, Double amount, TransactionType type) {
+    public Transaction(String fromIban, String toIban, Double amount, String type) {
         this.fromIban = fromIban;
         this.toIban = toIban;
         this.amount = amount;
-        this.type = type;
-        this.performedBy = securityController .getUserById;
+        this.type = TransactionType.valueOf(type);
+        this.performedBy = securityController.currentUserId();
     }
 
     //constructor for deposits/withdrawals
-    public Transaction(String Iban, Double amount, TransactionType type) {
+    public Transaction(String Iban, Double amount, String type) {
         this.amount = amount;
-        this.type = type;
-        this.performedBy = userRepository.getUserById;
+        this.type = TransactionType.valueOf(type);
+        this.performedBy = securityController.currentUserId();
 
-        if (type == TransactionType.DEPOSIT) {
+        if (type.equals(TransactionType.DEPOSIT)) {
             this.toIban = Iban;
         } else {
             this.fromIban = Iban;
@@ -329,5 +330,29 @@ public class Transaction {
             return "null";
         }
         return o.toString().replace("\n", "\n    ");
+    }
+
+///// TESTING
+
+    //constructor for test transactions
+    public Transaction(String fromIban, String toIban, Double amount, String type, int performedBy) {
+        this.fromIban = fromIban;
+        this.toIban = toIban;
+        this.amount = amount;
+        this.type = TransactionType.valueOf(type);
+        this.performedBy = performedBy;
+    }
+
+    //constructor for test deposits/withdrawals
+    public Transaction(String Iban, Double amount, String type, int performedBy) {
+        this.amount = amount;
+        this.type = TransactionType.valueOf(type);
+        this.performedBy = performedBy;
+
+        if (type.equals(TransactionType.DEPOSIT)) {
+            this.toIban = Iban;
+        } else {
+            this.fromIban = Iban;
+        }
     }
 }
