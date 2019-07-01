@@ -2,8 +2,6 @@ package io.swagger.config;
 
 import io.swagger.model.*;
 import io.swagger.repository.*;
-import io.swagger.service.DepositsService;
-import io.swagger.service.TransactionService;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -18,17 +16,13 @@ public class MyApplicationRunner implements ApplicationRunner {
     private ApiKeyRepository keyRepository;
     private AccountRepository accountRepository;
     private TransactionRepository transactionRepository;
-    private WithdrawalsRepository withdrawalsRepository;
-    private DepositsRepository depositsRepository;
 
-    public MyApplicationRunner(UserRepository userRepository, AccountRepository accountRepository, ApiKeyRepository keyRepository, TransactionRepository transactionRepository, DepositsRepository depositsRepository, WithdrawalsRepository withdrawalsRepository){
+    public MyApplicationRunner(UserRepository userRepository, AccountRepository accountRepository, ApiKeyRepository keyRepository, TransactionRepository transactionRepository){
 
         this.userRepository = userRepository;
         this.accountRepository = accountRepository;
         this.keyRepository = keyRepository;
         this.transactionRepository = transactionRepository;
-        this.depositsRepository = depositsRepository;
-        this.withdrawalsRepository = withdrawalsRepository;
     }
 
     @Override

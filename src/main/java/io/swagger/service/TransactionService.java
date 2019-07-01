@@ -29,9 +29,7 @@ public class TransactionService {
     private TransactionRepository transactionRepository;
     private AccountRepository accountRepository;
     private SecurityController securityController;
-    private DepositsService depositsService;
     private AccountService accountService;
-    private WithdrawalsService withdrawalsService;
     private UserRepository userRepository;
 
     private final Double MAX_AMOUNT = 500.0;
@@ -42,11 +40,9 @@ public class TransactionService {
 
 
     //constructor
-    public TransactionService(TransactionRepository transactionRepository, AccountRepository accountRepository, SecurityController securityController, UserRepository userRepository, DepositsService depositsService, WithdrawalsService withdrawalsService, AccountService accountService) {
+    public TransactionService(TransactionRepository transactionRepository, AccountRepository accountRepository, SecurityController securityController, UserRepository userRepository, AccountService accountService) {
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
-        this.withdrawalsService = withdrawalsService;
-        this.depositsService = depositsService;
         this.securityController = securityController;
         this.userRepository = userRepository;
         this.accountService = accountService;
@@ -72,10 +68,9 @@ public class TransactionService {
                 || userRepository.getUserByName(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
                 || userRepository.getUserByName(
-                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)){
+                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
             return transactionRepository.getTransactionsByFromIban(iban);
-        }
-        else throw new ApiException(403, "You are not authorized for this request");
+        } else throw new ApiException(403, "You are not authorized for this request");
     }
 
 
@@ -103,7 +98,6 @@ public class TransactionService {
     public Iterable<Transaction> getTransactionsByType(Transaction.TransactionType type) {
         return transactionRepository.getTransactionsByType(type);
     }
-
 
 
     //methods
@@ -157,7 +151,7 @@ public class TransactionService {
         if (!accountService.accountIsNotNull(withdrawal.getFromIban())) {
             throw new ApiException(406, "Something has gone wrong: ");
         }
-        if(!balanceIsHigherThanAmount(withdrawal.getFromIban(), withdrawal.getAmount())){
+        if (!balanceIsHigherThanAmount(withdrawal.getFromIban(), withdrawal.getAmount())) {
             throw new ApiException(406, "Balance is to low: ");
         }
     }
@@ -165,32 +159,26 @@ public class TransactionService {
 
     //creators
     private void createTransaction(Transaction newTransaction) throws ApiException {
-        String fromAccountIban = newTransaction.getFromIban();
-        String toAccountIban = newTransaction.getToIban();
-        double amount = newTransaction.getAmount();
-
-        if (!theAccountIsCustomer(fromAccountIban)) {
+        if (!theAccountIsCustomer(newTransaction.getFromIban())) {
             throw new ApiException(403, "You are not authorized for this request");
         }
-       // if (theTransactionIsValid(fromAccountIban, toAccountIban)) {
-            if (theTransactionDoesNotExceedTheDailyLimit(fromAccountIban)) {
-                if (theAmountFromAccountDoesNotExceedTheMaxAmount(amount)) {
-                    if (withdrawalsService.withdrawIsValid(fromAccountIban, amount)) {
-                        withdrawalsService.reductFromAccount(fromAccountIban, amount);
-                        depositsService.addToAccount(toAccountIban, amount);
-                        transactionRepository.save(newTransaction);
-                    }
-                }
-         //   }
-        } else if (withdrawalsService.withdrawIsValid(fromAccountIban, amount)) {
-            withdrawalsService.reductFromAccount(fromAccountIban, amount);
-            depositsService.addToAccount(toAccountIban, amount);
-            transactionRepository.save(newTransaction);
+
+        try {
+            theTransactionDoesNotExceedTheDailyLimit(newTransaction.getFromIban());
+            theAmountFromAccountDoesNotExceedTheMaxAmount(newTransaction.getAmount());
+            if (accountService.accountIsNotNull(newTransaction.getFromIban())) {
+                createWithdrawal(newTransaction);
+                createDeposit(newTransaction);
+                transactionRepository.save(newTransaction);
+            }
+        } catch (Exception e) {
+            if (accountService.accountIsNotNull(newTransaction.getFromIban())) {
+                createWithdrawal(newTransaction);
+                createDeposit(newTransaction);
+                transactionRepository.save(newTransaction);
+            }
         }
     }
-
-
-    //create
 
     private void createDeposit(Transaction newDeposit) throws ApiException {
         Account account = accountRepository.findById(newDeposit.getToIban()).orElse(null);
@@ -201,18 +189,15 @@ public class TransactionService {
         transactionRepository.save(newDeposit);
     }
 
-    private void createWithdrawal(Transaction newWithdrawal) throws ApiException {
+    private void createWithdrawal(Transaction newWithdrawal) {
         Account account = accountRepository.findById(newWithdrawal.getFromIban()).orElse(null);
 
-       // if (withdrawIsValid(newWithdrawal.getFromIban(), newWithdrawal.getAmount())) {
-            account.setBalance(account.getBalance() - newWithdrawal.getAmount());
-            accountRepository.save(account);
-       // }
+        // if (withdrawIsValid(newWithdrawal.getFromIban(), newWithdrawal.getAmount())) {
+        account.setBalance(account.getBalance() - newWithdrawal.getAmount());
+        accountRepository.save(account);
+        // }
         transactionRepository.save(newWithdrawal);
     }
-
-
-
 
 
     private Integer getNumberOfTransactionToday(String iban) {
