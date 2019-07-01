@@ -13,6 +13,9 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.math.BigDecimal;
 
+import io.swagger.api.SecurityController;
+import io.swagger.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.threeten.bp.OffsetDateTime;
 import org.springframework.validation.annotation.Validated;
@@ -56,6 +59,10 @@ public class Transaction {
 
     @JsonProperty("PerformedBy")
     private Integer performedBy = null;
+
+    @Autowired
+    private SecurityController securityController;
+
 
     /**
      * Gets or Sets transaction type
@@ -101,19 +108,19 @@ public class Transaction {
 
 
     //constructor for transactions
-    public Transaction(String fromIban, String toIban, Double amount, TransactionType type, Integer performedBy) {
+    public Transaction(String fromIban, String toIban, Double amount, TransactionType type) {
         this.fromIban = fromIban;
         this.toIban = toIban;
         this.amount = amount;
         this.type = type;
-        this.performedBy = performedBy;
+        this.performedBy = securityController .getUserById;
     }
 
     //constructor for deposits/withdrawals
-    public Transaction(String Iban, Double amount, TransactionType type, Integer performedBy) {
+    public Transaction(String Iban, Double amount, TransactionType type) {
         this.amount = amount;
         this.type = type;
-        this.performedBy = performedBy;
+        this.performedBy = userRepository.getUserById;
 
         if (type == TransactionType.DEPOSIT) {
             this.toIban = Iban;

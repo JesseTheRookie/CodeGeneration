@@ -103,7 +103,6 @@ public class TransactionService {
     //methods
 
     public void initiateTransaction(Transaction newTransaction) throws ApiException {
-
         switch (newTransaction.getType()) {
             case TRANSACTION:
                 validateTransaction(newTransaction);
@@ -125,16 +124,33 @@ public class TransactionService {
     //validators
 
     private void validateTransaction(Transaction transaction) throws ApiException {
+        checkIfAccountIsNull(transaction.getToIban());
+        checkIfAccountIsNull(transaction.getFromIban());
 
-        if (areAccountsSameUser(transaction.getFromIban(), transaction.getToIban())) { // binnen dezelfde user mogen transacties plaats vinden.
-            return;
-            //            throw new ApiException(403, "You are not authorized for this request");
-        }
-        if (areAccountsBothOfTypeCurrent(transaction.getFromIban(), transaction.getToIban())) { // Niet dezelfde user, dan alleen als beide current zijn
-            return;
+        if (!isEmployee()) { //if user is employee no validation needed
 
+            if (!accountsAreOwnedBySameUser(transaction.getFromIban(), transaction.getToIban())) { // binnen dezelfde user mogen transacties plaats vinden.
+
+                if(!accountIsOwnedByLoggedInUser(transaction.getFromIban())){
+                    throw new ApiException(403, "You are not authorized for this request");
+                }
+
+                if (!areAccountsBothOfTypeCurrent(transaction.getFromIban(), transaction.getToIban())) { // Niet dezelfde user, dan alleen als beide current zijn
+                    throw new ApiException(403, "You are not authorized for this request");
+                }
+
+                if (transactionExceedTheDailyLimit(transaction.getFromIban())) {
+                    throw new ApiException(406, "Can't create more transactions than day limit" + DAILY_TRANSACTIONS_LIMIT);
+                }
+
+                if (amountFromAccountExceedTheMaxAmount(transaction.getAmount())) {
+                    throw new ApiException(406, "Can't transfer more than " + MAX_AMOUNT);
+                }
+
+            }
         }
-        throw new ApiException(406, "Can't create a transaction to another savings account than your own nor from a savings acount to another user's current account or vice versa");
+
+        //voer transactie uit
     }
 
 
@@ -148,7 +164,7 @@ public class TransactionService {
         if (!isEmployee()) {
             throw new ApiException(403, "You are not authorized for this request");
         }
-        if (!accountService.accountIsNotNull(withdrawal.getFromIban())) {
+        if (accountService.accountIsNull(withdrawal.getFromIban())) {
             throw new ApiException(406, "Something has gone wrong: ");
         }
         if (!balanceIsHigherThanAmount(withdrawal.getFromIban(), withdrawal.getAmount())) {
@@ -159,33 +175,30 @@ public class TransactionService {
 
     //creators
     private void createTransaction(Transaction newTransaction) throws ApiException {
-        if (!theAccountIsCustomer(newTransaction.getFromIban())) {
-            throw new ApiException(403, "You are not authorized for this request");
-        }
+        Account fromAccount = accountRepository.findById(newTransaction.getFromIban()).orElse(null);
+        Account toAccount = accountRepository.findById(newTransaction.getToIban()).orElse(null);
 
-        try {
-            theTransactionDoesNotExceedTheDailyLimit(newTransaction.getFromIban());
-            theAmountFromAccountDoesNotExceedTheMaxAmount(newTransaction.getAmount());
-            if (accountService.accountIsNotNull(newTransaction.getFromIban())) {
-                createWithdrawal(newTransaction);
-                createDeposit(newTransaction);
-                transactionRepository.save(newTransaction);
-            }
-        } catch (Exception e) {
-            if (accountService.accountIsNotNull(newTransaction.getFromIban())) {
-                createWithdrawal(newTransaction);
-                createDeposit(newTransaction);
-                transactionRepository.save(newTransaction);
-            }
-        }
+        //update from account
+        fromAccount.setBalance(fromAccount.getBalance() - newTransaction.getAmount());
+        accountRepository.save(fromAccount);
+        // }
+
+        //update to account
+        toAccount.setBalance(toAccount.getBalance() + newTransaction.getAmount());
+        accountRepository.save(toAccount);
+
+        transactionRepository.save(newTransaction);
     }
 
     private void createDeposit(Transaction newDeposit) throws ApiException {
         Account account = accountRepository.findById(newDeposit.getToIban()).orElse(null);
-        if (accountService.accountIsNotNull(newDeposit.getToIban())) {
-            account.setBalance(account.getBalance() + newDeposit.getAmount());
-            accountRepository.save(account);
+        if (accountService.accountIsNull(newDeposit.getToIban())) {
+            throw new ApiException(406, "no account found that corresponds with the IBAN: " + newDeposit.getToIban());
         }
+
+        account.setBalance(account.getBalance() + newDeposit.getAmount());
+
+        accountRepository.save(account);
         transactionRepository.save(newDeposit);
     }
 
@@ -226,28 +239,24 @@ public class TransactionService {
         return transactionsDoneThisDay;
     }
 
-    private Boolean theTransactionDoesNotExceedTheDailyLimit(String iban) throws ApiException {
-        if (getNumberOfTransactionToday(iban) < DAILY_TRANSACTIONS_LIMIT) {
-            return true;
-        } else {
-            throw new ApiException(406, "Can't create more transactions than day limit" + DAILY_TRANSACTIONS_LIMIT);
-        }
+    private Boolean transactionExceedTheDailyLimit(String iban) {
+        return getNumberOfTransactionToday(iban) > DAILY_TRANSACTIONS_LIMIT;
     }
 
-    private Boolean theAmountFromAccountDoesNotExceedTheMaxAmount(Double amount) throws ApiException {
-        if (amount < MAX_AMOUNT) {
-            return true;
-        } else {
-            throw new ApiException(406, "Can't transfer more than " + MAX_AMOUNT);
-        }
+    private Boolean amountFromAccountExceedTheMaxAmount(Double amount) {
+        return amount > MAX_AMOUNT;
     }
 
-    private Boolean areAccountsSameUser(String ibanFrom, String ibanTo) {
+    private Boolean accountsAreOwnedBySameUser(String ibanFrom, String ibanTo) {
         Account accountFrom = accountRepository.findById(ibanFrom).orElse(null);
         Account accountTo = accountRepository.findById(ibanTo).orElse(null);
 
         int UserIdFrom = accountFrom.getUserId();
         int UserIdTo = accountTo.getUserId();
+
+        if(){
+
+        }
 
         if (UserIdFrom == UserIdTo) {
             return true;
@@ -277,15 +286,31 @@ public class TransactionService {
         }
     }
 
+    private Boolean accountIsOwnedByLoggedInUser(String iban){
+        Account account = accountRepository.findById(iban).orElse(null);
+        userRepository.
+        return true;
+    }
 
-    public boolean isEmployee() throws ApiException {
-        if (userRepository.getUserByName(
+    private void checkIfAccountIsNull(String iban) throws ApiException {
+        //check if fromIBAN exists
+        if (accountService.accountIsNull(iban)) {
+            throw new ApiException(406, "no account found that corresponds with the IBAN: " + iban);
+        }
+    }
+
+
+//    //check if toIBAN exists
+//        if (accountService.accountIsNull(newTransaction.getToIban())) {
+//        throw new ApiException(406, "no account found that corresponds with the IBAN: " + newTransaction.getFromIban());
+//    }
+
+
+    public boolean isEmployee() {
+        return userRepository.getUserByName(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
                 || userRepository.getUserByName(
-                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
-            return true;
-        }
-        return false;
+                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE);
     }
 
     private Boolean theAccountIsCustomer(String iban) {
@@ -297,8 +322,4 @@ public class TransactionService {
         }
         return false;
     }
-
-/////////////// all filter functions
-
-
 }

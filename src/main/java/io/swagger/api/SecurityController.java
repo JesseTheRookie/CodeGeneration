@@ -27,6 +27,11 @@ public class SecurityController {
         return authentication.getName();
     }
 
+    public int currentUserId() {
+        Authentication authentication = authenticationFacade.getAuthentication();
+        return authentication.getId();
+    }
+
     @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
     @ResponseBody
     public Object currentUser() {

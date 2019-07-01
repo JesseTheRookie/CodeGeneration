@@ -25,10 +25,10 @@ public class User   {
     @SequenceGenerator(name = "user_seq", initialValue = 100)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
     @JsonProperty("Id")
-    private Integer id;
+    private Integer id; // needs to be converted to Long
 
     @JsonProperty("Name")
-    private String name = null;
+    private String name = null; // needs to be username
 
     @JsonIgnore
     private String password = null;
