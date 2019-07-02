@@ -20,7 +20,7 @@ import javax.validation.constraints.*;
 @Validated
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
-public class User   {
+public class User  {
     @Id
     @SequenceGenerator(name = "user_seq", initialValue = 100)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")

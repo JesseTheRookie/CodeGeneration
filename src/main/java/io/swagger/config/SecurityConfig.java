@@ -1,6 +1,7 @@
 package io.swagger.config;
 
-import io.swagger.service.MyUserDetailsService;
+//import io.swagger.service.MyUserDetailsService;
+import io.swagger.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,14 +18,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 @Order(1)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-//
+
 //    @Bean
 //    public UserDetailsService userDetailsService() {
 //        return new MyUserDetailsService();
 //    }
 
     @Autowired
-    private MyUserDetailsService userDetailsService;
+    public UserDetailsService userService;
+
+//    private MyUserDetailsService userDetailsService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -33,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
 //        auth.inMemoryAuthentication()
 //                .withUser("bank")
 //                .password("{noop}bank123")

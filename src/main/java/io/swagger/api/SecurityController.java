@@ -20,6 +20,7 @@ public class SecurityController {
 
     @Autowired
     private IAuthenticationFacade authenticationFacade;
+
     @Autowired
     private UserRepository userRepository;
 
