@@ -3,8 +3,6 @@ package io.swagger.security;
 
 import io.swagger.model.User;
 import io.swagger.repository.UserRepository;
-import lombok.NoArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -23,14 +21,18 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
-        String credentials = (String)authentication.getCredentials();
+        String credentials = (String) authentication.getCredentials();
 
         User user = userRepository.findUserByUsername(username);
-        if (user == null){
+        if (user == null) {
+            throw new UsernameNotFoundException(username);
+
+        } else if (user.getUsername().equals("anonymousUser")) {
             throw new UsernameNotFoundException(username);
         }
 
-        if(!new BCryptPasswordEncoder().matches(credentials, user.getPassword())){
+
+        if (!new BCryptPasswordEncoder().matches(credentials, user.getPassword())) {
             throw new BadCredentialsException("Invalid password ");
         }
 

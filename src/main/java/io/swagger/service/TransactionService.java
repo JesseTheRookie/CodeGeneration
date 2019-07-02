@@ -131,7 +131,7 @@ public class TransactionService {
 
             if (!accountsAreOwnedBySameUser(transaction.getFromIban(), transaction.getToIban())) { // binnen dezelfde user mogen transacties plaats vinden.
 
-                if(!accountIsOwnedByLoggedInUser(transaction.getFromIban())){
+                if (!accountIsOwnedByLoggedInUser(transaction.getFromIban())) {
                     throw new ApiException(403, "You are not authorized for this request");
                 }
 
@@ -254,14 +254,7 @@ public class TransactionService {
         int UserIdFrom = accountFrom.getUserId();
         int UserIdTo = accountTo.getUserId();
 
-//        if(){
-//
-//        }
-
-        if (UserIdFrom == UserIdTo) {
-            return true;
-        }
-        return false;
+        return UserIdFrom == UserIdTo;
     }
 
     private Boolean areAccountsBothOfTypeCurrent(String ibanFrom, String ibanTo) {
@@ -271,10 +264,8 @@ public class TransactionService {
         Account.AccounttypeEnum accounttypeFrom = accountFrom.getAccounttype();
         Account.AccounttypeEnum accounttypeTo = accountTo.getAccounttype();
 
-        if (accounttypeFrom == accounttypeTo) {
-            return true;
-        }
-        return false;
+        return accounttypeFrom.equals(accounttypeTo);
+
     }
 
     private Boolean balanceIsHigherThanAmount(String iban, Double amount) throws ApiException {
@@ -286,7 +277,7 @@ public class TransactionService {
         }
     }
 
-    private Boolean accountIsOwnedByLoggedInUser(String iban){
+    private Boolean accountIsOwnedByLoggedInUser(String iban) {
         Account account = accountRepository.findById(iban).orElse(null);
         return account.getUser().getId() == securityController.currentUserId();
     }
@@ -298,27 +289,14 @@ public class TransactionService {
         }
     }
 
-
-//    //check if toIBAN exists
-//        if (accountService.accountIsNull(newTransaction.getToIban())) {
-//        throw new ApiException(406, "no account found that corresponds with the IBAN: " + newTransaction.getFromIban());
-//    }
-
-
     public boolean isEmployee() {
-        return userRepository.getUserByUsername(
-                securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
-                || userRepository.getUserByUsername(
-                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE);
+        return securityController.currentUser().hasAuthority(User.RoleEnum.EMPLOYEE) || securityController.currentUser().hasAuthority(User.RoleEnum.USER_EMPLOYEE);
     }
 
     private Boolean theAccountIsCustomer(String iban) {
         Account account = accountRepository.findById(iban).orElse(null);
         User user = account.getUser();
 
-        if (user.getRole() == User.RoleEnum.USER) { //userHasAuthority("ROLE_ADMIN")
-            return true;
-        }
-        return false;
+        return user.hasAuthority(User.RoleEnum.USER);
     }
 }

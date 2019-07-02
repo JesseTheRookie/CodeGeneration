@@ -1,7 +1,6 @@
 package io.swagger.model;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -9,10 +8,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModelProperty;
-import org.springframework.context.support.BeanDefinitionDsl;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.Entity;
@@ -24,9 +24,14 @@ import javax.validation.constraints.*;
  */
 @Entity
 @Validated
+@NoArgsConstructor
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
 public class User implements UserDetails {
+
+    /**
+     * Properties
+     */
     @Id
     @SequenceGenerator(name = "user_seq", initialValue = 100)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
@@ -39,90 +44,54 @@ public class User implements UserDetails {
     @JsonIgnore
     private String password = null;
 
-// org.springframework.security.core.userdetails.User fooUser = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), AuthorityUtils.createAuthorityList(user.getRole().toString()));
-    /**
-     * Gets or Sets role
-     */
-    public enum RoleEnum {
-        USER("USER"),
-
-        EMPLOYEE("EMPLOYEE"),
-
-        USER_EMPLOYEE("USER_EMPLOYEE");
-
-        private String value;
-
-        RoleEnum(String value) {
-            this.value = value;
-        }
-
-        @Override
-        @JsonValue
-        public String toString() {
-            return String.valueOf(value);
-        }
-
-        @JsonCreator
-        public static RoleEnum fromValue(String text) {
-            for (RoleEnum b : RoleEnum.values()) {
-                if (String.valueOf(b.value).equals(text)) {
-                    return b;
-                }
-            }
-            return null;
-        }
-    }
     @JsonProperty("Role")
     private RoleEnum role = null;
 
 
-    public User id(Integer id) {
-        this.id = id;
-        return this;
-    }
-
-    public User(Integer id, String username, String password, String role){
+    /**
+     * constructors
+     */
+    public User(Integer id, String username, String password, String role) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.role = RoleEnum.valueOf(role);
     }
 
-    public User(String username, String password, String role){
+    public User(String username, String password, String role) {
         this.username = username;
         this.password = password;
-        this.role = RoleEnum.valueOf(role);;
+        this.role = RoleEnum.valueOf(role);
+        ;
     }
 
-    public User(){}
+
 
     /**
-     * Get id
-     * @return id
-     **/
+     * Getters
+     */
     @ApiModelProperty(required = true, value = "")
-
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public User username(String username) {
-        this.username = username;
-        return this;
-    }
-
-    /**
-     * Get username
-     * @return username
-     **/
     @ApiModelProperty(required = true, value = "")
     @NotNull
     public String getUsername() {
         return username;
+    }
+
+    @ApiModelProperty(required = true, value = "")
+    @NotNull
+    @JsonIgnore
+    public String getPassword() {
+        return password;
+    }
+
+    @ApiModelProperty(required = true, value = "")
+    @NotNull
+    public RoleEnum getRole() {
+        return role;
     }
 
     @Override
@@ -145,35 +114,43 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public User password(String password) {
-        this.password = password;
-        return this;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return AuthorityUtils.createAuthorityList(this.getRole().toString());
     }
 
     /**
-     * Get password
-     * @return password
-     **/
-    @ApiModelProperty(required = true, value = "")
-    @NotNull
+     * Setters
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-    @JsonIgnore
-    public String getPassword() {
-        return password;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @JsonProperty("Password")
     public void setPassword(String password) {
-        this.password = password;
+        this.password = new BCryptPasswordEncoder().encode(password);
+        System.out.println(this.password);
+    }
+
+    public void setRole(String role) {
+        this.role = RoleEnum.valueOf(role);
+    }
+
+    /**
+     * Vage Property constructors
+     */
+    public User id(Integer id) {
+        this.id = id;
+        return this;
+    }
+
+    public User username(String username) {
+        this.username = username;
+        return this;
     }
 
     public User role(RoleEnum role) {
@@ -181,17 +158,12 @@ public class User implements UserDetails {
         return this;
     }
 
-    /**
-     * Get role
-     * @return role
-     **/
-    @ApiModelProperty(required = true, value = "")
-    @NotNull
-    public RoleEnum getRole() {
-        return role;
-    }
-    public void setRole(String role) {
-        this.role = RoleEnum.valueOf(role);
+    /*
+     * Misc Methods
+     */
+
+    public boolean hasAuthority(RoleEnum role){
+        return getRole().equals(role);
     }
 
 
@@ -210,10 +182,12 @@ public class User implements UserDetails {
                 Objects.equals(this.role, user.role);
     }
 
+
     @Override
     public int hashCode() {
         return Objects.hash(id, username, password, role);
     }
+
 
     @Override
     public String toString() {
@@ -237,5 +211,37 @@ public class User implements UserDetails {
             return "null";
         }
         return o.toString().replace("\n", "\n    ");
+    }
+
+
+    /**
+     * Role Enum
+     */
+    public enum RoleEnum {
+        USER("USER"),
+        EMPLOYEE("EMPLOYEE"),
+        USER_EMPLOYEE("USER_EMPLOYEE");
+
+        private String value;
+
+        RoleEnum(String value) {
+            this.value = value;
+        }
+
+        @Override
+        @JsonValue
+        public String toString() {
+            return String.valueOf(value);
+        }
+
+        @JsonCreator
+        public static RoleEnum fromValue(String text) {
+            for (RoleEnum b : RoleEnum.values()) {
+                if (String.valueOf(b.value).equals(text)) {
+                    return b;
+                }
+            }
+            return null;
+        }
     }
 }
