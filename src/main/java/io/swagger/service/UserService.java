@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @Service
-public class UserService implements IUserService {
+public class UserService {
 
     private UserRepository userRepository;
     private AccountService accountService;
@@ -64,20 +64,6 @@ public class UserService implements IUserService {
         } else throw new ApiException(403, "You are not authorized for this request");
     }
 
-    @Override
-    public User findByUsername(String username) {
-        return userRepository.findUserByUsername(username);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findUserByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(username);
-        }
-        org.springframework.security.core.userdetails.User fooUser = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), AuthorityUtils.createAuthorityList(user.getRole().toString()));
-        return fooUser;
-    }
 
 
 }

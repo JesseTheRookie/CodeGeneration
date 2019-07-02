@@ -1,5 +1,7 @@
 package io.swagger.model;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,6 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.context.support.BeanDefinitionDsl;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.Entity;
@@ -20,7 +26,7 @@ import javax.validation.constraints.*;
 @Validated
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
-public class User  {
+public class User implements UserDetails {
     @Id
     @SequenceGenerator(name = "user_seq", initialValue = 100)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
@@ -33,7 +39,7 @@ public class User  {
     @JsonIgnore
     private String password = null;
 
-
+// org.springframework.security.core.userdetails.User fooUser = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), AuthorityUtils.createAuthorityList(user.getRole().toString()));
     /**
      * Gets or Sets role
      */
@@ -115,9 +121,28 @@ public class User  {
      **/
     @ApiModelProperty(required = true, value = "")
     @NotNull
-
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setUsername(String username) {
@@ -127,6 +152,11 @@ public class User  {
     public User password(String password) {
         this.password = password;
         return this;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return AuthorityUtils.createAuthorityList(this.getRole().toString());
     }
 
     /**
@@ -157,13 +187,11 @@ public class User  {
      **/
     @ApiModelProperty(required = true, value = "")
     @NotNull
-
     public RoleEnum getRole() {
         return role;
     }
-
-    public void setRole(RoleEnum role) {
-        this.role = role;
+    public void setRole(String role) {
+        this.role = RoleEnum.valueOf(role);
     }
 
 

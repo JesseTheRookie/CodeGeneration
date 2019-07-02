@@ -316,7 +316,7 @@ public class TransactionService {
         Account account = accountRepository.findById(iban).orElse(null);
         User user = account.getUser();
 
-        if (user.getRole() == User.RoleEnum.USER) {
+        if (user.getRole() == User.RoleEnum.USER) { //userHasAuthority("ROLE_ADMIN")
             return true;
         }
         return false;
