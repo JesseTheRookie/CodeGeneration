@@ -39,9 +39,9 @@ public class Account   {
      * Gets or Sets accounttype
      */
     public enum AccounttypeEnum {
-        CURRENT("current"),
+        CURRENT("CURRENT"),
 
-        SAVINGS("savings");
+        SAVINGS("SAVINGS");
 
         private String value;
 
@@ -71,16 +71,13 @@ public class Account   {
     @JsonIgnore
     public String typeValue = null;
 
-
-
-
     /**
      * Gets or Sets status
      */
     public enum StatusEnum {
-        ACTIVE("active"),
+        ACTIVE("ACTIVE"),
 
-        FROZEN("frozen");
+        FROZEN("FROZEN");
 
         private String value;
 
@@ -153,13 +150,11 @@ public class Account   {
         this.iban = iban;
     }
 
-
     @JsonIgnore
     /**
      * Get userId
      * @return userId
      **/
-
 
     public Integer getUserId(){ //wat doet dit hier?
         return this.user.getId();

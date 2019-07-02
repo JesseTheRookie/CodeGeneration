@@ -62,7 +62,8 @@ public class Transaction {
     @JsonProperty("PerformedBy")
     private Integer performedBy = null;
 
-    @Autowired(required = false)
+    @Transient
+    @Autowired
     private SecurityController securityController;
 
     /**
