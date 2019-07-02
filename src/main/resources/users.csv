@@ -1,4 +1,4 @@
 bank,bank123,USER_EMPLOYEE
 stefan,admin123,USER_EMPLOYEE
-bert,user123,USER
+bert,$2a$10$AMD0gTttC7KhmyEP435kL.niVUJyBXLHNsyZcSn4NdH3Nwzsds6R.,USER
 ernie,user123,EMPLOYEE
