@@ -116,7 +116,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return AuthorityUtils.createAuthorityList(this.getRole().toString());
+        return AuthorityUtils.createAuthorityList("ROLE_"+this.getRole().toString());
     }
 
     /**
