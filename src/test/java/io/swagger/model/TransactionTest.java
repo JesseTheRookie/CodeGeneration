@@ -1,6 +1,5 @@
 package io.swagger.model;
 
-import io.swagger.models.auth.In;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;

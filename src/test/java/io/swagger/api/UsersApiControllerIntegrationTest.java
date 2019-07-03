@@ -24,7 +24,7 @@ public class UsersApiControllerIntegrationTest {
 
     @Test
     public void createUserTest() throws Exception {
-        User body = new User();
+        User body = new User("TheoTest", "test123", "USER");
         ResponseEntity<Integer> responseEntity = api.createUser(body);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
@@ -51,7 +51,7 @@ public class UsersApiControllerIntegrationTest {
 
     @Test
     public void loginUserTest() throws Exception {
-        User body = new User();
+        User body = new User("TheoTest", "test123", "USER");
         ResponseEntity<String> responseEntity = api.loginUser(body);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
