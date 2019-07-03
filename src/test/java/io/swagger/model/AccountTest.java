@@ -65,6 +65,7 @@ public class AccountTest {
         assertEquals((Double)50.,account.getBalance());
     }
 
+
     @Test
     public void accountTypeShouldBeCurrent() {
         assertEquals(Account.AccounttypeEnum.CURRENT,account.getAccounttype());
@@ -86,4 +87,24 @@ public class AccountTest {
         account.setStatus(Account.StatusEnum.FROZEN);
         assertEquals(Account.StatusEnum.FROZEN,account.getStatus());
     }
+
+    @Test
+    public void accountToStringShouldPrintCorrect(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("class Account {\n");
+        sb.append("    iban: NL01INHO0000000001").append("\n");
+        sb.append("    user: class User {").append("\n");
+        sb.append("        id: 100").append("\n");
+        sb.append("        username: Bank").append("\n");
+        sb.append("        password: bank123").append("\n");
+        sb.append("        role: USER_EMPLOYEE").append("\n");
+        sb.append("    }").append("\n");
+        sb.append("    name: SwaggerBank inc.").append("\n");
+        sb.append("    balance: 100.0").append("\n");
+        sb.append("    accounttype: CURRENT").append("\n");
+        sb.append("    status: ACTIVE").append("\n");
+        sb.append("}");
+        assertEquals(sb.toString(),account.toString());
+    }
+
 }
