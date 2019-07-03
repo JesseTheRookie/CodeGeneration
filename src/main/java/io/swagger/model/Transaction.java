@@ -191,7 +191,11 @@ public class Transaction {
     }
 
     public void setAmount(Double amount) {
-        this.amount = amount;
+        if(amount < 0){
+            throw new IllegalArgumentException("Amount is below zero");
+        } else{
+            this.amount = amount;
+        }
     }
 
     public void setTimeStamp(Timestamp timeStamp) {
