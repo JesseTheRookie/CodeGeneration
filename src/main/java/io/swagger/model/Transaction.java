@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 
 import io.swagger.api.SecurityController;
 import io.swagger.repository.UserRepository;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.annotation.Bean;
