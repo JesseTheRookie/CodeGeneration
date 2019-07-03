@@ -26,12 +26,12 @@ public class UsersApiControllerIntegrationTest {
     public void createUserTest() throws Exception {
         User body = new User("TheoTest", "test123", "USER");
         ResponseEntity<Integer> responseEntity = api.createUser(body);
-        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
+        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
     }
 
     @Test
     public void getAccountsByUserIdTest() throws Exception {
-        Integer userId = 56;
+        Integer userId = 101;
         ResponseEntity<List<Account>> responseEntity = api.getAccountsByUserId(userId);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
