@@ -83,20 +83,21 @@ public class AccountService {
         }
     }
 
-    public void toggleAccountStatus(String iban, Account body) {
+    public void toggleAccountStatus(String iban) {
         if (userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
                 || userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
 
             Account oldAccount = accountRepository.findById(iban).orElseThrow(IllegalArgumentException::new);
-            Account updatedAccount = new Account(
-                    oldAccount.getIban(),
-                    oldAccount.getUser(),
-                    oldAccount.getName(),
-                    oldAccount.getBalance(),
-                    oldAccount.getAccounttype().toString(),
-                    body.getStatus().toString());
+            Account updatedAccount = new Account(oldAccount.getUser());
+                    updatedAccount.setIban(oldAccount.getIban());
+                    updatedAccount.setName(oldAccount.getName());
+                    updatedAccount.setBalance(oldAccount.getBalance());
+                    updatedAccount.setAccounttype(oldAccount.getAccounttype());
+                    if (oldAccount.getStatus()== Account.StatusEnum.ACTIVE){
+                        updatedAccount.setStatus(Account.StatusEnum.FROZEN);
+                    }else updatedAccount.setStatus(Account.StatusEnum.ACTIVE);
             accountRepository.delete(oldAccount);
             accountRepository.save(updatedAccount);
         }
@@ -105,4 +106,5 @@ public class AccountService {
         Account account = accountRepository.findById(iban).orElse(null);
         return account == null;
     }
+
 }

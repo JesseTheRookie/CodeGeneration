@@ -35,6 +35,8 @@ public class Account   {
     @JsonProperty("Balance")
     private Double balance = null;
 
+
+
     /**
      * Gets or Sets accounttype
      */
@@ -107,6 +109,10 @@ public class Account   {
     public Account iban(String iban) {
         this.iban = iban;
         return this;
+    }
+
+    public Account (User user) {
+        this.user = user;
     }
 
 
