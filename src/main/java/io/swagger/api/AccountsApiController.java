@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-11T12:03:46.065Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-07-04T17:47:19.062Z[GMT]")
 @Controller
 public class AccountsApiController implements AccountsApi {
 
@@ -37,9 +37,9 @@ public class AccountsApiController implements AccountsApi {
         this.request = request;
     }
 
-    public ResponseEntity<Void> createAccount(@ApiParam(value = "Account details" ,required=true )  @Valid @RequestBody Account body) {
+    public ResponseEntity<String> createAccount(@ApiParam(value = "Account details" ,required=true )  @Valid @RequestBody Account body) {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<String>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<Void> deleteAccount(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban) {
@@ -47,7 +47,7 @@ public class AccountsApiController implements AccountsApi {
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<List<Account>> getAccountByIban(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban) {
+    public ResponseEntity<List<Account>> getAccountByIban(@ApiParam(value = "The iban of the account you want to retrieve",required=true) @PathVariable("iban") String iban) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<List<Account>>(HttpStatus.NOT_IMPLEMENTED);
     }

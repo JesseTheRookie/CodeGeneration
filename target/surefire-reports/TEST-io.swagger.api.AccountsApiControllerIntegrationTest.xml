@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="io.swagger.api.AccountsApiControllerIntegrationTest" time="8.293" tests="5" errors="5" skipped="0" failures="0">
+  <properties>
+    <property name="sun.desktop" value="windows"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="D:\OneDrive InHolland\OneDrive - Hogeschool Inholland\Jaar 2\Blok 2\Project Code Generatie\CodeGeneration\target\test-classes;D:\OneDrive InHolland\OneDrive - Hogeschool Inholland\Jaar 2\Blok 2\Project Code Generatie\CodeGeneration\target\classes;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-starter-web\2.1.4.RELEASE\spring-boot-starter-web-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-starter\2.1.4.RELEASE\spring-boot-starter-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot\2.1.4.RELEASE\spring-boot-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\2.1.4.RELEASE\spring-boot-autoconfigure-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-starter-logging\2.1.4.RELEASE\spring-boot-starter-logging-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\ch\qos\logback\logback-classic\1.2.3\logback-classic-1.2.3.jar;C:\Users\sjfde\.m2\repository\ch\qos\logback\logback-core\1.2.3\logback-core-1.2.3.jar;C:\Users\sjfde\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.11.2\log4j-to-slf4j-2.11.2.jar;C:\Users\sjfde\.m2\repository\org\apache\logging\log4j\log4j-api\2.11.2\log4j-api-2.11.2.jar;C:\Users\sjfde\.m2\repository\org\slf4j\jul-to-slf4j\1.7.26\jul-to-slf4j-1.7.26.jar;C:\Users\sjfde\.m2\repository\org\yaml\snakeyaml\1.23\snakeyaml-1.23.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-starter-json\2.1.4.RELEASE\spring-boot-starter-json-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.9.8\jackson-datatype-jdk8-2.9.8.jar;C:\Users\sjfde\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.9.8\jackson-datatype-jsr310-2.9.8.jar;C:\Users\sjfde\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.9.8\jackson-module-parameter-names-2.9.8.jar;C:\Users\sjfde\.m2\repository\org\hibernate\validator\hibernate-validator\6.0.16.Final\hibernate-validator-6.0.16.Final.jar;C:\Users\sjfde\.m2\repository\org\jboss\logging\jboss-logging\3.3.2.Final\jboss-logging-3.3.2.Final.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-web\5.1.6.RELEASE\spring-web-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-beans\5.1.6.RELEASE\spring-beans-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-webmvc\5.1.6.RELEASE\spring-webmvc-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-context\5.1.6.RELEASE\spring-context-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-expression\5.1.6.RELEASE\spring-expression-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\2.1.4.RELEASE\spring-boot-starter-tomcat-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\javax\annotation\javax.annotation-api\1.3.2\javax.annotation-api-1.3.2.jar;C:\Users\sjfde\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\9.0.17\tomcat-embed-core-9.0.17.jar;C:\Users\sjfde\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\9.0.17\tomcat-embed-el-9.0.17.jar;C:\Users\sjfde\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\9.0.17\tomcat-embed-websocket-9.0.17.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\2.1.4.RELEASE\spring-boot-starter-data-jpa-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-starter-aop\2.1.4.RELEASE\spring-boot-starter-aop-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\aspectj\aspectjweaver\1.9.2\aspectjweaver-1.9.2.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\2.1.4.RELEASE\spring-boot-starter-jdbc-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\com\zaxxer\HikariCP\3.2.0\HikariCP-3.2.0.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-jdbc\5.1.6.RELEASE\spring-jdbc-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\javax\transaction\javax.transaction-api\1.3\javax.transaction-api-1.3.jar;C:\Users\sjfde\.m2\repository\javax\xml\bind\jaxb-api\2.3.1\jaxb-api-2.3.1.jar;C:\Users\sjfde\.m2\repository\javax\activation\javax.activation-api\1.2.0\javax.activation-api-1.2.0.jar;C:\Users\sjfde\.m2\repository\org\hibernate\hibernate-core\5.3.9.Final\hibernate-core-5.3.9.Final.jar;C:\Users\sjfde\.m2\repository\javax\persistence\javax.persistence-api\2.2\javax.persistence-api-2.2.jar;C:\Users\sjfde\.m2\repository\org\javassist\javassist\3.23.1-GA\javassist-3.23.1-GA.jar;C:\Users\sjfde\.m2\repository\net\bytebuddy\byte-buddy\1.9.12\byte-buddy-1.9.12.jar;C:\Users\sjfde\.m2\repository\antlr\antlr\2.7.7\antlr-2.7.7.jar;C:\Users\sjfde\.m2\repository\org\jboss\jandex\2.0.5.Final\jandex-2.0.5.Final.jar;C:\Users\sjfde\.m2\repository\org\dom4j\dom4j\2.1.1\dom4j-2.1.1.jar;C:\Users\sjfde\.m2\repository\org\hibernate\common\hibernate-commons-annotations\5.0.4.Final\hibernate-commons-annotations-5.0.4.Final.jar;C:\Users\sjfde\.m2\repository\org\springframework\data\spring-data-jpa\2.1.6.RELEASE\spring-data-jpa-2.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\data\spring-data-commons\2.1.6.RELEASE\spring-data-commons-2.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-orm\5.1.6.RELEASE\spring-orm-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-tx\5.1.6.RELEASE\spring-tx-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-aspects\5.1.6.RELEASE\spring-aspects-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-starter-security\2.1.4.RELEASE\spring-boot-starter-security-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-aop\5.1.6.RELEASE\spring-aop-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\security\spring-security-config\5.1.5.RELEASE\spring-security-config-5.1.5.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\security\spring-security-core\5.1.5.RELEASE\spring-security-core-5.1.5.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\security\spring-security-web\5.1.5.RELEASE\spring-security-web-5.1.5.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\projectlombok\lombok\1.18.6\lombok-1.18.6.jar;C:\Users\sjfde\.m2\repository\com\h2database\h2\1.4.199\h2-1.4.199.jar;C:\Users\sjfde\.m2\repository\io\springfox\springfox-swagger2\2.7.0\springfox-swagger2-2.7.0.jar;C:\Users\sjfde\.m2\repository\io\swagger\swagger-annotations\1.5.13\swagger-annotations-1.5.13.jar;C:\Users\sjfde\.m2\repository\io\swagger\swagger-models\1.5.13\swagger-models-1.5.13.jar;C:\Users\sjfde\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.9.0\jackson-annotations-2.9.0.jar;C:\Users\sjfde\.m2\repository\io\springfox\springfox-spi\2.7.0\springfox-spi-2.7.0.jar;C:\Users\sjfde\.m2\repository\io\springfox\springfox-core\2.7.0\springfox-core-2.7.0.jar;C:\Users\sjfde\.m2\repository\io\springfox\springfox-schema\2.7.0\springfox-schema-2.7.0.jar;C:\Users\sjfde\.m2\repository\io\springfox\springfox-swagger-common\2.7.0\springfox-swagger-common-2.7.0.jar;C:\Users\sjfde\.m2\repository\io\springfox\springfox-spring-web\2.7.0\springfox-spring-web-2.7.0.jar;C:\Users\sjfde\.m2\repository\org\reflections\reflections\0.9.11\reflections-0.9.11.jar;C:\Users\sjfde\.m2\repository\com\google\guava\guava\18.0\guava-18.0.jar;C:\Users\sjfde\.m2\repository\com\fasterxml\classmate\1.4.0\classmate-1.4.0.jar;C:\Users\sjfde\.m2\repository\org\slf4j\slf4j-api\1.7.26\slf4j-api-1.7.26.jar;C:\Users\sjfde\.m2\repository\org\springframework\plugin\spring-plugin-core\1.2.0.RELEASE\spring-plugin-core-1.2.0.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\plugin\spring-plugin-metadata\1.2.0.RELEASE\spring-plugin-metadata-1.2.0.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\mapstruct\mapstruct\1.1.0.Final\mapstruct-1.1.0.Final.jar;C:\Users\sjfde\.m2\repository\io\springfox\springfox-swagger-ui\2.7.0\springfox-swagger-ui-2.7.0.jar;C:\Users\sjfde\.m2\repository\com\github\joschi\jackson\jackson-datatype-threetenbp\2.6.4\jackson-datatype-threetenbp-2.6.4.jar;C:\Users\sjfde\.m2\repository\org\threeten\threetenbp\1.3.1\threetenbp-1.3.1.jar;C:\Users\sjfde\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.9.8\jackson-core-2.9.8.jar;C:\Users\sjfde\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.9.8\jackson-databind-2.9.8.jar;C:\Users\sjfde\.m2\repository\javax\validation\validation-api\2.0.1.Final\validation-api-2.0.1.Final.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-starter-test\2.1.4.RELEASE\spring-boot-starter-test-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-test\2.1.4.RELEASE\spring-boot-test-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\2.1.4.RELEASE\spring-boot-test-autoconfigure-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\com\jayway\jsonpath\json-path\2.4.0\json-path-2.4.0.jar;C:\Users\sjfde\.m2\repository\net\minidev\json-smart\2.3\json-smart-2.3.jar;C:\Users\sjfde\.m2\repository\net\minidev\accessors-smart\1.2\accessors-smart-1.2.jar;C:\Users\sjfde\.m2\repository\org\ow2\asm\asm\5.0.4\asm-5.0.4.jar;C:\Users\sjfde\.m2\repository\junit\junit\4.12\junit-4.12.jar;C:\Users\sjfde\.m2\repository\org\assertj\assertj-core\3.11.1\assertj-core-3.11.1.jar;C:\Users\sjfde\.m2\repository\org\mockito\mockito-core\2.23.4\mockito-core-2.23.4.jar;C:\Users\sjfde\.m2\repository\net\bytebuddy\byte-buddy-agent\1.9.12\byte-buddy-agent-1.9.12.jar;C:\Users\sjfde\.m2\repository\org\objenesis\objenesis\2.6\objenesis-2.6.jar;C:\Users\sjfde\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\sjfde\.m2\repository\org\hamcrest\hamcrest-library\1.3\hamcrest-library-1.3.jar;C:\Users\sjfde\.m2\repository\org\skyscreamer\jsonassert\1.5.0\jsonassert-1.5.0.jar;C:\Users\sjfde\.m2\repository\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-core\5.1.6.RELEASE\spring-core-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-jcl\5.1.6.RELEASE\spring-jcl-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-test\5.1.6.RELEASE\spring-test-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\xmlunit\xmlunit-core\2.6.2\xmlunit-core-2.6.2.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="user.timezone" value="Europe/Berlin"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="user.country" value="NL"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_201\jre\bin"/>
+    <property name="sun.java.command" value="C:\Users\sjfde\AppData\Local\Temp\surefire6429416431055170390\surefirebooter3585304506163275675.jar C:\Users\sjfde\AppData\Local\Temp\surefire6429416431055170390 2019-07-03T13-29-27_771-jvmRun1 surefire5676841521970131684tmp surefire_07921664794300989727tmp"/>
+    <property name="surefire.test.class.path" value="D:\OneDrive InHolland\OneDrive - Hogeschool Inholland\Jaar 2\Blok 2\Project Code Generatie\CodeGeneration\target\test-classes;D:\OneDrive InHolland\OneDrive - Hogeschool Inholland\Jaar 2\Blok 2\Project Code Generatie\CodeGeneration\target\classes;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-starter-web\2.1.4.RELEASE\spring-boot-starter-web-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-starter\2.1.4.RELEASE\spring-boot-starter-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot\2.1.4.RELEASE\spring-boot-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\2.1.4.RELEASE\spring-boot-autoconfigure-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-starter-logging\2.1.4.RELEASE\spring-boot-starter-logging-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\ch\qos\logback\logback-classic\1.2.3\logback-classic-1.2.3.jar;C:\Users\sjfde\.m2\repository\ch\qos\logback\logback-core\1.2.3\logback-core-1.2.3.jar;C:\Users\sjfde\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.11.2\log4j-to-slf4j-2.11.2.jar;C:\Users\sjfde\.m2\repository\org\apache\logging\log4j\log4j-api\2.11.2\log4j-api-2.11.2.jar;C:\Users\sjfde\.m2\repository\org\slf4j\jul-to-slf4j\1.7.26\jul-to-slf4j-1.7.26.jar;C:\Users\sjfde\.m2\repository\org\yaml\snakeyaml\1.23\snakeyaml-1.23.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-starter-json\2.1.4.RELEASE\spring-boot-starter-json-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.9.8\jackson-datatype-jdk8-2.9.8.jar;C:\Users\sjfde\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.9.8\jackson-datatype-jsr310-2.9.8.jar;C:\Users\sjfde\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.9.8\jackson-module-parameter-names-2.9.8.jar;C:\Users\sjfde\.m2\repository\org\hibernate\validator\hibernate-validator\6.0.16.Final\hibernate-validator-6.0.16.Final.jar;C:\Users\sjfde\.m2\repository\org\jboss\logging\jboss-logging\3.3.2.Final\jboss-logging-3.3.2.Final.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-web\5.1.6.RELEASE\spring-web-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-beans\5.1.6.RELEASE\spring-beans-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-webmvc\5.1.6.RELEASE\spring-webmvc-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-context\5.1.6.RELEASE\spring-context-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-expression\5.1.6.RELEASE\spring-expression-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\2.1.4.RELEASE\spring-boot-starter-tomcat-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\javax\annotation\javax.annotation-api\1.3.2\javax.annotation-api-1.3.2.jar;C:\Users\sjfde\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\9.0.17\tomcat-embed-core-9.0.17.jar;C:\Users\sjfde\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\9.0.17\tomcat-embed-el-9.0.17.jar;C:\Users\sjfde\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\9.0.17\tomcat-embed-websocket-9.0.17.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\2.1.4.RELEASE\spring-boot-starter-data-jpa-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-starter-aop\2.1.4.RELEASE\spring-boot-starter-aop-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\aspectj\aspectjweaver\1.9.2\aspectjweaver-1.9.2.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\2.1.4.RELEASE\spring-boot-starter-jdbc-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\com\zaxxer\HikariCP\3.2.0\HikariCP-3.2.0.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-jdbc\5.1.6.RELEASE\spring-jdbc-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\javax\transaction\javax.transaction-api\1.3\javax.transaction-api-1.3.jar;C:\Users\sjfde\.m2\repository\javax\xml\bind\jaxb-api\2.3.1\jaxb-api-2.3.1.jar;C:\Users\sjfde\.m2\repository\javax\activation\javax.activation-api\1.2.0\javax.activation-api-1.2.0.jar;C:\Users\sjfde\.m2\repository\org\hibernate\hibernate-core\5.3.9.Final\hibernate-core-5.3.9.Final.jar;C:\Users\sjfde\.m2\repository\javax\persistence\javax.persistence-api\2.2\javax.persistence-api-2.2.jar;C:\Users\sjfde\.m2\repository\org\javassist\javassist\3.23.1-GA\javassist-3.23.1-GA.jar;C:\Users\sjfde\.m2\repository\net\bytebuddy\byte-buddy\1.9.12\byte-buddy-1.9.12.jar;C:\Users\sjfde\.m2\repository\antlr\antlr\2.7.7\antlr-2.7.7.jar;C:\Users\sjfde\.m2\repository\org\jboss\jandex\2.0.5.Final\jandex-2.0.5.Final.jar;C:\Users\sjfde\.m2\repository\org\dom4j\dom4j\2.1.1\dom4j-2.1.1.jar;C:\Users\sjfde\.m2\repository\org\hibernate\common\hibernate-commons-annotations\5.0.4.Final\hibernate-commons-annotations-5.0.4.Final.jar;C:\Users\sjfde\.m2\repository\org\springframework\data\spring-data-jpa\2.1.6.RELEASE\spring-data-jpa-2.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\data\spring-data-commons\2.1.6.RELEASE\spring-data-commons-2.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-orm\5.1.6.RELEASE\spring-orm-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-tx\5.1.6.RELEASE\spring-tx-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-aspects\5.1.6.RELEASE\spring-aspects-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-starter-security\2.1.4.RELEASE\spring-boot-starter-security-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-aop\5.1.6.RELEASE\spring-aop-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\security\spring-security-config\5.1.5.RELEASE\spring-security-config-5.1.5.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\security\spring-security-core\5.1.5.RELEASE\spring-security-core-5.1.5.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\security\spring-security-web\5.1.5.RELEASE\spring-security-web-5.1.5.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\projectlombok\lombok\1.18.6\lombok-1.18.6.jar;C:\Users\sjfde\.m2\repository\com\h2database\h2\1.4.199\h2-1.4.199.jar;C:\Users\sjfde\.m2\repository\io\springfox\springfox-swagger2\2.7.0\springfox-swagger2-2.7.0.jar;C:\Users\sjfde\.m2\repository\io\swagger\swagger-annotations\1.5.13\swagger-annotations-1.5.13.jar;C:\Users\sjfde\.m2\repository\io\swagger\swagger-models\1.5.13\swagger-models-1.5.13.jar;C:\Users\sjfde\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.9.0\jackson-annotations-2.9.0.jar;C:\Users\sjfde\.m2\repository\io\springfox\springfox-spi\2.7.0\springfox-spi-2.7.0.jar;C:\Users\sjfde\.m2\repository\io\springfox\springfox-core\2.7.0\springfox-core-2.7.0.jar;C:\Users\sjfde\.m2\repository\io\springfox\springfox-schema\2.7.0\springfox-schema-2.7.0.jar;C:\Users\sjfde\.m2\repository\io\springfox\springfox-swagger-common\2.7.0\springfox-swagger-common-2.7.0.jar;C:\Users\sjfde\.m2\repository\io\springfox\springfox-spring-web\2.7.0\springfox-spring-web-2.7.0.jar;C:\Users\sjfde\.m2\repository\org\reflections\reflections\0.9.11\reflections-0.9.11.jar;C:\Users\sjfde\.m2\repository\com\google\guava\guava\18.0\guava-18.0.jar;C:\Users\sjfde\.m2\repository\com\fasterxml\classmate\1.4.0\classmate-1.4.0.jar;C:\Users\sjfde\.m2\repository\org\slf4j\slf4j-api\1.7.26\slf4j-api-1.7.26.jar;C:\Users\sjfde\.m2\repository\org\springframework\plugin\spring-plugin-core\1.2.0.RELEASE\spring-plugin-core-1.2.0.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\plugin\spring-plugin-metadata\1.2.0.RELEASE\spring-plugin-metadata-1.2.0.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\mapstruct\mapstruct\1.1.0.Final\mapstruct-1.1.0.Final.jar;C:\Users\sjfde\.m2\repository\io\springfox\springfox-swagger-ui\2.7.0\springfox-swagger-ui-2.7.0.jar;C:\Users\sjfde\.m2\repository\com\github\joschi\jackson\jackson-datatype-threetenbp\2.6.4\jackson-datatype-threetenbp-2.6.4.jar;C:\Users\sjfde\.m2\repository\org\threeten\threetenbp\1.3.1\threetenbp-1.3.1.jar;C:\Users\sjfde\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.9.8\jackson-core-2.9.8.jar;C:\Users\sjfde\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.9.8\jackson-databind-2.9.8.jar;C:\Users\sjfde\.m2\repository\javax\validation\validation-api\2.0.1.Final\validation-api-2.0.1.Final.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-starter-test\2.1.4.RELEASE\spring-boot-starter-test-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-test\2.1.4.RELEASE\spring-boot-test-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\2.1.4.RELEASE\spring-boot-test-autoconfigure-2.1.4.RELEASE.jar;C:\Users\sjfde\.m2\repository\com\jayway\jsonpath\json-path\2.4.0\json-path-2.4.0.jar;C:\Users\sjfde\.m2\repository\net\minidev\json-smart\2.3\json-smart-2.3.jar;C:\Users\sjfde\.m2\repository\net\minidev\accessors-smart\1.2\accessors-smart-1.2.jar;C:\Users\sjfde\.m2\repository\org\ow2\asm\asm\5.0.4\asm-5.0.4.jar;C:\Users\sjfde\.m2\repository\junit\junit\4.12\junit-4.12.jar;C:\Users\sjfde\.m2\repository\org\assertj\assertj-core\3.11.1\assertj-core-3.11.1.jar;C:\Users\sjfde\.m2\repository\org\mockito\mockito-core\2.23.4\mockito-core-2.23.4.jar;C:\Users\sjfde\.m2\repository\net\bytebuddy\byte-buddy-agent\1.9.12\byte-buddy-agent-1.9.12.jar;C:\Users\sjfde\.m2\repository\org\objenesis\objenesis\2.6\objenesis-2.6.jar;C:\Users\sjfde\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\sjfde\.m2\repository\org\hamcrest\hamcrest-library\1.3\hamcrest-library-1.3.jar;C:\Users\sjfde\.m2\repository\org\skyscreamer\jsonassert\1.5.0\jsonassert-1.5.0.jar;C:\Users\sjfde\.m2\repository\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-core\5.1.6.RELEASE\spring-core-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-jcl\5.1.6.RELEASE\spring-jcl-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\springframework\spring-test\5.1.6.RELEASE\spring-test-5.1.6.RELEASE.jar;C:\Users\sjfde\.m2\repository\org\xmlunit\xmlunit-core\2.6.2\xmlunit-core-2.6.2.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\sjfde"/>
+    <property name="user.language" value="nl"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk1.8.0_201\jre"/>
+    <property name="basedir" value="D:\OneDrive InHolland\OneDrive - Hogeschool Inholland\Jaar 2\Blok 2\Project Code Generatie\CodeGeneration"/>
+    <property name="file.separator" value="\"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="C:\Users\sjfde\AppData\Local\Temp\surefire6429416431055170390\surefirebooter3585304506163275675.jar"/>
+    <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.8.0_201\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_201\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_201\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.8.0_201\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_201\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_201\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_201\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_201\jre\classes"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="1.8.0_201-b09"/>
+    <property name="user.name" value="sjfde"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_201\jre\lib\endorsed"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\sjfde\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\sjfde\AppData\Local\Temp\"/>
+    <property name="java.version" value="1.8.0_201"/>
+    <property name="user.dir" value="D:\OneDrive InHolland\OneDrive - Hogeschool Inholland\Jaar 2\Blok 2\Project Code Generatie\CodeGeneration"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="idea.version2019.1.2" value="true"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_201\jre\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\dotnet\;C:\Users\sjfde\AppData\Local\Microsoft\WindowsApps;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Java\jre1.8.0_201\bin\;C:\Program Files\Java\jdk1.8.0_201\bin;D:\Python\Scripts\;D:\Python\;C:\Users\sjfde\AppData\Local\Microsoft\WindowsApps;C:\Users\sjfde\AppData\Local\Microsoft\WindowsApps;D:\Heroku\bin;C:\Users\sjfde\AppData\Roaming\npm;D:\VS Code\bin;D:\IntelliJ\IntelliJ IDEA Community Edition 2019.1\bin;;C:\Program Files\Java\jre1.8.0_201\bin\;;."/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="25.201-b09"/>
+    <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.8.0_201\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="52.0"/>
+  </properties>
+  <testcase name="getAccountsTest" classname="io.swagger.api.AccountsApiControllerIntegrationTest" time="0.054">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at io.swagger.api.AccountsApiControllerIntegrationTest.getAccountsTest(AccountsApiControllerIntegrationTest.java:48)
+</error>
+    <system-out><![CDATA[13:29:29.187 [main] DEBUG org.springframework.test.context.junit4.SpringJUnit4ClassRunner - SpringJUnit4ClassRunner constructor called with [class io.swagger.api.AccountsApiControllerIntegrationTest]
+13:29:29.192 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+13:29:29.201 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+13:29:29.221 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [io.swagger.api.AccountsApiControllerIntegrationTest] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+13:29:29.234 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [io.swagger.api.AccountsApiControllerIntegrationTest], using SpringBootContextLoader
+13:29:29.238 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [io.swagger.api.AccountsApiControllerIntegrationTest]: class path resource [io/swagger/api/AccountsApiControllerIntegrationTest-context.xml] does not exist
+13:29:29.239 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [io.swagger.api.AccountsApiControllerIntegrationTest]: class path resource [io/swagger/api/AccountsApiControllerIntegrationTestContext.groovy] does not exist
+13:29:29.240 [main] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [io.swagger.api.AccountsApiControllerIntegrationTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+13:29:29.241 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [io.swagger.api.AccountsApiControllerIntegrationTest]: AccountsApiControllerIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+13:29:29.294 [main] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [io.swagger.api.AccountsApiControllerIntegrationTest]
+13:29:29.425 [main] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [D:\OneDrive InHolland\OneDrive - Hogeschool Inholland\Jaar 2\Blok 2\Project Code Generatie\CodeGeneration\target\classes\io\swagger\Swagger2SpringBoot.class]
+13:29:29.426 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration io.swagger.Swagger2SpringBoot for test class io.swagger.api.AccountsApiControllerIntegrationTest
+13:29:29.525 [main] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [io.swagger.api.AccountsApiControllerIntegrationTest]: using defaults.
+13:29:29.525 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+13:29:29.544 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@6989da5e, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@385c9627, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@139982de, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@682b2fa, org.springframework.test.context.support.DirtiesContextTestExecutionListener@217ed35e, org.springframework.test.context.transaction.TransactionalTestExecutionListener@7dcf94f8, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@229f66ed, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@31190526, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@662ac478, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@6743e411, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@3eb25e1a, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@477b4cdf]
+13:29:29.546 [main] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [io.swagger.api.AccountsApiControllerIntegrationTest]
+13:29:29.547 [main] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [io.swagger.api.AccountsApiControllerIntegrationTest]
+13:29:29.548 [main] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [io.swagger.api.AccountsApiControllerIntegrationTest]
+13:29:29.549 [main] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [io.swagger.api.AccountsApiControllerIntegrationTest]
+13:29:29.549 [main] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [io.swagger.api.AccountsApiControllerIntegrationTest]
+13:29:29.549 [main] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [io.swagger.api.AccountsApiControllerIntegrationTest]
+13:29:29.553 [main] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@49438269 testClass = AccountsApiControllerIntegrationTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@ba2f4ec testClass = AccountsApiControllerIntegrationTest, locations = '{}', classes = '{class io.swagger.Swagger2SpringBoot}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@51c8530f, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@c81cdd1, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@2eda0940, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@319b92f3], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true]], class annotated with @DirtiesContext [false] with mode [null].
+13:29:29.554 [main] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [io.swagger.api.AccountsApiControllerIntegrationTest]
+13:29:29.554 [main] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [io.swagger.api.AccountsApiControllerIntegrationTest]
+13:29:29.574 [main] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=-1}
+
+       /€€€€€€€€ /€€                        /€€€€€€                                                                  /€€                           /€€
+      |__  €€__/| €€                       /€€__  €€                                                                | €€                          | €€
+         | €€   | €€€€€€€   /€€€€€€       | €€  \__/ /€€  /€€  /€€  /€€€€€€   /€€€€€€   /€€€€€€   /€€€€€€   /€€€€€€ | €€€€€€€   /€€€€€€  /€€€€€€€ | €€   /€€
+         | €€   | €€__  €€ /€€__  €€      |  €€€€€€ | €€ | €€ | €€ |____  €€ /€€__  €€ /€€__  €€ /€€__  €€ /€€__  €€| €€__  €€ |____  €€| €€__  €€| €€  /€€/
+         | €€   | €€  \ €€| €€€€€€€€       \____  €€| €€ | €€ | €€  /€€€€€€€| €€  \ €€| €€  \ €€| €€€€€€€€| €€  \__/| €€  \ €€  /€€€€€€€| €€  \ €€| €€€€€€/
+         | €€   | €€  | €€| €€_____/       /€€  \ €€| €€ | €€ | €€ /€€__  €€| €€  | €€| €€  | €€| €€_____/| €€      | €€  | €€ /€€__  €€| €€  | €€| €€_  €€
+         | €€   | €€  | €€|  €€€€€€€      |  €€€€€€/|  €€€€€/€€€€/|  €€€€€€€|  €€€€€€€|  €€€€€€€|  €€€€€€€| €€      | €€€€€€€/|  €€€€€€€| €€  | €€| €€ \  €€
+         |__/   |__/  |__/ \_______/       \______/  \_____/\___/  \_______/ \____  €€ \____  €€ \_______/|__/      |_______/  \_______/|__/  |__/|__/  \__/
+                                                                             /€€  \ €€ /€€  \ €€
+                                                                            |  €€€€€€/|  €€€€€€/
+                                                                             \______/  \______/
+
+2019-07-03 13:29:29.906  INFO 15904 --- [           main] s.a.AccountsApiControllerIntegrationTest : Starting AccountsApiControllerIntegrationTest on DESKTOP-5DMHE8V with PID 15904 (started by sjfde in D:\OneDrive InHolland\OneDrive - Hogeschool Inholland\Jaar 2\Blok 2\Project Code Generatie\CodeGeneration)
+2019-07-03 13:29:29.908  INFO 15904 --- [           main] s.a.AccountsApiControllerIntegrationTest : No active profile set, falling back to default profiles: default
+2019-07-03 13:29:31.304  INFO 15904 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-07-03 13:29:31.429  INFO 15904 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 115ms. Found 4 repository interfaces.
+2019-07-03 13:29:31.897  INFO 15904 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$21d30071] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-07-03 13:29:32.177  INFO 15904 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-07-03 13:29:32.393  INFO 15904 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-07-03 13:29:32.490  INFO 15904 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-07-03 13:29:32.603  INFO 15904 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.9.Final}
+2019-07-03 13:29:32.608  INFO 15904 --- [           main] org.hibernate.cfg.Environment            : HHH000205: Loaded properties from resource hibernate.properties: {hibernate.bytecode.use_reflection_optimizer=false}
+2019-07-03 13:29:32.753  INFO 15904 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2019-07-03 13:29:32.977  INFO 15904 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2019-07-03 13:29:33.798  INFO 15904 --- [           main] o.h.t.schema.internal.SchemaCreatorImpl  : HHH000476: Executing import script 'org.hibernate.tool.schema.internal.exec.ScriptSourceInputNonExistentImpl@485451d8'
+2019-07-03 13:29:33.801  INFO 15904 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-07-03 13:29:34.393  INFO 15904 --- [           main] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+2019-07-03 13:29:35.616  INFO 15904 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@142918a0, org.springframework.security.web.context.SecurityContextPersistenceFilter@511de4dd, org.springframework.security.web.header.HeaderWriterFilter@13c18bba, org.springframework.security.web.authentication.logout.LogoutFilter@7f41d979, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@74450c9b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@31204303, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@639948a2, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@745cf754, org.springframework.security.web.session.SessionManagementFilter@56f61d74, org.springframework.security.web.access.ExceptionTranslationFilter@72b1df49, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3428420d]
+2019-07-03 13:29:35.630  INFO 15904 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: Ant [pattern='/users/**'], [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4738131e, org.springframework.security.web.context.SecurityContextPersistenceFilter@4682882a, org.springframework.security.web.header.HeaderWriterFilter@5c703860, org.springframework.security.web.authentication.logout.LogoutFilter@66716959, io.swagger.filter.ApiKeyAuthFilter@3b576ee3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@37fffef3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6a116354, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@705d914f, org.springframework.security.web.session.SessionManagementFilter@6315bb4, org.springframework.security.web.access.ExceptionTranslationFilter@28db2afb, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@701c482e]
+2019-07-03 13:29:35.704  INFO 15904 --- [           main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2019-07-03 13:29:36.093  INFO 15904 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-07-03 13:29:36.485  INFO 15904 --- [           main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2019-07-03 13:29:36.506  INFO 15904 --- [           main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2019-07-03 13:29:36.584  INFO 15904 --- [           main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2019-07-03 13:29:36.942  INFO 15904 --- [           main] s.a.AccountsApiControllerIntegrationTest : Started AccountsApiControllerIntegrationTest in 7.36 seconds (JVM running for 8.212)
+class User {
+    id: 100
+    username: bank
+    password: $2a$10$Fa6TnkGMAAnDLVxA4fklPegMA026rs3AiUd8nY7UE2bZuya2VcafG
+    role: USER_EMPLOYEE
+}
+class User {
+    id: 101
+    username: stefan
+    password: $2a$10$EcrrAlYdpfCn5CcGFE0quu8EBg5N30MV/qujeVGF5dWnJIt7KzZlu
+    role: USER_EMPLOYEE
+}
+class User {
+    id: 102
+    username: bert
+    password: $2a$10$AMD0gTttC7KhmyEP435kL.niVUJyBXLHNsyZcSn4NdH3Nwzsds6R.
+    role: USER
+}
+class User {
+    id: 103
+    username: ernie
+    password: $2a$10$8i5Ymg.FkPuAICRGvgbTsuzckzmS7kw4c1b7v8vZW/9E7P5HGR9da
+    role: EMPLOYEE
+}
+class User {
+    id: 104
+    username: jasper
+    password: $2a$10$nfhzRWEeG/QSi7/z98H2ie7232ExfBO057nScfNYmpEAeX.7R/epW
+    role: EMPLOYEE
+}
+class User {
+    id: 105
+    username: gabie
+    password: $2a$10$uOjMkcIFO7XHv7xto8oVZ.UkbJc0u70og1kYJHUTvhPzv/ti45JLq
+    role: EMPLOYEE
+}
+class User {
+    id: 106
+    username: jesse
+    password: $2a$10$j5H4NORGJwNa7AbpeeOAQeywOB3q/evIKcvJaIH6cE3fzzMnB7DaS
+    role: EMPLOYEE
+}
+class Account {
+    iban: NL01INHO0000000001
+    user: class User {
+        id: 100
+        username: bank
+        password: $2a$10$Fa6TnkGMAAnDLVxA4fklPegMA026rs3AiUd8nY7UE2bZuya2VcafG
+        role: USER_EMPLOYEE
+    }
+    name: bank
+    balance: 1.0E9
+    accounttype: CURRENT
+    status: ACTIVE
+}
+class Account {
+    iban: NL01INHO0000000002
+    user: class User {
+        id: 101
+        username: stefan
+        password: $2a$10$EcrrAlYdpfCn5CcGFE0quu8EBg5N30MV/qujeVGF5dWnJIt7KzZlu
+        role: USER_EMPLOYEE
+    }
+    name: stefan
+    balance: 1000.0
+    accounttype: CURRENT
+    status: ACTIVE
+}
+class Account {
+    iban: NL01INHO0000000003
+    user: class User {
+        id: 101
+        username: stefan
+        password: $2a$10$EcrrAlYdpfCn5CcGFE0quu8EBg5N30MV/qujeVGF5dWnJIt7KzZlu
+        role: USER_EMPLOYEE
+    }
+    name: stefan
+    balance: 1337.0
+    accounttype: SAVINGS
+    status: ACTIVE
+}
+class Account {
+    iban: NL01INHO0000000004
+    user: class User {
+        id: 102
+        username: bert
+        password: $2a$10$AMD0gTttC7KhmyEP435kL.niVUJyBXLHNsyZcSn4NdH3Nwzsds6R.
+        role: USER
+    }
+    name: bert
+    balance: 9001.0
+    accounttype: CURRENT
+    status: ACTIVE
+}
+class Account {
+    iban: NL01INHO0000000005
+    user: class User {
+        id: 102
+        username: bert
+        password: $2a$10$AMD0gTttC7KhmyEP435kL.niVUJyBXLHNsyZcSn4NdH3Nwzsds6R.
+        role: USER
+    }
+    name: bert
+    balance: 43.0
+    accounttype: CURRENT
+    status: ACTIVE
+}
+class Account {
+    iban: NL01INHO0000000006
+    user: class User {
+        id: 102
+        username: bert
+        password: $2a$10$AMD0gTttC7KhmyEP435kL.niVUJyBXLHNsyZcSn4NdH3Nwzsds6R.
+        role: USER
+    }
+    name: bert
+    balance: 772.0
+    accounttype: SAVINGS
+    status: ACTIVE
+}
+class Account {
+    iban: NL01INHO0000000007
+    user: class User {
+        id: 101
+        username: stefan
+        password: $2a$10$EcrrAlYdpfCn5CcGFE0quu8EBg5N30MV/qujeVGF5dWnJIt7KzZlu
+        role: USER_EMPLOYEE
+    }
+    name: stefan
+    balance: 588.0
+    accounttype: SAVINGS
+    status: ACTIVE
+}
+ApiKey(key=0449e978-5e4e-40bb-8af2-c29478bc3a98)
+ApiKey(key=e800eff2-846c-4334-9168-bcc14bdf0a9c)
+ApiKey(key=ebace734-4b2c-4791-aaac-e076cb3c221e)
+class Transaction {
+    id: 1
+    fromIban: NL01INHO0000000004
+    toIban: NL01INHO0000000002
+    amount: 50.0
+    timeStamp: 2019-07-03 13:29:37.125
+    performedBy: 1
+}
+class Transaction {
+    id: 2
+    fromIban: NL01INHO0000000002
+    toIban: NL01INHO0000000004
+    amount: 150.0
+    timeStamp: 2019-07-03 13:29:37.139
+    performedBy: 1
+}
+class Transaction {
+    id: 3
+    fromIban: NL01INHO0000000004
+    toIban: NL01INHO0000000002
+    amount: 50.0
+    timeStamp: 2019-07-03 13:29:37.141
+    performedBy: 1
+}
+class Account {
+    iban: NL01INHO0000000001
+    user: class User {
+        id: 100
+        username: bank
+        password: $2a$10$Fa6TnkGMAAnDLVxA4fklPegMA026rs3AiUd8nY7UE2bZuya2VcafG
+        role: USER_EMPLOYEE
+    }
+    name: bank
+    balance: 1.0E9
+    accounttype: CURRENT
+    status: ACTIVE
+}
+class Account {
+    iban: NL01INHO0000000002
+    user: class User {
+        id: 101
+        username: stefan
+        password: $2a$10$EcrrAlYdpfCn5CcGFE0quu8EBg5N30MV/qujeVGF5dWnJIt7KzZlu
+        role: USER_EMPLOYEE
+    }
+    name: stefan
+    balance: 1000.0
+    accounttype: CURRENT
+    status: ACTIVE
+}
+class Account {
+    iban: NL01INHO0000000003
+    user: class User {
+        id: 101
+        username: stefan
+        password: $2a$10$EcrrAlYdpfCn5CcGFE0quu8EBg5N30MV/qujeVGF5dWnJIt7KzZlu
+        role: USER_EMPLOYEE
+    }
+    name: stefan
+    balance: 1337.0
+    accounttype: SAVINGS
+    status: ACTIVE
+}
+class Account {
+    iban: NL01INHO0000000004
+    user: class User {
+        id: 102
+        username: bert
+        password: $2a$10$AMD0gTttC7KhmyEP435kL.niVUJyBXLHNsyZcSn4NdH3Nwzsds6R.
+        role: USER
+    }
+    name: bert
+    balance: 9001.0
+    accounttype: CURRENT
+    status: ACTIVE
+}
+class Account {
+    iban: NL01INHO0000000005
+    user: class User {
+        id: 102
+        username: bert
+        password: $2a$10$AMD0gTttC7KhmyEP435kL.niVUJyBXLHNsyZcSn4NdH3Nwzsds6R.
+        role: USER
+    }
+    name: bert
+    balance: 43.0
+    accounttype: CURRENT
+    status: ACTIVE
+}
+class Account {
+    iban: NL01INHO0000000006
+    user: class User {
+        id: 102
+        username: bert
+        password: $2a$10$AMD0gTttC7KhmyEP435kL.niVUJyBXLHNsyZcSn4NdH3Nwzsds6R.
+        role: USER
+    }
+    name: bert
+    balance: 772.0
+    accounttype: SAVINGS
+    status: ACTIVE
+}
+class Account {
+    iban: NL01INHO0000000007
+    user: class User {
+        id: 101
+        username: stefan
+        password: $2a$10$EcrrAlYdpfCn5CcGFE0quu8EBg5N30MV/qujeVGF5dWnJIt7KzZlu
+        role: USER_EMPLOYEE
+    }
+    name: stefan
+    balance: 588.0
+    accounttype: SAVINGS
+    status: ACTIVE
+}
+class Transaction {
+    id: 1
+    fromIban: NL01INHO0000000004
+    toIban: NL01INHO0000000002
+    amount: 50.0
+    timeStamp: 2019-07-03 13:29:37.125
+    performedBy: 1
+}
+class Transaction {
+    id: 2
+    fromIban: NL01INHO0000000002
+    toIban: NL01INHO0000000004
+    amount: 150.0
+    timeStamp: 2019-07-03 13:29:37.139
+    performedBy: 1
+}
+class Transaction {
+    id: 3
+    fromIban: NL01INHO0000000004
+    toIban: NL01INHO0000000002
+    amount: 50.0
+    timeStamp: 2019-07-03 13:29:37.141
+    performedBy: 1
+}
+class Transaction {
+    id: 4
+    fromIban: NL01INHO0000000003
+    amount: 12.0
+    timeStamp: 2019-07-03 13:29:37.161
+    performedBy: 1
+}
+class Transaction {
+    id: 5
+    fromIban: NL01INHO0000000002
+    amount: 404.0
+    timeStamp: 2019-07-03 13:29:37.171
+    performedBy: 1
+}
+class Transaction {
+    id: 6
+    fromIban: NL01INHO0000000004
+    amount: 50.0
+    timeStamp: 2019-07-03 13:29:37.196
+    performedBy: 1
+}
+class Transaction {
+    id: 7
+    fromIban: NL01INHO0000000004
+    amount: 4.0
+    timeStamp: 2019-07-03 13:29:37.198
+    performedBy: 1
+}
+class Transaction {
+    id: 8
+    fromIban: NL01INHO0000000004
+    amount: 6.0
+    timeStamp: 2019-07-03 13:29:37.204
+    performedBy: 1
+}
+class Transaction {
+    id: 9
+    fromIban: NL01INHO0000000004
+    amount: 8.0
+    timeStamp: 2019-07-03 13:29:37.208
+    performedBy: 1
+}
+]]></system-out>
+  </testcase>
+  <testcase name="getAccountByIbanTest" classname="io.swagger.api.AccountsApiControllerIntegrationTest" time="0.002">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at io.swagger.api.AccountsApiControllerIntegrationTest.getAccountByIbanTest(AccountsApiControllerIntegrationTest.java:41)
+</error>
+  </testcase>
+  <testcase name="deleteAccountTest" classname="io.swagger.api.AccountsApiControllerIntegrationTest" time="0.002">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at io.swagger.api.AccountsApiControllerIntegrationTest.deleteAccountTest(AccountsApiControllerIntegrationTest.java:34)
+</error>
+  </testcase>
+  <testcase name="toggleAccountStatusTest" classname="io.swagger.api.AccountsApiControllerIntegrationTest" time="0.002">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at io.swagger.api.AccountsApiControllerIntegrationTest.toggleAccountStatusTest(AccountsApiControllerIntegrationTest.java:56)
+</error>
+  </testcase>
+  <testcase name="createAccountTest" classname="io.swagger.api.AccountsApiControllerIntegrationTest" time="0.002">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at io.swagger.api.AccountsApiControllerIntegrationTest.createAccountTest(AccountsApiControllerIntegrationTest.java:27)
+</error>
+  </testcase>
+</testsuite>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>Transactions</title>
+
+	<link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet" />
+	<link href="css/get-transactions-style.css" rel="stylesheet" />
+
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<!-- THIS IS THE RIGHT JQUERY-->
+	<script src="/js/findGetParameter.js" type='text/javascript'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+
+	<!-- <script src="js/get-transactions-script.js"></script> -->
+
+
+	<script type="text/javascript">
+
+		function showTransactions(transactions) {
+			console.log(transactions);
+			console.time('showTransactions');
+			var iban = findGetParameter("iban");
+			
+			if (transactions.length > 0) {
+				$("#transactionTitle").text("Transactions of: " + iban);
+
+				for (let index = 0; index < transactions.length; index++) {
+					const element = transactions[index];
+					$("#transactionsList").append('<li class=""><p>From IBAN: ' + element.FromIban + ', To IBAN: '+ element.To +',  Amount: €' + element.Amount + ', Performed by: '+ element.PerformedBy +'</p></li>');
+				}
+
+			} else {
+				$("#transactionTitle").text("There are no transactions for: " + iban);
+				
+			}
+			console.timeEnd('showTransactions');
+		}
+
+
+
+
+		$(document).ready(function () {
+			var userInfo;
+			var userAccounts;
+			var iban;
+			var transactionFromIban;
+			var transactionToIban;
+			//var AlltransactionsList = [];
+
+			if (findGetParameter("iban")) {
+				console.log(findGetParameter("iban"));
+				iban = findGetParameter("iban");
+
+				$.ajax({//get current logged in user info
+					async: false,
+					type: "GET",
+					url: "/userinfo",
+					data: "",
+					contentType: "application/json",
+					success: function (data) {
+						userInfo = data;
+					}
+				});
+
+				$.ajax({
+					async: false,
+					type: "GET",
+					url: "/transactions?fromIban=" + iban ,
+					data: "",
+					contentType: "application/json",
+					success: function (data) {
+						transactionFromIban = data
+						console.log("from"+ data);
+						//AlltransactionsList.push(data);//first push
+						showTransactions(data);
+					}
+				});
+
+				$.ajax({
+					async: false,
+					type: "GET",
+					url: "/transactions?to=" + iban,
+					data: "",
+					contentType: "application/json",
+					success: function (data) {
+						transactionToIban = data
+						console.log("to"+ data);
+						//AlltransactionsList.push(data);//then concat
+						showTransactions(data);
+					}
+				});
+
+				//console.log(AlltransactionsList);
+				//don't forget the most important part..
+				// showTransactions(AlltransactionsList);
+
+
+			}
+		});
+
+	</script>
+</head>
+
+<body>
+	<main>
+		<h1 id="transactionTitle"></h1>
+		<ul id="transactionsList" class="list"></ul>
+	</main>
+	<!-- <div id="root">
+		Search for iban from: <input type="text" id="ibanFrom" name="fname"><br>
+		<input type="submit" onclick="getTransactionsByFromIban()" id="ibanFromButton" value="Find">
+		</br>
+		Search for iban to: <input type="text" id="ibanTo" name="fname"><br>
+		<input type="submit" id="ibanToButton" value="Find">
+		</br>
+		Search for performed by: <input type="text" id="performedBy" name="fname"><br>
+		<input type="submit" id="performedByButton" value="Find">
+	</div> -->
+
+</body>
+
+</html>

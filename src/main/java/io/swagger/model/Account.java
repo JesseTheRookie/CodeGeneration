@@ -6,7 +6,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.model.User;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -15,13 +18,14 @@ import javax.validation.constraints.*;
  * Account
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-11T12:03:46.065Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-07-04T17:47:19.062Z[GMT]")
 public class Account   {
   @JsonProperty("iban")
   private String iban = null;
 
-  @JsonProperty("id")
-  private BigDecimal id = null;
+  @JsonProperty("user")
+  @Valid
+  private List<User> user = null;
 
   @JsonProperty("name")
   private String name = null;
@@ -115,25 +119,31 @@ public class Account   {
     this.iban = iban;
   }
 
-  public Account id(BigDecimal id) {
-    this.id = id;
+  public Account user(List<User> user) {
+    this.user = user;
+    return this;
+  }
+
+  public Account addUserItem(User userItem) {
+    if (this.user == null) {
+      this.user = new ArrayList<User>();
+    }
+    this.user.add(userItem);
     return this;
   }
 
   /**
-   * The id of the user
-   * @return id
+   * The user who owns the account
+   * @return user
   **/
-  @ApiModelProperty(required = true, value = "The id of the user")
-  @NotNull
-
+  @ApiModelProperty(value = "The user who owns the account")
   @Valid
-  public BigDecimal getId() {
-    return id;
+  public List<User> getUser() {
+    return user;
   }
 
-  public void setId(BigDecimal id) {
-    this.id = id;
+  public void setUser(List<User> user) {
+    this.user = user;
   }
 
   public Account name(String name) {
@@ -228,7 +238,7 @@ public class Account   {
     }
     Account account = (Account) o;
     return Objects.equals(this.iban, account.iban) &&
-        Objects.equals(this.id, account.id) &&
+        Objects.equals(this.user, account.user) &&
         Objects.equals(this.name, account.name) &&
         Objects.equals(this.balance, account.balance) &&
         Objects.equals(this.type, account.type) &&
@@ -237,7 +247,7 @@ public class Account   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(iban, id, name, balance, type, status);
+    return Objects.hash(iban, user, name, balance, type, status);
   }
 
   @Override
@@ -246,7 +256,7 @@ public class Account   {
     sb.append("class Account {\n");
     
     sb.append("    iban: ").append(toIndentedString(iban)).append("\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    user: ").append(toIndentedString(user)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    balance: ").append(toIndentedString(balance)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");

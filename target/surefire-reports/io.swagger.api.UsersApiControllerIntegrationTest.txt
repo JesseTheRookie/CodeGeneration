@@ -1,0 +1,30 @@
+-------------------------------------------------------------------------------
+Test set: io.swagger.api.UsersApiControllerIntegrationTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 4, Skipped: 0, Time elapsed: 0.002 s <<< FAILURE! - in io.swagger.api.UsersApiControllerIntegrationTest
+getUsersTest(io.swagger.api.UsersApiControllerIntegrationTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NullPointerException
+	at io.swagger.api.UsersApiControllerIntegrationTest.getUsersTest(UsersApiControllerIntegrationTest.java:48)
+
+createUserTest(io.swagger.api.UsersApiControllerIntegrationTest)  Time elapsed: 0 s  <<< ERROR!
+org.springframework.transaction.TransactionSystemException: Could not commit JPA transaction; nested exception is javax.persistence.RollbackException: Error while committing the transaction
+	at io.swagger.api.UsersApiControllerIntegrationTest.createUserTest(UsersApiControllerIntegrationTest.java:28)
+Caused by: javax.persistence.RollbackException: Error while committing the transaction
+	at io.swagger.api.UsersApiControllerIntegrationTest.createUserTest(UsersApiControllerIntegrationTest.java:28)
+Caused by: javax.validation.ConstraintViolationException: 
+Validation failed for classes [io.swagger.model.User] during persist time for groups [javax.validation.groups.Default, ]
+List of constraint violations:[
+	ConstraintViolationImpl{interpolatedMessage='mag niet null zijn', propertyPath=role, rootBeanClass=class io.swagger.model.User, messageTemplate='{javax.validation.constraints.NotNull.message}'}
+	ConstraintViolationImpl{interpolatedMessage='mag niet null zijn', propertyPath=username, rootBeanClass=class io.swagger.model.User, messageTemplate='{javax.validation.constraints.NotNull.message}'}
+	ConstraintViolationImpl{interpolatedMessage='mag niet null zijn', propertyPath=password, rootBeanClass=class io.swagger.model.User, messageTemplate='{javax.validation.constraints.NotNull.message}'}
+]
+	at io.swagger.api.UsersApiControllerIntegrationTest.createUserTest(UsersApiControllerIntegrationTest.java:28)
+
+getAccountsByUserIdTest(io.swagger.api.UsersApiControllerIntegrationTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NullPointerException
+	at io.swagger.api.UsersApiControllerIntegrationTest.getAccountsByUserIdTest(UsersApiControllerIntegrationTest.java:35)
+
+getUserByIdTest(io.swagger.api.UsersApiControllerIntegrationTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NullPointerException
+	at io.swagger.api.UsersApiControllerIntegrationTest.getUserByIdTest(UsersApiControllerIntegrationTest.java:42)
+

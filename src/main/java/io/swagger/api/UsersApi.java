@@ -23,17 +23,17 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-11T12:03:46.065Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-07-04T17:47:19.062Z[GMT]")
 @Api(value = "users", description = "the users API")
 public interface UsersApi {
 
     @ApiOperation(value = "Creates a new user", nickname = "createUser", notes = "Creates a new user, if the logged in user is an employee, and returns the userId", response = Integer.class, authorizations = {
-        @Authorization(value = "ApiKeyAuth")    }, tags={ "user", })
+        @Authorization(value = "cookieAuth")    }, tags={ "user", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "user created", response = Integer.class),
-        @ApiResponse(code = 400, message = "Client says no"),
-        @ApiResponse(code = 405, message = "Invalid input"),
-        @ApiResponse(code = 500, message = "Server says no") })
+        @ApiResponse(code = 201, message = "User created", response = Integer.class),
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 403, message = "Forbidden, you do not have the required rights"),
+        @ApiResponse(code = 500, message = "Oops, something went wrong on the server. Sorry!") })
     @RequestMapping(value = "/users",
         produces = { "application/json" }, 
         consumes = { "application/json" },
@@ -42,11 +42,13 @@ public interface UsersApi {
 
 
     @ApiOperation(value = "Returns all accounts of the specified user", nickname = "getAccountsByUserId", notes = "Returns a list of accounts, belonging to the logged in user", response = Account.class, responseContainer = "List", authorizations = {
-        @Authorization(value = "ApiKeyAuth")    }, tags={ "user", })
+        @Authorization(value = "cookieAuth")    }, tags={ "user", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "the account(s)", response = Account.class, responseContainer = "List"),
-        @ApiResponse(code = 400, message = "Client says no"),
-        @ApiResponse(code = 500, message = "Server says no") })
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 403, message = "Forbidden, you do not have the required rights"),
+        @ApiResponse(code = 404, message = "Not found"),
+        @ApiResponse(code = 500, message = "Oops, something went wrong on the server. Sorry!") })
     @RequestMapping(value = "/users/{userId}/accounts",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
@@ -54,47 +56,30 @@ public interface UsersApi {
 
 
     @ApiOperation(value = "Returns specified user", nickname = "getUserById", notes = "Returns the specified user", response = User.class, responseContainer = "List", authorizations = {
-        @Authorization(value = "ApiKeyAuth")    }, tags={ "user", })
+        @Authorization(value = "cookieAuth")    }, tags={ "user", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "the user", response = User.class, responseContainer = "List"),
-        @ApiResponse(code = 400, message = "Client says no"),
-        @ApiResponse(code = 404, message = "User not found"),
-        @ApiResponse(code = 405, message = "Validation exception"),
-        @ApiResponse(code = 500, message = "Server says no") })
+        @ApiResponse(code = 200, message = "User found", response = User.class, responseContainer = "List"),
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 403, message = "Forbidden, you do not have the required rights"),
+        @ApiResponse(code = 404, message = "Not found"),
+        @ApiResponse(code = 500, message = "Oops, something went wrong on the server. Sorry!") })
     @RequestMapping(value = "/users/{userId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<User>> getUserById(@Min(1)@ApiParam(value = "The user ID",required=true, allowableValues = "") @PathVariable("userId") Integer userId);
+    ResponseEntity<List<User>> getUserById(@Min(100)@ApiParam(value = "The user ID, starts at 100",required=true, allowableValues = "") @PathVariable("userId") Integer userId);
 
 
     @ApiOperation(value = "Returns all users", nickname = "getUsers", notes = "Returns a list of all users", response = User.class, responseContainer = "List", authorizations = {
-        @Authorization(value = "ApiKeyAuth")    }, tags={ "user", })
+        @Authorization(value = "cookieAuth")    }, tags={ "user", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "the user list", response = User.class, responseContainer = "List"),
-        @ApiResponse(code = 400, message = "Nee") })
+        @ApiResponse(code = 200, message = "User(s) found", response = User.class, responseContainer = "List"),
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 403, message = "Forbidden, you do not have the required rights"),
+        @ApiResponse(code = 404, message = "Not found"),
+        @ApiResponse(code = 500, message = "Oops, something went wrong on the server. Sorry!") })
     @RequestMapping(value = "/users",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<List<User>> getUsers();
-
-
-    @ApiOperation(value = "Logs user into the system", nickname = "loginUser", notes = "", response = String.class, tags={ "user", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "User logged in", response = String.class),
-        @ApiResponse(code = 400, message = "Invalid username/password supplied"),
-        @ApiResponse(code = 500, message = "Server says no") })
-    @RequestMapping(value = "/users/login",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.POST)
-    ResponseEntity<String> loginUser(@ApiParam(value = "Username and password" ,required=true )  @Valid @RequestBody User body);
-
-
-    @ApiOperation(value = "Logs out current logged in user session", nickname = "logoutUser", notes = "", tags={ "user", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation") })
-    @RequestMapping(value = "/users/logout",
-        method = RequestMethod.GET)
-    ResponseEntity<Void> logoutUser();
 
 }

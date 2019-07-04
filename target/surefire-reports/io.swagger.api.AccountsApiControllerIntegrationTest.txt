@@ -1,0 +1,24 @@
+-------------------------------------------------------------------------------
+Test set: io.swagger.api.AccountsApiControllerIntegrationTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 5, Skipped: 0, Time elapsed: 8.293 s <<< FAILURE! - in io.swagger.api.AccountsApiControllerIntegrationTest
+getAccountsTest(io.swagger.api.AccountsApiControllerIntegrationTest)  Time elapsed: 0.054 s  <<< ERROR!
+java.lang.NullPointerException
+	at io.swagger.api.AccountsApiControllerIntegrationTest.getAccountsTest(AccountsApiControllerIntegrationTest.java:48)
+
+getAccountByIbanTest(io.swagger.api.AccountsApiControllerIntegrationTest)  Time elapsed: 0.002 s  <<< ERROR!
+java.lang.NullPointerException
+	at io.swagger.api.AccountsApiControllerIntegrationTest.getAccountByIbanTest(AccountsApiControllerIntegrationTest.java:41)
+
+deleteAccountTest(io.swagger.api.AccountsApiControllerIntegrationTest)  Time elapsed: 0.002 s  <<< ERROR!
+java.lang.NullPointerException
+	at io.swagger.api.AccountsApiControllerIntegrationTest.deleteAccountTest(AccountsApiControllerIntegrationTest.java:34)
+
+toggleAccountStatusTest(io.swagger.api.AccountsApiControllerIntegrationTest)  Time elapsed: 0.002 s  <<< ERROR!
+java.lang.NullPointerException
+	at io.swagger.api.AccountsApiControllerIntegrationTest.toggleAccountStatusTest(AccountsApiControllerIntegrationTest.java:56)
+
+createAccountTest(io.swagger.api.AccountsApiControllerIntegrationTest)  Time elapsed: 0.002 s  <<< ERROR!
+java.lang.NullPointerException
+	at io.swagger.api.AccountsApiControllerIntegrationTest.createAccountTest(AccountsApiControllerIntegrationTest.java:27)
+

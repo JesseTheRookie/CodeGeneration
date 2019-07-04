@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-11T12:03:46.065Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-07-04T17:47:19.062Z[GMT]")
 @Controller
 public class UsersApiController implements UsersApi {
 
@@ -48,7 +48,7 @@ public class UsersApiController implements UsersApi {
         return new ResponseEntity<List<Account>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<List<User>> getUserById(@Min(1)@ApiParam(value = "The user ID",required=true, allowableValues = "") @PathVariable("userId") Integer userId) {
+    public ResponseEntity<List<User>> getUserById(@Min(100)@ApiParam(value = "The user ID, starts at 100",required=true, allowableValues = "") @PathVariable("userId") Integer userId) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<List<User>>(HttpStatus.NOT_IMPLEMENTED);
     }
@@ -56,16 +56,6 @@ public class UsersApiController implements UsersApi {
     public ResponseEntity<List<User>> getUsers() {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<List<User>>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    public ResponseEntity<String> loginUser(@ApiParam(value = "Username and password" ,required=true )  @Valid @RequestBody User body) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<String>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    public ResponseEntity<Void> logoutUser() {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 }

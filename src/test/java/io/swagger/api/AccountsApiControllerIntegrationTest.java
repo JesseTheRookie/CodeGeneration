@@ -24,7 +24,7 @@ public class AccountsApiControllerIntegrationTest {
     @Test
     public void createAccountTest() throws Exception {
         Account body = new Account();
-        ResponseEntity<Void> responseEntity = api.createAccount(body);
+        ResponseEntity<String> responseEntity = api.createAccount(body);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 

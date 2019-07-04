@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-06-11T12:03:46.065Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-07-04T17:47:19.062Z[GMT]")
 @Controller
 public class TransactionsApiController implements TransactionsApi {
 
@@ -42,7 +42,12 @@ public class TransactionsApiController implements TransactionsApi {
         return new ResponseEntity<Integer>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<List<Transaction>> getTransactions(@ApiParam(value = "The id of a transaction") @Valid @RequestParam(value = "transactionID", required = false) Integer transactionID,@ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "from", required = false) String from,@ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "to", required = false) String to,@ApiParam(value = "The userId of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) {
+    public ResponseEntity<List<Transaction>> getTransactionById(@ApiParam(value = "The transaction id",required=true) @PathVariable("transactionId") Integer transactionId) {
+        String accept = request.getHeader("Accept");
+        return new ResponseEntity<List<Transaction>>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    public ResponseEntity<List<Transaction>> getTransactions(@ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "fromIban", required = false) String fromIban,@ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "toIban", required = false) String toIban,@ApiParam(value = "The type of transaction", allowableValues = "transaction, deposit, withdrawal") @Valid @RequestParam(value = "Type", required = false) String type,@ApiParam(value = "The id of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<List<Transaction>>(HttpStatus.NOT_IMPLEMENTED);
     }

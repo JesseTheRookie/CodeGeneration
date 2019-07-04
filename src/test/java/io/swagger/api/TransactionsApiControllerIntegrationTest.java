@@ -29,12 +29,19 @@ public class TransactionsApiControllerIntegrationTest {
     }
 
     @Test
+    public void getTransactionByIdTest() throws Exception {
+        Integer transactionId = 56;
+        ResponseEntity<List<Transaction>> responseEntity = api.getTransactionById(transactionId);
+        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
+    }
+
+    @Test
     public void getTransactionsTest() throws Exception {
-        Integer transactionID = 56;
-        String from = "from_example";
-        String to = "to_example";
+        String fromIban = "fromIban_example";
+        String toIban = "toIban_example";
+        String type = "type_example";
         Integer performedBy = 56;
-        ResponseEntity<List<Transaction>> responseEntity = api.getTransactions(transactionID, from, to, performedBy);
+        ResponseEntity<List<Transaction>> responseEntity = api.getTransactions(fromIban, toIban, type, performedBy);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 
