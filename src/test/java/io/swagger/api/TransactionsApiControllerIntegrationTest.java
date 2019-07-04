@@ -34,13 +34,13 @@ public class TransactionsApiControllerIntegrationTest {
     //Turn off getAllTransactions() security in TransactionService
     @Test
     public void testGetAllTransactionsShouldRetrieveAListOfAllTransactions() throws ApiException {
-        ResponseEntity<List<Transaction>> responseEntity = api.getTransactions(null, null, null, null, null);
+        ResponseEntity<List<Transaction>> responseEntity = api.getTransactions(null, null, null, null);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
     //Turn off getTransactionsByFromIban security in TransactionService
     @Test
     public void testGetTransactionByFromIban() throws ApiException{
-        ResponseEntity<List<Transaction>> responseEntity = api.getTransactions("NL01INHO0000000004", null, null, null, null);
+        ResponseEntity<List<Transaction>> responseEntity = api.getTransactions("NL01INHO0000000004", null, null, null);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
     //Turn off validateTransaction security in TransactionService
@@ -57,19 +57,19 @@ public class TransactionsApiControllerIntegrationTest {
         Transaction.TransactionType deposit = Transaction.TransactionType.DEPOSIT;
         Transaction.TransactionType withdrawal = Transaction.TransactionType.WITHDRAWAL;
 
-        ResponseEntity<List<Transaction>> responseEntity = api.getTransactions(null, null, deposit, null, null);
+        ResponseEntity<List<Transaction>> responseEntity = api.getTransactions(null, null, deposit, null);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
     //Turn off getTransactionsByToIban security in TransactionService
     @Test
     public void getTransactionsByToIban() throws ApiException {
-        ResponseEntity<List<Transaction>> responseEntity = api.getTransactions(null, "NL01INHO0000000004", null, null, null);
+        ResponseEntity<List<Transaction>> responseEntity = api.getTransactions(null, "NL01INHO0000000004", null, null);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
     //Turn off getTransactionsByPerformedBy security in TransactionService
     @Test
     public void getTransactionsByPerformedBy() throws ApiException {
-        ResponseEntity<List<Transaction>> responseEntity = api.getTransactions(null, null, null, 101, null);
+        ResponseEntity<List<Transaction>> responseEntity = api.getTransactions(null, null, null, 101);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 }

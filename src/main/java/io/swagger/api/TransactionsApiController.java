@@ -49,7 +49,10 @@ public class TransactionsApiController implements TransactionsApi {
         return new ResponseEntity<Integer>(Integer.valueOf(body.getId()), HttpStatus.CREATED);
     }
 
-    public ResponseEntity<List<Transaction>> getTransactions(@ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "fromIban", required = false) String fromIban, @ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "toIban", required = false) String toIban, @ApiParam(value = "The type of the transaction") @Valid @RequestParam(value = "Type", required = false) Transaction.TransactionType type, @ApiParam(value = "The userId of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy, @ApiParam(value = "get the transactions where this iban is in") @Valid @RequestParam(value = "iban", required = false) String iban) throws ApiException{
+    public ResponseEntity<List<Transaction>> getTransactions(@ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "fromIban", required = false) String fromIban,
+                                                             @ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "toIban", required = false) String toIban,
+                                                             @ApiParam(value = "The type of the transaction") @Valid @RequestParam(value = "Type", required = false) Transaction.TransactionType type,
+                                                             @ApiParam(value = "The userId of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) throws ApiException{
         String accept = request.getHeader("Accept");
         if (fromIban != null) {
             return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getTransactionsByFromIban(fromIban), HttpStatus.OK); // deze werkt
@@ -59,10 +62,7 @@ public class TransactionsApiController implements TransactionsApi {
             return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getTransactionsByPerformedBy(performedBy), HttpStatus.OK);
         } else if (type != null){
             return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getTransactionsByType(type), HttpStatus.OK);
-        } else if(iban != null){
-            return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getTransactionsByIban(iban), HttpStatus.OK);
-        }
-        else{
+        }else{
             return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getAllTransactions(), HttpStatus.OK);
         }
     }
@@ -76,5 +76,8 @@ public class TransactionsApiController implements TransactionsApi {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Transaction>(transactionService.getTransactionById(transactionId), HttpStatus.OK);
     }
-
+    public ResponseEntity<List<Transaction>> getTransactionsByIban(@Min(1)@ApiParam(value = "The transaction ID",required=true, allowableValues = "") @PathVariable("iban") String iban) throws ApiException {
+        String accept = request.getHeader("Accept");
+        return new ResponseEntity<List<Transaction>>((List<Transaction>) transactionService.getTransactionsByIban(iban), HttpStatus.OK);
+    }
 }
