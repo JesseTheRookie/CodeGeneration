@@ -65,15 +65,4 @@ public class UsersApiController implements UsersApi {
         return new ResponseEntity<List<User>>((List<User>)service.getAllUsers(), HttpStatus.OK);
     }
 
-    public ResponseEntity<String> loginUser(@ApiParam(value = "Username and password" ,required=true )  @Valid @RequestBody User body) {
-        String accept = request.getHeader("Accept");
-        //return new ResponseEntity<String>( "redirect:swagger-ui.html", HttpStatus.NOT_IMPLEMENTED);
-        return new ResponseEntity<String>(  HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    public ResponseEntity<Void> logoutUser() {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
 }
