@@ -21,4 +21,7 @@ public interface TransactionRepository extends CrudRepository<Transaction, Integ
 
     @Query("select t from Transaction t where t.type = ?1")
     List<Transaction> getTransactionsByType(Transaction.TransactionType type);
+
+    @Query("select t from Transaction t where t.fromIban = ?1 or t.toIban = ?1")
+    List<Transaction> getTransactionByIban(String iban);
 }
