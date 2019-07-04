@@ -87,7 +87,7 @@ public class TransactionService {
         } else throw new ApiException(403, "You are not authorized for this request");
     }
 
-    public Iterable<Transaction> getTransactionById(Integer id) {
+    public Transaction getTransactionById(Integer id) {
         return transactionRepository.getTransactionById(id);
     }
 
@@ -128,7 +128,7 @@ public class TransactionService {
 
         if (areAccountsSameUser(transaction.getFromIban(), transaction.getToIban())) { // binnen dezelfde user mogen transacties plaats vinden.
             return;
-            //            throw new ApiException(403, "You are not authorized for this request");
+            //throw new ApiException(403, "You are not authorized for this request");
         }
         if (areAccountsBothOfTypeCurrent(transaction.getFromIban(), transaction.getToIban())) { // Niet dezelfde user, dan alleen als beide current zijn
             return;
@@ -198,7 +198,6 @@ public class TransactionService {
         // }
         transactionRepository.save(newWithdrawal);
     }
-
 
     private Integer getNumberOfTransactionToday(String iban) {
 

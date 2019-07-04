@@ -30,12 +30,12 @@ public class TransactionsApiControllerIntegrationTest {
 
     @Test
     public void getTransactionsTest() throws Exception {
-        Integer transactionID = 56;
+        //Integer transactionID = 56;
         String from = "from_example";
         String to = "to_example";
         Transaction.TransactionType Type = Transaction.TransactionType.TRANSACTION;
         Integer performedBy = 56;
-        ResponseEntity<List<Transaction>> responseEntity = api.getTransactions(transactionID, from, to, Type, performedBy);
+        ResponseEntity<List<Transaction>> responseEntity = api.getTransactions( from, to, Type, performedBy);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 
