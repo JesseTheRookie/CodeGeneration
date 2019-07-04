@@ -1,0 +1,163 @@
+{
+	"info": {
+		"_postman_id": "51147eaa-49f6-4f1b-ae7a-0975942bd975",
+		"name": "Accounts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://swaggerbank.herokuapp.com/accounts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://swaggerbank.herokuapp.com/accounts",
+					"protocol": "https",
+					"host": [
+						"swaggerbank",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://swaggerbank.herokuapp.com/accounts",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"Iban\": \"NL01INHO000001337\",\n        \"User\": {\n            \"Id\": 101,\n            \"Name\": \"stefan\",\n            \"Role\": \"USER_EMPLOYEE\"\n        },\n        \"Name\": \"sjf de jong\",\n        \"Balance\": 1000,\n        \"Accounttype\": \"CURRENT\",\n        \"Status\": \"ACTIVE\"\n    }"
+				},
+				"url": {
+					"raw": "https://swaggerbank.herokuapp.com/accounts",
+					"protocol": "https",
+					"host": [
+						"swaggerbank",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://swaggerbank.herokuapp.com/accounts/NL01INHO0000000003",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://swaggerbank.herokuapp.com/accounts/NL01INHO0000000003",
+					"protocol": "https",
+					"host": [
+						"swaggerbank",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"NL01INHO0000000003"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://swaggerbank.herokuapp.com/accounts/NL01INHO0000000003",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://swaggerbank.herokuapp.com/accounts/NL01INHO0000000003",
+					"protocol": "https",
+					"host": [
+						"swaggerbank",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"NL01INHO0000000003"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:8443/accounts/NL01INHO000001337",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"Iban\": \"NL01INHO000001337\"\n    }"
+				},
+				"url": {
+					"raw": "https://swaggerbank.herokuapp.com/accounts/NL01INHO0000000003",
+					"protocol": "https",
+					"host": [
+						"swaggerbank",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"accounts",
+						"NL01INHO0000000003"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "fc0b9c36-2436-4856-97d9-461c5ea1c50e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "4c713367-db71-42a7-b9c1-b45fab688868",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

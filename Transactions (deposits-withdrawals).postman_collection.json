@@ -1,0 +1,261 @@
+{
+	"info": {
+		"_postman_id": "bf02aec9-4efd-4c85-b41e-219e86a8b5fc",
+		"name": "Transactions (deposits/withdrawals)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://swaggerbank.herokuapp.com/transactions",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://swaggerbank.herokuapp.com/transactions",
+					"protocol": "https",
+					"host": [
+						"swaggerbank",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://swaggerbank.herokuapp.com/transactions?fromIban=NL01INHO0000000004",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://swaggerbank.herokuapp.com/transactions?fromIban=NL01INHO0000000004",
+					"protocol": "https",
+					"host": [
+						"swaggerbank",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"transactions"
+					],
+					"query": [
+						{
+							"key": "fromIban",
+							"value": "NL01INHO0000000004"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://swaggerbank.herokuapp.com/transactions?to=NL01INHO0000000004",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://swaggerbank.herokuapp.com/transactions?toIban=NL01INHO0000000002",
+					"protocol": "https",
+					"host": [
+						"swaggerbank",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"transactions"
+					],
+					"query": [
+						{
+							"key": "toIban",
+							"value": "NL01INHO0000000002"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://swaggerbank.herokuapp.com/transactions?performedBy=1",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://swaggerbank.herokuapp.com/transactions?performedBy=1",
+					"protocol": "https",
+					"host": [
+						"swaggerbank",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"transactions"
+					],
+					"query": [
+						{
+							"key": "performedBy",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://swaggerbank.herokuapp.com/transactions?Type=WITHDRAWAL",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://swaggerbank.herokuapp.com/transactions?Type=WITHDRAWAL",
+					"protocol": "https",
+					"host": [
+						"swaggerbank",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"transactions"
+					],
+					"query": [
+						{
+							"key": "Type",
+							"value": "WITHDRAWAL"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://swaggerbank.herokuapp.com/transactions | transactions",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"FromIban\": \"NL01INHO0000000004\",\n        \"ToIban\": \"NL01INHO0000000002\",\n        \"Amount\": 50,\n\t\t\"Type\": \"transaction\",\n\t\t\"PerformedBy\": 1\n    }"
+				},
+				"url": {
+					"raw": "https://swaggerbank.herokuapp.com/transactions",
+					"protocol": "https",
+					"host": [
+						"swaggerbank",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://swaggerbank.herokuapp.com/transactions | deposit",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"ToIban\": \"NL01INHO0000000002\",\n    \"Amount\": 50,\n    \"Type\": \"deposit\",\n    \"PerformedBy\": 1\n}"
+				},
+				"url": {
+					"raw": "https://swaggerbank.herokuapp.com/transactions",
+					"protocol": "https",
+					"host": [
+						"swaggerbank",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://swaggerbank.herokuapp.com/transactions | withdrawal",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"FromIban\": \"NL01INHO0000000003\",\n    \"Amount\": 1337,\n    \"Type\": \"withdrawal\",\n    \"PerformedBy\": 1\n}"
+				},
+				"url": {
+					"raw": "https://swaggerbank.herokuapp.com/transactions",
+					"protocol": "https",
+					"host": [
+						"swaggerbank",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

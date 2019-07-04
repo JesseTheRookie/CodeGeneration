@@ -1,0 +1,110 @@
+{
+	"info": {
+		"_postman_id": "831774fd-2a0a-48f7-a04a-93d5cde357fd",
+		"name": "Users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://swaggerbank.herokuapp.com/users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://swaggerbank.herokuapp.com/users",
+					"protocol": "https",
+					"host": [
+						"swaggerbank",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://swaggerbank.herokuapp.com/users/101",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://swaggerbank.herokuapp.com/users/101",
+					"protocol": "https",
+					"host": [
+						"swaggerbank",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users",
+						"101"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://swaggerbank.herokuapp.com/users",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Name\": \"erwin\",\n    \"Password\": \"erwin123\",\n    \"Role\": \"USER_EMPLOYEE\"\n}"
+				},
+				"url": {
+					"raw": "https://swaggerbank.herokuapp.com/users",
+					"protocol": "https",
+					"host": [
+						"swaggerbank",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://swaggerbank.herokuapp.com/users/101/accounts",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://swaggerbank.herokuapp.com/users/101/accounts",
+					"protocol": "https",
+					"host": [
+						"swaggerbank",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users",
+						"101",
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
