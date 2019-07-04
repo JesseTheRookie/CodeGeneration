@@ -55,25 +55,25 @@ public interface TransactionsApi {
                                                       @ApiParam(value = "The id of the user performing the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) throws ApiException;
 
     @ApiOperation(value = "Returns specified transaction", nickname = "getTransactionById", notes = "Returns the specified transaction", response = Transaction.class, authorizations = {
-            @Authorization(value = "cookieAuth")    }, tags={ "transaction", })
+        @Authorization(value = "cookieAuth")    }, tags={ "transaction", })
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "succes", response = Transaction.class),
-            @ApiResponse(code = 400, message = "Invalid input"),
-            @ApiResponse(code = 403, message = "Forbidden, you do not have the required rights"),
-            @ApiResponse(code = 500, message = "Oops, something went wrong on the server. Sorry!") })
+        @ApiResponse(code = 200, message = "Transaction found", response = Transaction.class),
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 403, message = "Forbidden, you do not have the required rights"),
+        @ApiResponse(code = 500, message = "Oops, something went wrong on the server. Sorry!") })
     @RequestMapping(value = "/transactions/{transactionId}",
             produces = { "application/json" },
             method = RequestMethod.GET)
     ResponseEntity<Transaction> getTransactionById(@Min(1)@ApiParam(value = "The transaction ID",required=true, allowableValues = "") @PathVariable("transactionId") Integer transactionId) throws ApiException;
 
-    @ApiOperation(value = "Returns transactions by iban", nickname = "getTransactionsByIban", notes = "Returns transaction where the iban is in", response = Transaction.class, responseContainer = "List",  authorizations = {
-            @Authorization(value = "cookieAuth")    }, tags={ "transaction", })
+    @ApiOperation(value = "Returns all transaction with the specified iban in the fromIban or toIban field", nickname = "getTransactionsByIban", notes = "Returns all transaction which involve this iban (from or to)", response = Transaction.class, responseContainer = "List",  authorizations = {
+        @Authorization(value = "cookieAuth")    }, tags={ "transaction", })
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "succes", response = Transaction.class, responseContainer = "List"),
-            @ApiResponse(code = 400, message = "Invalid input"),
-            @ApiResponse(code = 403, message = "Forbidden, you do not have the required rights"),
-            @ApiResponse(code = 500, message = "Oops, something went wrong on the server. Sorry!") })
-    @RequestMapping(value = "/transactions/iban/{iban}",
+        @ApiResponse(code = 200, message = "Transaction(s) found", response = Transaction.class, responseContainer = "List"),
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 403, message = "Forbidden, you do not have the required rights"),
+        @ApiResponse(code = 500, message = "Oops, something went wrong on the server. Sorry!") })
+    @RequestMapping(value = "/transactions/{iban}",
             produces = { "application/json" },
             method = RequestMethod.GET)
     ResponseEntity<List<Transaction>> getTransactionsByIban(@Min(1)@ApiParam(value = "The iban",required=true, allowableValues = "") @PathVariable("iban") String iban) throws ApiException;
