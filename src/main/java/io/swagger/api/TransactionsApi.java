@@ -47,13 +47,24 @@ public interface TransactionsApi {
         method = RequestMethod.GET)
     ResponseEntity<List<Transaction>> getTransactions(/*@ApiParam(value = "The id of a transaction") @Valid @RequestParam(value = "transactionID", required = false) Integer transactionID,*/ @ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "fromIban", required = false) String fromIban, @ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "toIban", required = false) String toIban, @ApiParam(value = "The type of the transaction") @Valid @RequestParam(value = "Type", required = false) Transaction.TransactionType type, @ApiParam(value = "The userId of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) throws ApiException;
 
-    @ApiOperation(value = "Get the a specific transaction by using it's id", nickname = "getTransactionById", notes = "", response = Transaction.class, authorizations = {
+//    @ApiOperation(value = "Get the a specific transaction by using it's id", nickname = "getTransactionById", notes = "", response = Transaction.class, authorizations = {
+//            @Authorization(value = "ApiKeyAuth")    }, tags={ "transaction", })
+//    @ApiResponses(value = {
+//            @ApiResponse(code = 200, message = "succes", response = Transaction.class),
+//            @ApiResponse(code = 400, message = "Nee") })
+//    @RequestMapping(value = "/transactions/search/{transactionId}",
+//            produces = { "application/json" },
+//            method = RequestMethod.GET)
+//    ResponseEntity<Transaction> getTransactionById(@Min(1)@ApiParam(value = "The id of a transaction") @Valid @RequestParam(value = "transactionId", required = true) Integer transactionId) throws ApiException;
+
+    @ApiOperation(value = "Returns specified transaction", nickname = "getTransactionById", notes = "Returns the specified transaction", response = Transaction.class, authorizations = {
             @Authorization(value = "ApiKeyAuth")    }, tags={ "transaction", })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "succes", response = Transaction.class),
             @ApiResponse(code = 400, message = "Nee") })
-    @RequestMapping(value = "/transactions/{id}",
+    @RequestMapping(value = "/transactions/{transactionId}",
             produces = { "application/json" },
             method = RequestMethod.GET)
-    ResponseEntity<Transaction> getTransactionById(@ApiParam(value = "The id of a transaction") @Valid @RequestParam(value = "transactionID", required = false) Integer transactionID) throws ApiException;
+    ResponseEntity<Transaction> getTransactionById(@Min(1)@ApiParam(value = "The transaction ID",required=true, allowableValues = "") @PathVariable("transactionId") Integer transactionId) throws ApiException;
+
 }
