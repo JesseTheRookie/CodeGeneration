@@ -29,7 +29,7 @@ public class ViewController{
      */
     @RequestMapping(value = {"/dashboard"})
     public String dashboard() {
-        if (((User)securityController.currentUser()).getRole().equals(User.RoleEnum.EMPLOYEE)){
+        if (securityController.currentUser().getRole().equals(User.RoleEnum.EMPLOYEE)){
             return "redirect:/all-users";
         }
         return "/user-dashboard.html";
@@ -40,7 +40,7 @@ public class ViewController{
      */
     @RequestMapping(value = {"/employeeTools"})
     public String employeeTools() {
-        if (((User)securityController.currentUser()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)){
+        if (securityController.currentUser().getRole().equals(User.RoleEnum.USER_EMPLOYEE)){
             return "redirect:/all-users";
         }
         return "/user-dashboard.html";
@@ -114,7 +114,7 @@ public class ViewController{
      */
     @RequestMapping(value = {"/all-users"})
     public String allUsers() {
-        if (((User)securityController.currentUser()).getRole().equals(User.RoleEnum.USER)){
+        if (securityController.currentUser().getRole().equals(User.RoleEnum.USER)){
             return "/user-dashboard.html";
         }
         return "/employee-search-users.html";
