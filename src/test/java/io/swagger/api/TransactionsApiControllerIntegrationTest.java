@@ -45,4 +45,11 @@ public class TransactionsApiControllerIntegrationTest {
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 
+    @Test
+    public void getTransactionsByIbanTest() throws Exception {
+        String iban = "iban_example";
+        ResponseEntity<List<Transaction>> responseEntity = api.getTransactionsByIban(iban);
+        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
+    }
+
 }
