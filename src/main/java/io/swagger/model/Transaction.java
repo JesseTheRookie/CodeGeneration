@@ -123,7 +123,7 @@ public class Transaction {
         this.type = TransactionType.valueOf(type);
         this.performedBy = securityController.currentUserId();
 
-        if (type.equals(TransactionType.DEPOSIT)) {
+        if (this.type.equals(TransactionType.DEPOSIT)) {
             this.toIban = Iban;
         } else {
             this.fromIban = Iban;
@@ -213,10 +213,11 @@ public class Transaction {
 //        return this;
 //    }
 //
+    /*
     public Transaction fromIban(String fromIban) {
         this.fromIban = fromIban;
         return this;
-    }
+    }*/
 
     /**
      * the iban of the sending end
@@ -319,6 +320,7 @@ public class Transaction {
             sb.append("    toIban: ").append(toIndentedString(toIban)).append("\n");
         }
         sb.append("    amount: ").append(toIndentedString(amount)).append("\n");
+        sb.append("    type: ").append(toIndentedString(getType())).append("\n");
         sb.append("    timeStamp: ").append(toIndentedString(timeStamp)).append("\n");
         sb.append("    performedBy: ").append(toIndentedString(performedBy)).append("\n");
         sb.append("}");
@@ -353,7 +355,7 @@ public class Transaction {
         this.type = TransactionType.valueOf(type);
         this.performedBy = performedBy;
 
-        if (type.equals(TransactionType.DEPOSIT)) {
+        if (this.type.equals(TransactionType.DEPOSIT)) {
             this.toIban = Iban;
         } else {
             this.fromIban = Iban;
