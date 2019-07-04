@@ -26,13 +26,14 @@ import java.util.Map;
 @Api(value = "accounts", description = "the accounts API")
 public interface AccountsApi {
 
-    @ApiOperation(value = "Creates an account", nickname = "createAccount", notes = "Creates a new account, if the logged in user is an employee", response = String.class, authorizations = {
-        @Authorization(value = "ApiKeyAuth")    }, tags={ "account", })
+    @ApiOperation(value = "Creates a new account", nickname = "createAccount", notes = "Creates a new account, if the logged in user is an employee", response = String.class, authorizations = {
+        @Authorization(value = "cookieAuth")    }, tags={ "account", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Account created", response = String.class),
-        @ApiResponse(code = 400, message = "Client says no"),
-        @ApiResponse(code = 405, message = "Invalid input"),
-        @ApiResponse(code = 500, message = "Server says no") })
+        @ApiResponse(code = 201, message = "Account created", response = String.class),
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 403, message = "Forbidden, you do not have the required rights"),
+        @ApiResponse(code = 404, message = "Not found"),
+        @ApiResponse(code = 500, message = "Oops, something went wrong on the server. Sorry!") })
     @RequestMapping(value = "/accounts",
         produces = { "application/json" },
         consumes = { "application/json" },
@@ -41,36 +42,39 @@ public interface AccountsApi {
 
 
     @ApiOperation(value = "Deletes the specified account", nickname = "deleteAccount", notes = "Deletes the specified account, if the logged in user is an employee AND the balance of the account is zero", authorizations = {
-        @Authorization(value = "ApiKeyAuth")    }, tags={ "account", })
+        @Authorization(value = "cookieAuth")    }, tags={ "account", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Status updated"),
-        @ApiResponse(code = 400, message = "Client says no"),
-        @ApiResponse(code = 404, message = "Account not found"),
-        @ApiResponse(code = 500, message = "Server says no") })
+        @ApiResponse(code = 200, message = "Account deleted"),
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 403, message = "Forbidden, you do not have the required rights"),
+        @ApiResponse(code = 404, message = "Not found"),
+        @ApiResponse(code = 500, message = "Oops, something went wrong on the server. Sorry!") })
     @RequestMapping(value = "/accounts/{iban}",
         method = RequestMethod.DELETE)
     ResponseEntity<Void> deleteAccount(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban) throws ApiException;
 
 
-    @ApiOperation(value = "Returns the specified account", nickname = "getAccountByIban", notes = "Returns the specified account", response = Account.class, authorizations = {
-        @Authorization(value = "ApiKeyAuth")    }, tags={ "account", })
+    @ApiOperation(value = "Returns the specified account", nickname = "getAccountByIban", notes = "Returns the account, specified by the iban", response = Account.class, authorizations = {
+        @Authorization(value = "cookieAuth")    }, tags={ "account", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "the account", response = Account.class, responseContainer = "List"),
-        @ApiResponse(code = 400, message = "Client says no"),
-        @ApiResponse(code = 404, message = "Account not found"),
-        @ApiResponse(code = 500, message = "Server says no") })
+        @ApiResponse(code = 200, message = "Account found", response = Account.class, responseContainer = "List"),
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 404, message = "Not found"),
+        @ApiResponse(code = 500, message = "Oops, something went wrong on the server. Sorry!") })
     @RequestMapping(value = "/accounts/{iban}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<Account> getAccountByIban(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban) throws ApiException;
+    ResponseEntity<Account> getAccountByIban(@ApiParam(value = "The iban of the account you want to retrieve",required=true) @PathVariable("iban") String iban) throws ApiException;
 
 
     @ApiOperation(value = "Returns all accounts", nickname = "getAccounts", notes = "Returns a list of all accounts, if the logged in user is an employee", response = Account.class, responseContainer = "List", authorizations = {
-        @Authorization(value = "ApiKeyAuth")    }, tags={ "account", })
+        @Authorization(value = "cookieAuth")    }, tags={ "account", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "The account list", response = Account.class, responseContainer = "List"),
-        @ApiResponse(code = 400, message = "Client says no"),
-        @ApiResponse(code = 500, message = "Server says no") })
+        @ApiResponse(code = 200, message = "Account(s) found", response = Account.class, responseContainer = "List"),
+            @ApiResponse(code = 400, message = "Invalid input"),
+            @ApiResponse(code = 403, message = "Forbidden, you do not have the required rights"),
+            @ApiResponse(code = 404, message = "Not found"),
+            @ApiResponse(code = 500, message = "Oops, something went wrong on the server. Sorry!") })
     @RequestMapping(value = "/accounts",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
@@ -78,12 +82,13 @@ public interface AccountsApi {
 
 
     @ApiOperation(value = "Toggles the status of the specified account", nickname = "toggleAccountStatus", notes = "Toggles the status of the specified account, active or frozen", authorizations = {
-        @Authorization(value = "ApiKeyAuth")    }, tags={ "account", })
+        @Authorization(value = "cookieAuth")    }, tags={ "account", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Status updated"),
-        @ApiResponse(code = 400, message = "Client says no"),
-        @ApiResponse(code = 404, message = "Account not found"),
-        @ApiResponse(code = 500, message = "Server says no") })
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 403, message = "Forbidden, you do not have the required rights"),
+        @ApiResponse(code = 404, message = "Not found"),
+        @ApiResponse(code = 500, message = "Oops, something went wrong on the server. Sorry!") })
     @RequestMapping(value = "/accounts/{iban}",
         method = RequestMethod.PUT)
     ResponseEntity<Void> toggleAccountStatus(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban);

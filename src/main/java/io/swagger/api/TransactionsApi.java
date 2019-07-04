@@ -26,11 +26,13 @@ import java.util.Map;
 @Api(value = "transactions", description = "the transactions API")
 public interface TransactionsApi {
 
-    @ApiOperation(value = "Place a new transaction", nickname = "createTransaction", notes = "Creates a transaction of the specified amount between the specified accounts", response = Integer.class, authorizations = {
-        @Authorization(value = "ApiKeyAuth")    }, tags={ "transaction", })
+    @ApiOperation(value = "Create a new transaction", nickname = "createTransaction", notes = "Creates a transaction of the specified type, ammount and accounts", response = Integer.class, authorizations = {
+        @Authorization(value = "cookieAuth")    }, tags={ "transaction", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "succes and returns transactionID", response = Integer.class),
-        @ApiResponse(code = 400, message = "the operation is unsuccesfull") })
+        @ApiResponse(code = 201, message = "Transaction created", response = Integer.class),
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 403, message = "Forbidden, you do not have the required rights"),
+        @ApiResponse(code = 500, message = "Oops, something went wrong on the server. Sorry!")})
     @RequestMapping(value = "/transactions",
         produces = { "application/json" }, 
         consumes = { "application/json" },
@@ -38,7 +40,7 @@ public interface TransactionsApi {
     ResponseEntity<Integer> createTransaction(@ApiParam(value = ""  )  @Valid @RequestBody Transaction body) throws ApiException;
 
     @ApiOperation(value = "Get transactions depending on the optional parameters; the abstinence of any parameters results in all transactions.", nickname = "getTransactions", notes = "", response = Transaction.class, responseContainer = "List", authorizations = {
-        @Authorization(value = "ApiKeyAuth")    }, tags={ "transaction", })
+        @Authorization(value = "cookieAuth")    }, tags={ "transaction", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "succes", response = Transaction.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Nee") })
