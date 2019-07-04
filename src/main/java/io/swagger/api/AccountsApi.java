@@ -34,10 +34,10 @@ public interface AccountsApi {
         @ApiResponse(code = 405, message = "Invalid input"),
         @ApiResponse(code = 500, message = "Server says no") })
     @RequestMapping(value = "/accounts",
-            produces = { "application/json" },
-            consumes = { "application/json" },
+        produces = { "application/json" },
+        consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<String> createAccount(@ApiParam(value = "Account details" ,required=true )  @Valid @RequestBody Account body);
+    ResponseEntity<String> createAccount(@ApiParam(value = "" )  @Valid @RequestBody Account body);
 
 
     @ApiOperation(value = "Deletes the specified account", nickname = "deleteAccount", notes = "Deletes the specified account, if the logged in user is an employee AND the balance of the account is zero", authorizations = {
@@ -85,9 +85,7 @@ public interface AccountsApi {
         @ApiResponse(code = 404, message = "Account not found"),
         @ApiResponse(code = 500, message = "Server says no") })
     @RequestMapping(value = "/accounts/{iban}",
-            consumes = { "application/json" },
         method = RequestMethod.PUT)
-
-    ResponseEntity<Void> toggleAccountStatus(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban, @Valid @RequestBody Account body);
+    ResponseEntity<Void> toggleAccountStatus(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban);
 
 }

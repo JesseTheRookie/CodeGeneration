@@ -37,7 +37,7 @@ public class AccountsApiController implements AccountsApi {
     }
 
     // Werkt
-    public ResponseEntity<String> createAccount(@ApiParam(value = "Account details" ,required=true )  @Valid @RequestBody Account body) {
+    public ResponseEntity<String> createAccount(@ApiParam(value = "" )  @Valid @RequestBody Account body) {
         String accept = request.getHeader("Accept");
         service.createAccount(body);
         return new ResponseEntity<String>(String.valueOf(body.getIban()), HttpStatus.CREATED);
@@ -68,9 +68,9 @@ public class AccountsApiController implements AccountsApi {
     }
 
     // Werkt
-    public ResponseEntity<Void> toggleAccountStatus(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban, @Valid @RequestBody Account body) {
+    public ResponseEntity<Void> toggleAccountStatus(@ApiParam(value = "The iban",required=true) @PathVariable("iban") String iban) {
         String accept = request.getHeader("Accept");
-        service.toggleAccountStatus(iban, body);
+        service.toggleAccountStatus(iban);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 

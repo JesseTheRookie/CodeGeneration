@@ -1,136 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <title>Transactions</title>
 
-  <title>Transactions</title>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- THIS IS THE RIGHT JQUERY-->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
 
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <!-- THIS IS THE RIGHT JQUERY-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
+    <!-- Optional JavaScript -->
+    <script type="text/javascript">
+      function showTransactions(transactions) {
+        var iban = findGetParameter("iban");
 
-  <!-- Optional JavaScript -->
-  <script type="text/javascript">
+        if (transactions.length > 0) {
+          console.time("showTransactions");
 
-    function showTransactions(transactions) {
-      var iban = findGetParameter("iban");
+          $("#transactionTitle").text("Transactions of: " + iban);
 
-      if (transactions.length > 0) {
-        console.time('showTransactions')
+          for (let index = 0; index < transactions.length; index++) {
+            const element = transactions[index];
+            $("#transactionsList").append(
+              '<li class=""><p>IBAN: ' +
+                element.Iban +
+                ", Balance: €" +
+                element.Balance +
+                "</p></li>"
+            );
+          }
 
-        $("#transactionTitle").text("Transactions of: " + iban);
-
-
-        for (let index = 0; index < transactions.length; index++) {
-          const element = transactions[index];
-          $("#transactionsList").append('<li class=""><p>IBAN: ' + element.Iban + ', Balance: €' + element.Balance + '</p></li>');
+          console.timeEnd("showTransactions");
+        } else {
+          $("#transactionTitle").text("There are no transactions for: " + iban);
         }
-
-        console.timeEnd('showTransactions')
-      } else {
-        $("#transactionTitle").text("There are no transactions for: " + iban);
-
       }
-    }
 
-
-
-
-    $(document).ready(function () {
-     
-
-     
-
-
-    });
-
-  </script>
-  <script>
-    $(document).ready(function () {
-      var userInfo;
-
-      $.ajax({//get current logged in user info
-        async: false,
-        type: "GET",
-        url: "/userinfo",
-        data: "",
-        contentType: "application/json",
-        success: function (data) {
-          userInfo = data;
-        }
-      });
-
-      $("#submit").click(function (e) {
-        var transaction = {
-          FromIban: $("#ibanFrom").val(),
-          To: $("#ibanTo").val(),
-          Amount: $("#amount").val(),
-          PerformedBy: userInfo.Id,
-        };
+      $(document).ready(function() {});
+    </script>
+    <script>
+      $(document).ready(function() {
+        var userInfo;
 
         $.ajax({
-          type: "POST",
-          url: "/transactions",
-          data: JSON.stringify(transaction),
+          //get current logged in user info
+          async: false,
+          type: "GET",
+          url: "/userinfo",
+          data: "",
           contentType: "application/json",
-          success: function (data) {
-            $("#result").html(data);
-            console.log(data);
+          success: function(data) {
+            userInfo = data;
           }
         });
+
+        $("#submit").click(function(e) {
+          var transaction = {
+            FromIban: $("#ibanFrom").val(),
+            ToIban: $("#ibanTo").val(),
+            Amount: $("#amount").val(),
+            Type: $("#type").val(),
+            PerformedBy: userInfo.Id
+          };
+
+          $.ajax({
+            type: "POST",
+            url: "/transactions",
+            data: JSON.stringify(transaction),
+            contentType: "application/json",
+            success: function(data) {
+              $("#result").html(data);
+              console.log(data);
+            }
+          });
+        });
       });
-    });
-  </script>
-</head>
+    </script>
+  </head>
 
-<body>
-  <h1>Create Transaction</h1>
+  <body>
+    <h1>Create Transaction</h1>
 
-  <section id="create">
-    <div class="container">
-      <div class="form-group">
-        <label for="ibanFrom">Iban from user</label>
-        <input type="text" class="form-control" id="ibanFrom" aria-describedby="ibanHelp"
-          placeholder="NL01INHO0000000001" />
-      </div>
-      <div class="form-group">
-        <label for="ibanTo">Iban to user</label>
-        <input type="text" class="form-control" id="ibanTo" placeholder="NL01INHO0000000002" />
-      </div>
-      <div class="form-group">
-        <label for="amount">Amount to be send</label>
-        <input type="text" class="form-control" id="amount" placeholder="0.0" />
-      </div>
-      <!--Should be given by a session-->
-      <!-- <div class="form-group">
+    <section id="create">
+      <div class="container">
+        <div class="form-group">
+          <label for="ibanFrom">Iban from user</label>
+          <input
+            type="text"
+            class="form-control"
+            id="ibanFrom"
+            placeholder="NL01INHO0000000001"
+          />
+        </div>
+        <div class="form-group">
+          <label for="ibanTo">Iban to user</label>
+          <input
+            type="text"
+            class="form-control"
+            id="ibanTo"
+            placeholder="NL01INHO0000000002"
+          />
+        </div>
+        <div class="form-group">
+          <label for="amount">Amount to be send</label>
+          <input
+            type="text"
+            class="form-control"
+            id="amount"
+            placeholder="0.0"
+          />
+        </div>
+        <!--Should be given by a session-->
+        <!-- <div class="form-group">
         <label for="performedById">Your user ID</label>
         <input type="text" class="form-control" id="performedById" placeholder="Current or Savings" />
       </div> -->
+        <div class="form-group">
+          <label for="type">Type of transaction</label>
+          <select class="form-control" id="type">
+            <option value="transaction">Transaction</option>
+            <option value="deposit">Deposit</option>
+            <option value="withdrawal">Withdrawal</option>
+          </select>
+        </div>
 
-      <button type="submit" class="btn btn-primary" id="submit">
-        Submit
-      </button>
-    </div>
-  </section>
+        <button type="submit" class="btn btn-primary" id="submit">
+          Submit
+        </button>
+      </div>
+    </section>
 
-  <section id="result-success">
-    <h2>
-      <div id="result" class="col-lg-12 text-center"></div>
-    </h2>
-  </section>
-</body>
-
+    <section id="result-success">
+      <h2>
+        <div id="result" class="col-lg-12 text-center"></div>
+      </h2>
+    </section>
+  </body>
 </html>

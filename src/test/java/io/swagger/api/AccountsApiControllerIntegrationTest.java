@@ -53,7 +53,7 @@ public class AccountsApiControllerIntegrationTest {
     public void toggleAccountStatusTest() throws Exception {
         String iban = "iban_example";
         Account body = new Account();
-        ResponseEntity<Void> responseEntity = api.toggleAccountStatus(iban, body);
+        ResponseEntity<Void> responseEntity = api.toggleAccountStatus(iban);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 

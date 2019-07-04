@@ -1,5 +1,7 @@
 package io.swagger.config;
 
+import io.swagger.security.CustomAuthenticationProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
@@ -13,55 +15,27 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Order(1)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private CustomAuthenticationProvider authenticationProvider;
+
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("bank")
-                .password("{noop}bank123")
-                .roles("USER_EMPLOYEE")
-                .and()
-                .withUser("stefan")
-                .password("{noop}admin123")
-                .roles("USER_EMPLOYEE")
-                .and()
-                .withUser("jasper")
-                .password("{noop}appelmoes123")
-                .roles("USER_EMPLOYEE")
-                .and()
-                .withUser("gabie")
-                .password("{noop}frikandel123")
-                .roles("USER_EMPLOYEE")
-                .and()
-                .withUser("jesse")
-                .password("{noop}niks123")
-                .roles("USER_EMPLOYEE")
-                .and()
-                .withUser("bert")
-                .password("{noop}user123")
-                .roles("USER")
-                .and()
-                .withUser("ernie")
-                .password("{noop}user123")
-                .roles("EMPLOYEE");
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(authenticationProvider);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http.authorizeRequests()
                 .antMatchers("/accounts").hasAnyRole("USER_EMPLOYEE", "EMPLOYEE")
                 .antMatchers("/transactions").permitAll()
-                .antMatchers(HttpMethod.GET, "/users/**","/css/**", "/img/**", "/js/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/users/**", "/css/**", "/img/**", "/js/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/users/**").hasAnyRole("USER_EMPLOYEE", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
                 .logout().permitAll();
-       http.csrf().disable();
-
-//       http.headers().contentTypeOptions().disable();
-//       http.headers().httpStrictTransportSecurity().disable();//.includeSubDomains(true).maxAgeInSeconds(31536000);//.includeSubdomains(true).maxAgeSeconds(31536000);
+        http.csrf().disable();
     }
 
 }

@@ -34,7 +34,7 @@ public class MyApplicationRunner implements ApplicationRunner {
                         line -> userRepository.save(
                                 new User(line.split(",")[0],
                                         line.split(",")[1],
-                                        User.RoleEnum.fromValue(line.split(",")[2])
+                                        line.split(",")[2]
                                 )
                         )
                 );
@@ -45,12 +45,13 @@ public class MyApplicationRunner implements ApplicationRunner {
         Files.lines(Paths.get("src/main/resources/accounts.csv"))
                 .forEach(
                         line -> accountRepository.save(
-                                new Account((line.split(",")[0]),
+                                new Account(
+                                        line.split(",")[0],
                                         userRepository.findById(Integer.parseInt(line.split(",")[1])),
                                         line.split(",")[2],
                                         Double.parseDouble(line.split(",")[3]),
-                                        Account.AccounttypeEnum.fromValue(line.split(",")[4]),
-                                        Account.StatusEnum.fromValue(line.split(",")[5])
+                                        line.split(",")[4],
+                                        line.split(",")[5]
                                 )
                         )
                 );
@@ -65,10 +66,10 @@ public class MyApplicationRunner implements ApplicationRunner {
         keyRepository.findAll()
                 .forEach(System.out::println);
 
-        transactionRepository.save(new Transaction("NL01INHO0000000004", "NL01INHO0000000002", 50.0, Transaction.TransactionType.TRANSACTION, 1 ));
-        transactionRepository.save(new Transaction("NL01INHO0000000002", "NL01INHO0000000004", 150.0, Transaction.TransactionType.TRANSACTION, 1 ));
+        transactionRepository.save(new Transaction("NL01INHO0000000004", "NL01INHO0000000002", 50.0, "TRANSACTION", 1 ));
+        transactionRepository.save(new Transaction("NL01INHO0000000002", "NL01INHO0000000004", 150.0, "TRANSACTION", 1 ));
 
-        transactionRepository.save(new Transaction("NL01INHO0000000004", "NL01INHO0000000002", 50.0, Transaction.TransactionType.TRANSACTION, 1 ));
+        transactionRepository.save(new Transaction("NL01INHO0000000004", "NL01INHO0000000002", 50.0, "TRANSACTION", 1 ));
 
         transactionRepository.findAll()
                 .forEach(System.out::println);
@@ -76,13 +77,13 @@ public class MyApplicationRunner implements ApplicationRunner {
         accountRepository.findAll()
                 .forEach(System.out::println);
 
-        transactionRepository.save(new Transaction("NL01INHO0000000003", 12.00, Transaction.TransactionType.DEPOSIT, 1 ));
-        transactionRepository.save(new Transaction("NL01INHO0000000002", 404.00, Transaction.TransactionType.DEPOSIT, 1 ));
+        transactionRepository.save(new Transaction("NL01INHO0000000003", 12.00, "DEPOSIT", 1 ));
+        transactionRepository.save(new Transaction("NL01INHO0000000002", 404.00, "DEPOSIT", 1 ));
 
-        transactionRepository.save(new Transaction("NL01INHO0000000004", 50.0, Transaction.TransactionType.WITHDRAWAL, 1 ));
-        transactionRepository.save(new Transaction("NL01INHO0000000004", 4.0, Transaction.TransactionType.WITHDRAWAL, 1 ));
-        transactionRepository.save(new Transaction("NL01INHO0000000004", 6.0, Transaction.TransactionType.WITHDRAWAL, 1 ));
-        transactionRepository.save(new Transaction("NL01INHO0000000004", 8.0, Transaction.TransactionType.WITHDRAWAL, 1 ));
+        transactionRepository.save(new Transaction("NL01INHO0000000004", 50.0, "WITHDRAWAL", 1 ));
+        transactionRepository.save(new Transaction("NL01INHO0000000004", 4.0, "WITHDRAWAL", 1 ));
+        transactionRepository.save(new Transaction("NL01INHO0000000004", 6.0, "WITHDRAWAL", 1 ));
+        transactionRepository.save(new Transaction("NL01INHO0000000004", 8.0, "WITHDRAWAL", 1 ));
 
         transactionRepository.findAll()
                 .forEach(System.out::println);

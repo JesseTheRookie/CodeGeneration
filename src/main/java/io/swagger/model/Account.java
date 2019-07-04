@@ -35,13 +35,15 @@ public class Account   {
     @JsonProperty("Balance")
     private Double balance = null;
 
+
+
     /**
      * Gets or Sets accounttype
      */
     public enum AccounttypeEnum {
-        CURRENT("current"),
+        CURRENT("CURRENT"),
 
-        SAVINGS("savings");
+        SAVINGS("SAVINGS");
 
         private String value;
 
@@ -71,16 +73,13 @@ public class Account   {
     @JsonIgnore
     public String typeValue = null;
 
-
-
-
     /**
      * Gets or Sets status
      */
     public enum StatusEnum {
-        ACTIVE("active"),
+        ACTIVE("ACTIVE"),
 
-        FROZEN("frozen");
+        FROZEN("FROZEN");
 
         private String value;
 
@@ -112,27 +111,31 @@ public class Account   {
         return this;
     }
 
+    public Account (User user) {
+        this.user = user;
+    }
 
-    public Account(String iban, Optional<User> user, String name, Double balance, AccounttypeEnum type, StatusEnum status){
+
+    public Account(String iban, Optional<User> user, String name, Double balance, String accounttype, String status){
         this.iban = iban;
         if(user.isPresent()){
             this.user = user.get();
         }
         this.name = name;
         this.balance = balance;
-        this.accounttype = type;
-        this.status = status;
-        this.typeValue = this.accounttype.toString();
+        this.accounttype = AccounttypeEnum.valueOf(accounttype);
+        this.status = StatusEnum.valueOf(status);
+        this.typeValue = accounttype;
     }
 
-    public Account(String iban, User user, String name, Double balance, AccounttypeEnum type, StatusEnum status){
+    public Account(String iban, User user, String name, Double balance, String accounttype, String status){
         this.iban = iban;
         this.user = user;
         this.name = name;
         this.balance = balance;
-        this.accounttype = type;
-        this.status = status;
-        this.typeValue = this.accounttype.toString();
+        this.accounttype = AccounttypeEnum.valueOf(accounttype);
+        this.status = StatusEnum.valueOf(status);
+        this.typeValue = accounttype;
     }
 
     public Account(){}
@@ -153,15 +156,13 @@ public class Account   {
         this.iban = iban;
     }
 
-
     @JsonIgnore
     /**
      * Get userId
      * @return userId
      **/
 
-
-    public Integer getUserId(){
+    public Integer getUserId(){ //wat doet dit hier?
         return this.user.getId();
     }
 

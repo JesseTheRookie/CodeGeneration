@@ -24,57 +24,57 @@ public class AccountService {
     }
 
     public List<Account> getAllAccountsByType(String type) throws ApiException {
-        if (userRepository.getUserByName(
+        if (userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
-                ||userRepository.getUserByName(
+                ||userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
             return accountRepository.getAccountsByType(type);
         } else throw new ApiException(403, "You are not authorized for this request");
     }
 
     public Iterable<Account> getAllAccountsByType() throws ApiException {
-        if (userRepository.getUserByName(
+        if (userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
-                || userRepository.getUserByName(
+                || userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
             return accountRepository.findAll();
         } else throw new ApiException(403, "You are not authorized for this request");
     }
 
     public List<Account> getAccountsByUserId(Integer id) throws ApiException {
-        if (userRepository.getUserByName(
+        if (userRepository.getUserByUsername(
                 securityController.currentUserName())
                 .getId() == id
-                || userRepository.getUserByName(
+                || userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
-                ||userRepository.getUserByName(
+                ||userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
             return accountRepository.getAccountsById(id);
         }  else throw new ApiException(403, "You are not authorized for this request");
     }
 
     public void createAccount(Account body) {
-        if (userRepository.getUserByName(
+        if (userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
-                ||userRepository.getUserByName(
+                ||userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
             accountRepository.save(body);
         }
     }
 
     public Account getAccountByIban(String iban) throws ApiException {
-        if (userRepository.getUserByName(
+        if (userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
-                ||userRepository.getUserByName(
+                ||userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)){
             return accountRepository.findById(iban).orElseThrow(IllegalArgumentException::new);
         } else throw new ApiException(403, "You are not authorized for this request");
     }
 
     public void deleteAccount(String iban) throws ApiException {
-        if (userRepository.getUserByName(
+        if (userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
-                ||userRepository.getUserByName(
+                ||userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
             Account account = accountRepository.findById(iban).orElseThrow(IllegalArgumentException::new);
             if (account.getBalance()!= 0){
@@ -83,30 +83,28 @@ public class AccountService {
         }
     }
 
-    public void toggleAccountStatus(String iban, Account body) {
-        if (userRepository.getUserByName(
+    public void toggleAccountStatus(String iban) {
+        if (userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
-                || userRepository.getUserByName(
+                || userRepository.getUserByUsername(
                 securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
 
             Account oldAccount = accountRepository.findById(iban).orElseThrow(IllegalArgumentException::new);
-            Account updatedAccount = new Account(
-                    oldAccount.getIban(),
-                    oldAccount.getUser(),
-                    oldAccount.getName(),
-                    oldAccount.getBalance(),
-                    oldAccount.getAccounttype(),
-                    body.getStatus());
+            Account updatedAccount = new Account(oldAccount.getUser());
+                    updatedAccount.setIban(oldAccount.getIban());
+                    updatedAccount.setName(oldAccount.getName());
+                    updatedAccount.setBalance(oldAccount.getBalance());
+                    updatedAccount.setAccounttype(oldAccount.getAccounttype());
+                    if (oldAccount.getStatus()== Account.StatusEnum.ACTIVE){
+                        updatedAccount.setStatus(Account.StatusEnum.FROZEN);
+                    }else updatedAccount.setStatus(Account.StatusEnum.ACTIVE);
             accountRepository.delete(oldAccount);
             accountRepository.save(updatedAccount);
         }
     }
-    public Boolean accountIsNotNull(String iban) throws ApiException{
+    public Boolean accountIsNull(String iban){
         Account account = accountRepository.findById(iban).orElse(null);
-        if(account != null){
-            return true;
-        } else{
-            throw new ApiException(406, "no account found that corresponds with the IBAN: "+ iban);
-        }
+        return account == null;
     }
+
 }
