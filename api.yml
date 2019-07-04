@@ -1,20 +1,23 @@
 openapi: 3.0.0
+servers:
+  - description: Inholland backend
+    url: https://swaggerbank.herokuapp.com/
 info:
-  version: '1.0'
-  title: 'Inholland_Bank_API'
-  description: 'Banking API voor Inholland'
-  
+  version: "1.0"
+  title: "Inholland_Bank_API"
+  description: "Banking API voor Inholland"
+
 paths:
   /accounts:
     get:
       security:
-        - ApiKeyAuth: []
+        - cookieAuth: []
       tags:
         - account
       summary: Returns all accounts
       operationId: getAccounts
       description: Returns a list of all accounts, if the logged in user is an employee
-      parameters: 
+      parameters:
         - name: type
           in: query
           description: The type of accounts that need to be considered to filter
@@ -26,7 +29,7 @@ paths:
               - savings
       responses:
         "200":
-          description: The account list
+          description: Account(s) found
           content:
             application/json:
               schema:
@@ -34,26 +37,38 @@ paths:
                 items:
                   $ref: "#/components/schemas/Account"
         "400":
-          description: Client says no
+          description: Invalid input
+        "403":
+          description: Forbidden, you do not have the required rights
+        "404":
+          description: Not found
         "500":
-          description: Server says no
+          description: Oops, something went wrong on the server. Sorry!
+
     post:
       security:
-        - ApiKeyAuth: []
+        - cookieAuth: []
       tags:
         - account
-      summary: Creates an account
+      summary: Creates a new account
       operationId: createAccount
       description: Creates a new account, if the logged in user is an employee
       responses:
-        "200":
+        "201":
           description: Account created
+          content:
+            application/json:
+              schema:
+                type: string
+                description: The iban of the created user
         "400":
-          description: Client says no
-        "405":
           description: Invalid input
+        "403":
+          description: Forbidden, you do not have the required rights
+        "404":
+          description: Not found
         "500":
-          description: Server says no
+          description: Oops, something went wrong on the server. Sorry!
       requestBody:
         content:
           application/json:
@@ -65,22 +80,22 @@ paths:
   /accounts/{iban}:
     get:
       security:
-        - ApiKeyAuth: []
+        - cookieAuth: []
       parameters:
         - in: path
           name: iban
           required: true
           schema:
             type: string
-          description: The iban
+          description: The iban of the account you want to retrieve
       tags:
         - account
       summary: Returns the specified account
       operationId: getAccountByIban
-      description: Returns the specified account
+      description: Returns the account, specified by the iban
       responses:
         "200":
-          description: the account
+          description: Account found
           content:
             application/json:
               schema:
@@ -88,15 +103,15 @@ paths:
                 items:
                   $ref: "#/components/schemas/Account"
         "400":
-          description: Client says no
+          description: Invalid input
         "404":
-          description: Account not found
+          description: Not found
         "500":
-          description: Server says no
+          description: Oops, something went wrong on the server. Sorry!
 
     put:
       security:
-        - ApiKeyAuth: []
+        - cookieAuth: []
       parameters:
         - in: path
           name: iban
@@ -113,14 +128,17 @@ paths:
         "200":
           description: Status updated
         "400":
-          description: Client says no
+          description: Invalid input
+        "403":
+          description: Forbidden, you do not have the required rights
         "404":
-          description: Account not found
+          description: Not found
         "500":
-          description: Server says no
+          description: Oops, something went wrong on the server. Sorry!
+
     delete:
       security:
-        - ApiKeyAuth: []
+        - cookieAuth: []
       parameters:
         - in: path
           name: iban
@@ -135,18 +153,20 @@ paths:
       description: Deletes the specified account, if the logged in user is an employee AND the balance of the account is zero
       responses:
         "200":
-          description: Status updated
+          description: Account deleted
         "400":
-          description: Client says no
+          description: Invalid input
+        "403":
+          description: Forbidden, you do not have the required rights
         "404":
-          description: Account not found
+          description: Not found
         "500":
-          description: Server says no
+          description: Oops, something went wrong on the server. Sorry!
 
   /users:
     get:
       security:
-        - ApiKeyAuth: []
+        - cookieAuth: []
       tags:
         - user
       summary: Returns all users
@@ -154,7 +174,7 @@ paths:
       description: Returns a list of all users
       responses:
         "200":
-          description: the user list
+          description: User(s) found
           content:
             application/json:
               schema:
@@ -162,11 +182,17 @@ paths:
                 items:
                   $ref: "#/components/schemas/User"
         "400":
-          description: Nee
-    
+          description: Invalid input
+        "403":
+          description: Forbidden, you do not have the required rights
+        "404":
+          description: Not found
+        "500":
+          description: Oops, something went wrong on the server. Sorry!
+
     post:
       security:
-        - ApiKeyAuth: []
+        - cookieAuth: []
       tags:
         - user
       summary: Creates a new user
@@ -176,34 +202,34 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
       responses:
-        "200":
-          description: user created
+        "201":
+          description: User created
           content:
             application/json:
               schema:
                 type: integer
-                description: userId
-        "400": 
-          description: Client says no
-        "405":
+                description: The id of the created user
+        "400":
           description: Invalid input
+        "403":
+          description: Forbidden, you do not have the required rights
         "500":
-          description: Server says no
-          
+          description: Oops, something went wrong on the server. Sorry!
+
   /users/{userId}:
     get:
       security:
-        - ApiKeyAuth: []
+        - cookieAuth: []
       parameters:
         - in: path
           name: userId
           required: true
           schema:
             type: integer
-            minimum: 1
-          description: The user ID
+            minimum: 100
+          description: The user ID, starts at 100
       tags:
         - user
       summary: Returns specified user
@@ -211,26 +237,26 @@ paths:
       description: Returns the specified user
       responses:
         "200":
-          description: the user
+          description: User found
           content:
             application/json:
               schema:
                 type: object
                 items:
                   $ref: "#/components/schemas/User"
-        '400':
-          description: Client says no
-        '404':
-          description: User not found
-        '405':
-          description: Validation exception
+        "400":
+          description: Invalid input
+        "403":
+          description: Forbidden, you do not have the required rights
+        "404":
+          description: Not found
         "500":
-          description: Server says no
-          
+          description: Oops, something went wrong on the server. Sorry!
+
   /users/{userId}/accounts:
     get:
       security:
-        - ApiKeyAuth: []
+        - cookieAuth: []
       parameters:
         - in: path
           name: userId
@@ -253,361 +279,257 @@ paths:
                 items:
                   $ref: "#/components/schemas/Account"
         "400":
-          description: Client says no
+          description: Invalid input
+        "403":
+          description: Forbidden, you do not have the required rights
+        "404":
+          description: Not found
         "500":
-          description: Server says no
+          description: Oops, something went wrong on the server. Sorry!
 
-  /users/login:
+  /login:
     post:
       tags:
-        - user
+        - login & out
       summary: Logs user into the system
       operationId: loginUser
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/User"
-        description: Username and password
         required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+        description: Username and password
+      security: []
       responses:
         "200":
-          description: User logged in
-          content:
-            application/json:
+          description: >
+            User logged in.
+            The session ID is returned in a cookie named `JSESSIONID`. You need to include this cookie in subsequent requests.
+          headers:
+            Set-Cookie:
               schema:
                 type: string
+                example: JSESSIONID=238C4576E823201BFFD…C1E; Path=/; Secure; HttpOnly
         "400":
-          description: Invalid username/password supplied
+          description: Invalid input, username and/or password is not correct
         "500":
-          description: Server says no
+          description: Oops, something went wrong on the server. Sorry!
 
-  /users/logout:
+  /logout:
     get:
+      security:
+        - cookieAuth: []
       tags:
-        - user
+        - login & out
       summary: Logs out current logged in user session
       operationId: logoutUser
       responses:
         default:
           description: successful operation
-          
+
   /transactions:
     post:
       security:
-        - ApiKeyAuth: []
+        - cookieAuth: []
       tags:
         - transaction
-      summary: Place a new transaction
+      summary: Create a new transaction
       operationId: createTransaction
-      description: Creates a transaction of the specified amount between the specified accounts
+      description: Creates a transaction of the specified type, ammount and accounts
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Transaction'
+              $ref: "#/components/schemas/Transaction"
       responses:
-        '200':
-          description: succes and returns transactionID
+        "201":
+          description: Transaction created
           content:
             application/json:
               schema:
                 type: integer
-                description: transactionID
-        '400':
-          description: the operation is unsuccesfull
+                description: The id of the created transaction
+        "400":
+          description: Invalid input
+        "403":
+          description: Forbidden, you do not have the required rights
+        "500":
+          description: Oops, something went wrong on the server. Sorry!
     get:
       security:
-        - ApiKeyAuth: []
-      tags: 
+        - cookieAuth: []
+      tags:
         - transaction
       summary: Get transactions depending on the optional parameters; the abstinence of any parameters results in all transactions.
       operationId: getTransactions
       parameters:
-        - name: transactionID
-          in: query
-          required: false
-          schema:
-            type: integer
-          description: The id of a transaction
-        - name: from
+        - name: fromIban
           in: query
           required: false
           schema:
             type: string
           description: The iban of the sending backaccount
-        - name: to
+        - name: toIban
           in: query
           required: false
           schema:
             type: string
           description: The iban of the receiving backaccount
+        - name: Type
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [transaction, deposit, withdrawal]
+          description: The type of transaction
         - name: performedBy
           in: query
           required: false
           schema:
             type: integer
-          description: The userId of the user who performed the transaction
+          description: The id of the user who performed the transaction
       responses:
-        '200':
-          description: succes
+        "200":
+          description: Transaction(s) found
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Transaction'
-        '400':
-          description: Nee
-          
-  /deposits:
+                  $ref: "#/components/schemas/Transaction"
+        "400":
+          description: Invalid input
+        "403":
+          description: Forbidden, you do not have the required rights
+        "500":
+          description: Oops, something went wrong on the server. Sorry!
+
+  /transactions/{transactionId}:
     get:
       security:
-        - ApiKeyAuth: []
-      tags:
-        - deposits
-      summary: Returns all deposits
-      operationId: getDeposits
-      description: Returns a list of all deposits
-      responses:
-        '200':
-          description: the deposits list
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Deposit'
-        '400':
-          description: There occured an error
-    post:
-      security:
-        - ApiKeyAuth: []
-      tags:
-        - deposits
-      summary: Creates an deposit
-      operationId: createDeposit
-      description: Creates a new deposit moment
-      responses:
-        '200':
-          description: Money succesfully deposited
-        '400':
-          description: There occured an error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Deposit'
-        description: Account details
-        required: true
-  /deposits/{iban}:
-    get:
-      security:
-        - ApiKeyAuth: []
+        - cookieAuth: []
       parameters:
         - in: path
-          name: iban
+          name: transactionId
           required: true
           schema:
-            type: string
-            minimum: 1
-          description: The account IBAN
+            type: integer
+          description: The transaction id
       tags:
-        - deposits
-      summary: Returns the deposits of the specified account
-      operationId: getDepositsByIban
-      description: Returns the specified IBAN deposits
+        - transaction
+      summary: Returns the specified transaction
+      operationId: getTransactionById
+      description: Returns the specified transaction
       responses:
-        '200':
-          description: the account 
+        "200":
+          description: Transaction found
           content:
             application/json:
               schema:
                 type: object
                 items:
-                  $ref: '#/components/schemas/Deposit'
-        '400':
-          description: Invalid IBAN
-  /Withdrawals:
-    get:
-      security:
-        - ApiKeyAuth: []
-      tags:
-        - Withdrawal
-      summary: gets all Withdrawals
-      operationId: GetAllWithdrawals
-      description: Gets a list with all Withdrawal transactions
-      responses:
-        '200':
-          description: The list with all Withdrawals is successfully fetched
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Withdrawal'
-        default:
-          description: Oops, it looks like it didn't do what it was supposed to be doing..
-    post:
-      security:
-        - ApiKeyAuth: []
-      tags:
-        - Withdrawal
-      summary: Create a new Withdrawal
-      operationId: CreatNewWithdrawal
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Withdrawal'
-      description: Creates a new Withdrawal
-      responses:
-        '200':
-          description: Withdrawal successfully created! 
-          content:
-            application/json:
-              schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/Withdrawal'
-        '400':
-          description: bad input parameter
-          
-  /Withdrawals/{iban}:
-    get:
-      security:
-        - ApiKeyAuth: []
-      parameters:
-        - in: path
-          name: iban
-          required: true
-          schema:
-            type: string
-          description: The IBAN
-      tags:
-        - Withdrawal
-      summary: Get all withdrawals for a specific account
-      operationId: GetAllWithdrawalsConnectedToSpecifiedAccount
-      description: Gets a list of all withdraw transactions of the specified account
-      responses:
-        '200':
-          description: The list with all Withdrawals for the specified account is successfully fetched 
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Withdrawal'
-        '400':
-          description: bad input parameter
-          
+                  $ref: "#/components/schemas/Transaction"
+        "400":
+          description: Invalid input
+        "403":
+          description: Forbidden, you do not have the required rights
+        "500":
+          description: Oops, something went wrong on the server. Sorry!
 components:
   schemas:
     Account:
       type: object
       required:
-        - Iban
-        - UserId
-        - Name
-        - Balance
-        - Type
-        - Status
+        - iban
+        - name
+        - balance
+        - type
+        - status
       properties:
-        Iban:
+        iban:
           type: string
-        UserId:
-          type: number
-        Name:
+          description: The Iban of the account
+        user:
+          type: object
+          items:
+            $ref: "#/components/schemas/User"
+          description: The user who owns the account
+        name:
           type: string
-        Balance:
+          description: The name of the user
+        balance:
           type: number
-        Accounttype:
+          description: The ammount of money in the account
+        type:
           type: string
           enum: [current, savings]
-        Status:
+          description: The type of the account; current or savings
+        status:
           type: string
           enum: [active, frozen]
+          description: The status of the account; frozen or active
     User:
       type: object
       required:
-        - UserId
-        - Name
-        - Password
-        - Role
+        - id
+        - name
+        - password
+        - role
       properties:
-        UserId:
+        id:
           type: integer
-        Name:
+          description: The id of the user
+        name:
           type: string
-        Password:
+          description: The name of the user
+        password:
           type: string
-        Role:
+          description: The password of the users
+        role:
           type: string
           enum: [user, employee, user_employee]
-        Accounts:
-          type: array
-          items:
-            $ref: "#/components/schemas/Account"
+          description: The role the users has; a user, employee or user_employee
     Transaction:
       type: object
       required:
-        - From
-        - To
-        - Amount
-        - TimeStamp
-        - PerformedBy
-        - Id
+        - id
+        - fromIban
+        - toIban
+        - amount
+        - type
+        - timeStamp
+        - performedBy
       properties:
-        Id:
+        id:
           type: integer
-          format: int64
-        From:
+        fromIban:
           type: string
           description: the iban of the sending end
-        To:
+        toIban:
           type: string
           description: the iban of the receiving end
-        Amount:
+        amount:
           type: number
           description: the amount to transfer
-        TimeStamp:
+        type:
+          type: string
+          enum: [transaction, deposit, withdrawal]
+          description: the type of transaction
+        timeStamp:
           type: string
           format: date-time
-        PerformedBy:
+        performedBy:
           type: integer
           description: userID of the user who creates the transaction
-    Withdrawal:
-      type: object
-      required:
-        - From
-        - Amount
-      properties:
-        From:
-          type: string
-          description: de iban van de gebruiker
-        Amount:
-          type: number
-          description: het op te nemen bedrag
-        TimeStamp:
-          type: string
-          format: date-time
-    Deposit:
-      type: object
-      required:
-        - To
-        - Amount
-      properties:
-        To:
-          type: string
-          description: de iban van de gebruiker
-        Amount:
-          type: number
-          description: het te storten bedrag
-        TimeStamp:
-          type: string
-          format: date-time
+
   securitySchemes:
-    ApiKeyAuth:
+    cookieAuth: # arbitrary name for the security scheme; will be used in the "security" key later
       type: apiKey
-      in: header
-      name: x-authtoken
+      in: cookie
+      name: JSESSIONID # cookie name
