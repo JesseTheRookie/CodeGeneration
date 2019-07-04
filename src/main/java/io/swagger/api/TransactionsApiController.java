@@ -66,6 +66,11 @@ public class TransactionsApiController implements TransactionsApi {
         }
     }
 
+//    public ResponseEntity<Transaction> getTransactionById(@Min(1)@ApiParam(value = "The transaction ID",required=true, allowableValues = "") @PathVariable(value = "transactionId", required = true) Integer transactionId) throws ApiException {
+//        String accept = request.getHeader("Accept");
+//        return new ResponseEntity<Transaction>(transactionService.getTransactionById(transactionId), HttpStatus.OK);
+//    }
+
     public ResponseEntity<Transaction> getTransactionById(@Min(1)@ApiParam(value = "The transaction ID",required=true, allowableValues = "") @PathVariable("transactionId") Integer transactionId) throws ApiException {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Transaction>(transactionService.getTransactionById(transactionId), HttpStatus.OK);
