@@ -38,7 +38,7 @@ public interface AccountsApi {
         produces = { "application/json" },
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<String> createAccount(@ApiParam(value = "" )  @Valid @RequestBody Account body);
+    ResponseEntity<String> createAccount(@ApiParam(value = "Account details" )  @Valid @RequestBody Account body);
 
 
     @ApiOperation(value = "Deletes the specified account", nickname = "deleteAccount", notes = "Deletes the specified account, if the logged in user is an employee AND the balance of the account is zero", authorizations = {
@@ -71,10 +71,10 @@ public interface AccountsApi {
         @Authorization(value = "cookieAuth")    }, tags={ "account", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Account(s) found", response = Account.class, responseContainer = "List"),
-            @ApiResponse(code = 400, message = "Invalid input"),
-            @ApiResponse(code = 403, message = "Forbidden, you do not have the required rights"),
-            @ApiResponse(code = 404, message = "Not found"),
-            @ApiResponse(code = 500, message = "Oops, something went wrong on the server. Sorry!") })
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 403, message = "Forbidden, you do not have the required rights"),
+        @ApiResponse(code = 404, message = "Not found"),
+        @ApiResponse(code = 500, message = "Oops, something went wrong on the server. Sorry!") })
     @RequestMapping(value = "/accounts",
         produces = { "application/json" }, 
         method = RequestMethod.GET)

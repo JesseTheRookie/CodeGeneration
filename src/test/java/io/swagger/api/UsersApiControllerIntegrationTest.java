@@ -81,13 +81,13 @@ public class UsersApiControllerIntegrationTest {
     @Test
     public void loginUserTest() throws Exception {
         User body = new User("TheoTest", "test123", "USER");
-        ResponseEntity<String> responseEntity = api.loginUser(body);
-        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
+        //ResponseEntity<String> responseEntity = api.loginUser(body);
+        //assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
     @Test
     public void logoutUserTest() throws Exception {
-        ResponseEntity<Void> responseEntity = api.logoutUser();
-        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
+        //ResponseEntity<Void> responseEntity = api.logoutUser();
+        //assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 */
 }
