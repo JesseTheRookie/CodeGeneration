@@ -63,12 +63,7 @@ public class TransactionService {
     //get all send transactions
     public Iterable<Transaction> getTransactionsByFromIban(String iban) throws ApiException {
         Account account = accountRepository.findById(iban).orElse(null);
-        if (userRepository.getUserByUsername(
-                securityController.currentUserName()).getId() == account.getUserId()
-                || userRepository.getUserByUsername(
-                securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
-                || userRepository.getUserByUsername(
-                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
+        if (isEmployee() || securityController.currentUserId() == account.getUserId()) {
             return transactionRepository.getTransactionsByFromIban(iban);
         } else throw new ApiException(403, "You are not authorized for this request");
     }
@@ -77,12 +72,7 @@ public class TransactionService {
     //get all received transactions
     public Iterable<Transaction> getTransactionsByToIban(String iban) throws ApiException {
         Account account = accountRepository.findById(iban).orElse(null);
-        if (userRepository.getUserByUsername(
-                securityController.currentUserName()).getId() == account.getUserId()
-                || userRepository.getUserByUsername(
-                securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
-                || userRepository.getUserByUsername(
-                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
+        if (isEmployee() || securityController.currentUserId() == account.getUserId()) {
             return transactionRepository.getTransactionsByToIban(iban);
         } else throw new ApiException(403, "You are not authorized for this request");
     }
@@ -289,7 +279,7 @@ public class TransactionService {
     }
 
     public boolean isEmployee() {
-        return securityController.currentUser().hasAuthority(User.RoleEnum.EMPLOYEE) || securityController.currentUser().hasAuthority(User.RoleEnum.USER_EMPLOYEE);
+        return (securityController.currentUser().hasAuthority(User.RoleEnum.EMPLOYEE)) || (securityController.currentUser().hasAuthority(User.RoleEnum.USER_EMPLOYEE));
     }
 
     private Boolean theAccountIsCustomer(String iban) {
