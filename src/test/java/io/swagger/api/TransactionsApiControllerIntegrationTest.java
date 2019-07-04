@@ -20,63 +20,56 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = Swagger2SpringBoot.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 public class TransactionsApiControllerIntegrationTest {
 
-    @LocalServerPort
+    /*@LocalServerPort
     private int port;
     private TestRestTemplate template = new TestRestTemplate();
-    private HttpHeaders headers = new HttpHeaders();
+    private HttpHeaders headers = new HttpHeaders();*/
 
     @Autowired
     private TransactionsApi api;
 
+    //Turn off getAllTransactions() security in TransactionService
     @Test
-    public void testGetAllTransactionsShouldRetrieveAListOfAllTransactions() throws JSONException {
-        HttpEntity<String> entity = new HttpEntity<>(null, new HttpHeaders());
-        ResponseEntity<String> response = template.exchange(
-                createFullUrl("/transactions"),
-                HttpMethod.GET, entity, String.class);
-
-        JSONArray array = new JSONArray(response.getBody());
-        Assert.assertTrue(array.length() >= 1);
+    public void testGetAllTransactionsShouldRetrieveAListOfAllTransactions() throws ApiException {
+        ResponseEntity<List<Transaction>> responseEntity = api.getTransactions(null, null, null, null);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
-
+    //Turn off getTransactionsByFromIban security in TransactionService
     @Test
-    public void testGetTransactionByFromIban() throws JSONException{
-        HttpEntity<String> entity = new HttpEntity<>(null, headers);
-
-        ResponseEntity<String> response = template.exchange(
-                createFullUrl("/transactions?fromIban=NL01INHO0000000004"),
-                HttpMethod.GET, entity, String.class);
-
-        JSONArray array = new JSONArray(response.getBody());
-        //trying to verify if all transactions are from NL01INHO0000000004
-        for(int i = 0; i < array.length();i++ ){
-
-        }
-        // JSONAssert.assertEquals(expected, response.getBody(), true);
+    public void testGetTransactionByFromIban() throws ApiException{
+        ResponseEntity<List<Transaction>> responseEntity = api.getTransactions("NL01INHO0000000004", null, null, null);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
-    private String createFullUrl(String uri) {
-        return "http://localhost:" + port + uri;
-    }
-
+    //Turn off validateTransaction security in TransactionService
     @Test
-    public void createTransactionTest() throws Exception {
-        Transaction body = new Transaction();
+    public void createTransactionTest() throws ApiException {
+        Transaction body = new Transaction("NL01INHO0000000004", "NL01INHO0000000002", 50.0, "TRANSACTION", 1 );
         ResponseEntity<Integer> responseEntity = api.createTransaction(body);
-        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
+        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
     }
 
     @Test
-    public void getTransactionsTest() throws Exception {
-        //Integer transactionID = 56;
-        String from = "from_example";
-        String to = "to_example";
-        Transaction.TransactionType Type = Transaction.TransactionType.TRANSACTION;
-        Integer performedBy = 56;
-        ResponseEntity<List<Transaction>> responseEntity = api.getTransactions( from, to, Type, performedBy);
-        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
-    }
+    public void getTransactionsByType() throws ApiException {
+        Transaction.TransactionType transaction = Transaction.TransactionType.TRANSACTION;
+        Transaction.TransactionType deposit = Transaction.TransactionType.DEPOSIT;
+        Transaction.TransactionType withdrawal = Transaction.TransactionType.WITHDRAWAL;
 
+        ResponseEntity<List<Transaction>> responseEntity = api.getTransactions(null, null, deposit, null);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+    //Turn off getTransactionsByToIban security in TransactionService
+    @Test
+    public void getTransactionsByToIban() throws ApiException {
+        ResponseEntity<List<Transaction>> responseEntity = api.getTransactions(null, "NL01INHO0000000004", null, null);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+    //Turn off getTransactionsByPerformedBy security in TransactionService
+    @Test
+    public void getTransactionsByPerformedBy() throws ApiException {
+        ResponseEntity<List<Transaction>> responseEntity = api.getTransactions(null, null, null, 101);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
 }

@@ -66,7 +66,7 @@ public interface UsersApi {
     @RequestMapping(value = "/users/{userId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<User> getUserById(@Min(1)@ApiParam(value = "The user ID",required=true, allowableValues = "") @PathVariable("userId") Integer userId) throws ApiException;
+    ResponseEntity<User> getUserById(@Min(100)@ApiParam(value = "The user ID",required=true, allowableValues = "") @PathVariable("userId") Integer userId) throws ApiException;
 
 
     @ApiOperation(value = "Returns all users", nickname = "getUsers", notes = "Returns a list of all users", response = User.class, responseContainer = "List", authorizations = {

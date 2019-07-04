@@ -63,7 +63,7 @@ public class TransactionService {
     //get all send transactions
     public Iterable<Transaction> getTransactionsByFromIban(String iban) throws ApiException {
         Account account = accountRepository.findById(iban).orElse(null);
-        if (isEmployee() || securityController.currentUserId() == account.getUserId()) {
+       if (isEmployee() || securityController.currentUserId() == account.getUserId()) {
             return transactionRepository.getTransactionsByFromIban(iban);
         } else throw new ApiException(403, "You are not authorized for this request");
     }
@@ -77,21 +77,30 @@ public class TransactionService {
         } else throw new ApiException(403, "You are not authorized for this request");
     }
 
-    public Transaction getTransactionById(Integer id) {
-        return transactionRepository.getTransactionById(id);
+    public Transaction getTransactionById(Integer id) throws ApiException {
+        Transaction transaction = transactionRepository.getTransactionById(id);
+        Account accountFrom = accountRepository.findById(transaction.getFromIban()).orElse(null);
+        Account accountTo = accountRepository.findById(transaction.getToIban()).orElse(null);
+
+        if (isEmployee() || securityController.currentUserId() == accountFrom.getUserId() || securityController.currentUserId() == accountTo.getUserId()) {
+            return transaction;
+        } else throw new ApiException(403, "You are not authorized for this request");
     }
 
-    public Iterable<Transaction> getTransactionsByPerformedBy(Integer userId) {
-        return transactionRepository.getTransactionsByPerformedBy(userId);
+    public Iterable<Transaction> getTransactionsByPerformedBy(Integer userId) throws ApiException  {
+        if (isEmployee() || securityController.currentUserId() == userId) {
+            return transactionRepository.getTransactionsByPerformedBy(userId);
+        } else throw new ApiException(403, "You are not authorized for this request");
     }
 
-    public Iterable<Transaction> getTransactionsByType(Transaction.TransactionType type) {
-        return transactionRepository.getTransactionsByType(type);
+    public Iterable<Transaction> getTransactionsByType(Transaction.TransactionType type) throws ApiException {
+        if (isEmployee()) {
+            return transactionRepository.getTransactionsByType(type);
+        } else throw new ApiException(403, "You are not authorized for this request");
     }
 
 
     //methods
-
     public void initiateTransaction(Transaction newTransaction) throws ApiException {
         switch (newTransaction.getType()) {
             case TRANSACTION:
