@@ -45,8 +45,9 @@
 
                     if (searchString.length > 0 && searchString != element.Name) {
                         continue;
-                    }else{
-                        $("#usersList").append('<a href="/employee-get-accounts?user-id=' + element.Id + '"><li class=""><p>Username: ' + element.Name + ', Role: ' + element.Role + '</p></li></a>');                    }
+                    } else {
+                        $("#usersList").append('<a href="/employee-get-accounts?user-id=' + element.Id + '"><li class=""><p>Username: ' + element.Name + ', Role: ' + element.Role + '</p></li></a>');
+                    }
 
                 }
 
@@ -65,9 +66,12 @@
             var users;
             var searchString = "";
 
+            var userInfo;
+            var userAccounts;
+
             if (findGetParameter("username")) {
-                searchString.concat("?username="+findGetParameter("username"));
-            } 
+                searchString.concat("?username=" + findGetParameter("username"));
+            }
 
             $.ajax({//get current logged in user info
                 async: false,
@@ -77,6 +81,7 @@
                 contentType: "application/json",
                 success: function (data) {
                     userInfo = data;
+                    $("#welcomeMsg").text("Welcome, " + data.Name + "!");
                 }
             });
 
@@ -101,28 +106,29 @@
 
 <body>
     <header id="header">
-        <title>Search Useraccounts</title>
-        <a type="button" class="btn btn-primary float-right m-2" href="/logout">Logout</a>
-        <a type="button" class="btn btn-primary float-right m-2" href="/withdrawals">withdrawals</a>
-        <a type="button" class="btn btn-primary float-right m-2" href="/deposits">Deposits</a>
-        <a type="button" class="btn btn-primary float-right m-2" href="/transactions">Transactions</a>
-        <a type="button" class="btn btn-primary float-right m-2" href="/get-users">Users</a>
-        <a type="button" class="btn btn-primary float-right m-2" href="/get-accounts">Accounts</a>
+        <h1>Employee tools</h1>
     </header>
     <aside id="sideMenu">
-        <h1>Employee tools</h1>
+        <h2 id="welcomeMsg" class="mt-2"></h2>
         <nav>
-            <ul>
-                <a type="button" class="btn btn-primary active" href="/employeeTools">Manage Users</a>
-                <br><br>
-                <a type="button" class="btn btn-primary" href="/employee-user-new-deposit.html">Create Deposit</a>
-                <a type="button" class="btn btn-primary" href="/employee-user-new-withdrawal.html">Create Withdrawal</a>
-                <br><br>
-                <a type="button" class="btn btn-primary" href="/create-transaction">Make Transaction</a>
-                <br><br>
-                <a type="button" class="btn btn-primary" href="/create-users">Create users</a>
-                <a type="button" class="btn btn-primary" href="/create-accounts">Create accounts</a>
-            </ul>
+            <p>
+                <a type="button" class="btn btn-primary m-2" href="/logout">Logout</a>
+                <a type="button" class="btn btn-primary active m-2" href="/employeeTools">Manage Users</a>
+            </p>
+            <p>
+                <a type="button" class="btn btn-primary m-2" href="/employee-user-new-deposit.html">Create Deposit</a>
+                <a type="button" class="btn btn-primary m-2" href="/employee-user-new-withdrawal.html">Create Withdrawal</a>
+                <a type="button" class="btn btn-primary m-2" href="/create-transaction">Create Transaction</a>
+            </p>
+            <p>
+                <a type="button" class="btn btn-primary m-2" href="/create-users">Create users</a>
+                <a type="button" class="btn btn-primary m-2" href="/create-accounts">Create accounts</a>
+            </p>
+            <p>
+                <a type="button" class="btn btn-primary m-2" href="/get-transactions">Get all Transaction</a>
+                <a type="button" class="btn btn-primary m-2" href="/get-users">Get all Users</a>
+                <a type="button" class="btn btn-primary m-2" href="/get-accounts">Get all Accounts</a>
+            </p>
         </nav>
     </aside>
     <main class="rightSection">

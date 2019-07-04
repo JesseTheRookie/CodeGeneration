@@ -28,64 +28,6 @@
         crossorigin="anonymous"></script>
 
     <script type="text/javascript">
-        // $(document).ready(function () {
-        //     var url = ;
-
-        //     $("#submit").click(function (e) {
-        //         e.preventDefault();
-        //         // var data = {
-        //         //     "username": $("#username").val(),
-        //         //     "password": $("#password").val()
-        //         // };
-
-        //         var data = {
-        //             "username": "stefan",
-        //             "password": "admin123"
-        //         };
-
-        //         $.ajax({
-        //             type: "POST",
-        //             url: "/login",
-        //             data: data,
-        //             contentType: "application/json",
-        //             success: function (data) {
-        //                 console.log(data)
-        //             }
-
-        //         })
-        //     });
-        // });
-
-        // $(document).ready(function () {
-
-        //     $(".btn").val("withdrawals").click(function (e) {
-        //         e.preventDefault();
-
-        //         $.ajax({
-        //             type: "GET",
-        //             url: "/withdrawals",
-        //             data: "",
-        //             contentType: "application/json",
-        //             success: function (data) {
-        //                 console.log(data)
-        //             }
-
-        //         })
-        //     });
-        // });
-
-        // var xhttp = new XMLHttpRequest();
-        // xhttp.onreadystatechange = function () {
-        //     if (this.readyState == 4 && this.status == 200) {
-        //         $("#contentPlaceholder").html(this.responseText);
-        //     }
-        // };
-        // xhttp.open("GET", "/userinfo/", true);
-        // xhttp.send();
-        //$("#contentPlaceholder").html =  sessionStorage.getItem("lastname"); 
-        //console.log(sessionStorage.getItem("userName"));
-
-
 
         function showAccount(accounts) {
             console.time('showAccounts');
@@ -93,7 +35,7 @@
             showSavingsAccount(accounts);
             console.timeEnd('showAccounts');
         }
-       
+
 
         function showCurrentAccount(account) {
 
@@ -131,9 +73,6 @@
             }
         }
 
-
-
-
         $(document).ready(function () {
             var userInfo;
             var userAccounts;
@@ -147,6 +86,7 @@
                 success: function (data) {
                     userInfo = data;
                     $("#welcomeMsg").text("Welcome, " + data.Name + "!");
+
                 }
             });
 
@@ -163,41 +103,27 @@
                 }
             });
 
-
-
+            if (userInfo.Role === "USER") {
+                $("#employeeToolsBtn").css('display', 'none');
+            }
         });
 
 
-
-
-        // var xhttp = new XMLHttpRequest();
-        // xhttp.onreadystatechange = function () {
-        //     if (this.readyState == 4 && this.status == 200) {
-        //         $("#contentPlaceholder").html(this.responseText);
-        //     }
-        // };
-        // xhttp.open("GET", "/userinfo/", true);
-        // xhttp.send();
-        //$("#contentPlaceholder").html =  sessionStorage.getItem("lastname");
-        //console.log(sessionStorage.getItem("userName"));
-        //});
     </script>
 </head>
 
-</head>
 
 <body>
     <header id="header">
-        <a type="button" class="btn btn-primary float-right m-2" href="/logout">Logout</a>
-        <a type="button" class="btn btn-primary float-right m-2" href="/employeeTools">Employee Tools</a>
         <h1>Swagger Bank - My Overview</h1>
-
-
     </header>
+
     <aside id="sideMenu">
         <h2 id="welcomeMsg" class="mt-2"></h2>
-        <h3>User tools</h3>
+        <!-- <h3>User tools</h3> -->
         <nav>
+            <a type="button" id="logoutBtn" class="btn btn-primary m-2" href="/logout">Logout</a>
+            <a type="button" id="employeeToolsBtn" class="btn btn-primary m-2" href="/employeeTools">Employee Tools</a>
             <!-- <ul> -->
             <!-- <li class="active">Manage accounts</li> -->
             <!-- <br /> -->
@@ -206,11 +132,11 @@
             <!-- <li>Create Withdrawal</li> -->
             <!-- </ul> -->
 
-            <a type="button" class="btn btn-primary m-1" href="/withdrawals">withdrawals</a>
-            <a type="button" class="btn btn-primary m-1" href="/deposits">Deposits</a>
-            <a type="button" class="btn btn-primary m-1" href="/transactions">Transactions</a>
-            <a type="button" class="btn btn-primary m-1" href="/get-users">Users</a>
-            <a type="button" class="btn btn-primary m-1" href="/get-accounts">Accounts</a>
+            <!-- <a type="button" class="btn btn-primary m-1" href="/withdrawals">withdrawals</a> -->
+            <!-- <a type="button" class="btn btn-primary m-1" href="/deposits">Deposits</a> -->
+            <!--<a type="button" class="btn btn-primary m-1" href="/transactions">Transactions</a>-->
+            <!-- <a type="button" class="btn btn-primary m-1" href="/get-users">Users</a> -->
+            <!-- <a type="button" class="btn btn-primary m-1" href="/get-accounts">Accounts</a> -->
         </nav>
     </aside>
 
