@@ -66,10 +66,9 @@ public class MyApplicationRunner implements ApplicationRunner {
         keyRepository.findAll()
                 .forEach(System.out::println);
 
-        transactionRepository.save(new Transaction("NL01INHO0000000004", "NL01INHO0000000002", 50.0, "TRANSACTION", 1 ));
-        transactionRepository.save(new Transaction("NL01INHO0000000002", "NL01INHO0000000004", 150.0, "TRANSACTION", 1 ));
-
-        transactionRepository.save(new Transaction("NL01INHO0000000004", "NL01INHO0000000002", 50.0, "TRANSACTION", 1 ));
+        transactionRepository.save(new Transaction("NL01INHO0000000004", "NL01INHO0000000002", 50.0, "TRANSACTION", 101 ));
+        transactionRepository.save(new Transaction("NL01INHO0000000002", "NL01INHO0000000004", 150.0, "TRANSACTION", 101 ));
+        transactionRepository.save(new Transaction("NL01INHO0000000004", "NL01INHO0000000002", 50.0, "TRANSACTION", 102 ));
 
         transactionRepository.findAll()
                 .forEach(System.out::println);
@@ -77,13 +76,13 @@ public class MyApplicationRunner implements ApplicationRunner {
         accountRepository.findAll()
                 .forEach(System.out::println);
 
-        transactionRepository.save(new Transaction("NL01INHO0000000003", 12.00, "DEPOSIT", 1 ));
-        transactionRepository.save(new Transaction("NL01INHO0000000002", 404.00, "DEPOSIT", 1 ));
+        transactionRepository.save(new Transaction("NL01INHO0000000003", 12.00, "DEPOSIT", 101 ));
+        transactionRepository.save(new Transaction("NL01INHO0000000002", 404.00, "DEPOSIT", 101 ));
 
-        transactionRepository.save(new Transaction("NL01INHO0000000004", 50.0, "WITHDRAWAL", 1 ));
-        transactionRepository.save(new Transaction("NL01INHO0000000004", 4.0, "WITHDRAWAL", 1 ));
-        transactionRepository.save(new Transaction("NL01INHO0000000004", 6.0, "WITHDRAWAL", 1 ));
-        transactionRepository.save(new Transaction("NL01INHO0000000004", 8.0, "WITHDRAWAL", 1 ));
+        transactionRepository.save(new Transaction("NL01INHO0000000004", 50.0, "WITHDRAWAL", 101 ));
+        transactionRepository.save(new Transaction("NL01INHO0000000004", 4.0, "WITHDRAWAL", 101 ));
+        transactionRepository.save(new Transaction("NL01INHO0000000004", 6.0, "WITHDRAWAL", 101 ));
+        transactionRepository.save(new Transaction("NL01INHO0000000004", 8.0, "WITHDRAWAL", 101 ));
 
         transactionRepository.findAll()
                 .forEach(System.out::println);

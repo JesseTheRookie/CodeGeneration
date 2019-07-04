@@ -22,6 +22,7 @@ public class UsersApiControllerIntegrationTest {
     @Autowired
     private UsersApi api;
 
+
     @Test
     public void createUserTest() throws Exception {
         User Erwin = new User("Erwin", "wachtwoord123", "EMPLOYEE");
@@ -76,18 +77,17 @@ public class UsersApiControllerIntegrationTest {
     }
 
 
-
+/*
     @Test
     public void loginUserTest() throws Exception {
         User body = new User("TheoTest", "test123", "USER");
         ResponseEntity<String> responseEntity = api.loginUser(body);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
-
     @Test
     public void logoutUserTest() throws Exception {
         ResponseEntity<Void> responseEntity = api.logoutUser();
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
-
+*/
 }
