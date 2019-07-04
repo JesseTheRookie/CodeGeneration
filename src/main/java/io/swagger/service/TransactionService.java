@@ -99,6 +99,12 @@ public class TransactionService {
         } else throw new ApiException(403, "You are not authorized for this request");
     }
 
+    public Iterable<Transaction> getTransactionsByIban(String iban) throws ApiException {
+        Account account = accountRepository.findById(iban).orElse(null);
+        if (isEmployee() || securityController.currentUserId() == account.getUserId()) {
+            return transactionRepository.getTransactionByIban(iban);
+        } else throw new ApiException(403, "You are not authorized for this request");
+    }
 
     //methods
     public void initiateTransaction(Transaction newTransaction) throws ApiException {
