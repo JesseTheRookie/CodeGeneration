@@ -42,12 +42,14 @@ public interface TransactionsApi {
     @ApiOperation(value = "Get transactions depending on the optional parameters; the abstinence of any parameters results in all transactions.", nickname = "getTransactions", notes = "", response = Transaction.class, responseContainer = "List", authorizations = {
         @Authorization(value = "cookieAuth")    }, tags={ "transaction", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "succes", response = Transaction.class, responseContainer = "List"),
-        @ApiResponse(code = 400, message = "Nee") })
+        @ApiResponse(code = 200, message = "Transaction(s) found", response = Transaction.class, responseContainer = "List"),
+        @ApiResponse(code = 400, message = "Invalid input"),
+        @ApiResponse(code = 403, message = "Forbidden, you do not have the required rights"),
+        @ApiResponse(code = 500, message = "Oops, something went wrong on the server. Sorry!") })
     @RequestMapping(value = "/transactions",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<Transaction>> getTransactions(/*@ApiParam(value = "The id of a transaction") @Valid @RequestParam(value = "transactionID", required = false) Integer transactionID,*/ @ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "fromIban", required = false) String fromIban, @ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "toIban", required = false) String toIban, @ApiParam(value = "The type of the transaction") @Valid @RequestParam(value = "Type", required = false) Transaction.TransactionType type, @ApiParam(value = "The userId of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) throws ApiException;
+    ResponseEntity<List<Transaction>> getTransactions(/*@ApiParam(value = "The id of a transaction") @Valid @RequestParam(value = "transactionID", required = false) Integer transactionID,*/ @ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "fromIban", required = false) String fromIban, @ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "toIban", required = false) String toIban, @ApiParam(value = "The type of transaction; transaction, deposit, withdrawal") @Valid @RequestParam(value = "Type", required = false) Transaction.TransactionType type, @ApiParam(value = "The id of the user performing the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) throws ApiException;
 
 //    @ApiOperation(value = "Get the a specific transaction by using it's id", nickname = "getTransactionById", notes = "", response = Transaction.class, authorizations = {
 //            @Authorization(value = "ApiKeyAuth")    }, tags={ "transaction", })
@@ -60,10 +62,12 @@ public interface TransactionsApi {
 //    ResponseEntity<Transaction> getTransactionById(@Min(1)@ApiParam(value = "The id of a transaction") @Valid @RequestParam(value = "transactionId", required = true) Integer transactionId) throws ApiException;
 
     @ApiOperation(value = "Returns specified transaction", nickname = "getTransactionById", notes = "Returns the specified transaction", response = Transaction.class, authorizations = {
-            @Authorization(value = "ApiKeyAuth")    }, tags={ "transaction", })
+            @Authorization(value = "cookieAuth")    }, tags={ "transaction", })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "succes", response = Transaction.class),
-            @ApiResponse(code = 400, message = "Nee") })
+            @ApiResponse(code = 400, message = "Invalid input"),
+            @ApiResponse(code = 403, message = "Forbidden, you do not have the required rights"),
+            @ApiResponse(code = 500, message = "Oops, something went wrong on the server. Sorry!") })
     @RequestMapping(value = "/transactions/{transactionId}",
             produces = { "application/json" },
             method = RequestMethod.GET)
