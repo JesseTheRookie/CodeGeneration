@@ -24,10 +24,7 @@ public class UserService {
     }
 
     public Iterable<User> getAllUsers() throws ApiException {
-        if (userRepository.getUserByUsername(
-                securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
-                || userRepository.getUserByUsername(
-                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
+        if (isEmployee()) {
             return userRepository.findAll();
         } else throw new ApiException(403, "You are not authorized for this request");
     }
@@ -40,10 +37,7 @@ public class UserService {
         if (userRepository.getUserByUsername(
                 securityController.currentUserName())
                 .getId() == userId
-                || userRepository.getUserByUsername(
-                securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
-                || userRepository.getUserByUsername(
-                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
+                || isEmployee()) {
             return userRepository.findById(userId).orElseThrow(IllegalArgumentException::new);
         } else throw new ApiException(403, "You are not authorized for this request");
     }
@@ -52,11 +46,13 @@ public class UserService {
         if (userRepository.getUserByUsername(
                 securityController.currentUserName())
                 .getId() == userId
-                || userRepository.getUserByUsername(
-                securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
-                || userRepository.getUserByUsername(
-                securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE)) {
+                || isEmployee()) {
             return accountService.getAccountsByUserId(userId);
         } else throw new ApiException(403, "You are not authorized for this request");
+    }
+
+    private boolean isEmployee(){
+        return userRepository.getUserByUsername(securityController.currentUserName()).getRole().equals(User.RoleEnum.USER_EMPLOYEE)
+                || userRepository.getUserByUsername(securityController.currentUserName()).getRole().equals(User.RoleEnum.EMPLOYEE);
     }
 }
