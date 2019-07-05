@@ -115,7 +115,39 @@
 		}
 
 
+		function showMenuLinks(userInfo) {
+			var iban = findGetParameter("iban");
+			// var type = findGetParameter("type");
 
+
+			if (userInfo.Role === "USER") {
+				$("#menu").append('<a type="button" class="btn btn-primary m-2" href="/dashboard" title="Return to the previous page">&laquo; Go back</a>');
+				
+				$("#menu").append('<a type="button" class="btn btn-primary m-2" href="/get-transactions?iban=' + iban + '">Get all Transactions</a>');
+				$("#menu").append('<a type="button" class="btn btn-primary m-2" href="/get-transactions?iban=' + iban + '&type=DEPOSIT">Get Deposits</a>');
+				$("#menu").append('<a type="button" class="btn btn-primary m-2" href="/get-transactions?iban=' + iban + '&type=WITHDRAWAL">Get Withdrawals</a>');
+				$("#menu").append('<a type="button" class="btn btn-primary m-2" href="/get-transactions?iban=' + iban + '&type=TRANSACTION">Get Transactions</a>');
+
+			} else {
+				$("#menu").append('<a type="button" class="btn btn-primary m-2" href="/employeeTools" title="Return to the previous page">&laquo; Go back</a>');
+				
+				if (iban) {
+					$("#menu").append('<a type="button" class="btn btn-primary m-2" href="/get-transactions?iban=' + iban + '">Get all Transactions</a>');
+					$("#menu").append('<a type="button" class="btn btn-primary m-2" href="/get-transactions?iban=' + iban + '&type=DEPOSIT">Get Deposits</a>');
+					$("#menu").append('<a type="button" class="btn btn-primary m-2" href="/get-transactions?iban=' + iban + '&type=WITHDRAWAL">Get Withdrawals</a>');
+					$("#menu").append('<a type="button" class="btn btn-primary m-2" href="/get-transactions?iban=' + iban + '&type=TRANSACTION">Get Transactions</a>');
+				} else {
+					$("#menu").append('<a type="button" class="btn btn-primary m-2" href="/get-transactions">Get all Transactions</a>');
+					$("#menu").append('<a type="button" class="btn btn-primary m-2" href="/get-transactions?type=DEPOSIT">Get Deposits</a>');
+					$("#menu").append('<a type="button" class="btn btn-primary m-2" href="/get-transactions?type=WITHDRAWAL">Get Withdrawals</a>');
+					$("#menu").append('<a type="button" class="btn btn-primary m-2" href="/get-transactions?type=TRANSACTION">Get Transactions</a>');
+				}
+			}
+
+
+
+
+		}
 
 
 
@@ -132,7 +164,7 @@
 
 			var url;
 
-		//get current logged in user info
+			//get current logged in user info
 			$.ajax({
 				async: false,
 				type: "GET",
@@ -141,10 +173,14 @@
 				contentType: "application/json",
 				success: function (data) {
 					userInfo = data;
+					showMenuLinks(userInfo);
 				}
 			});
 
-		//determine ajax url
+
+
+
+			//determine ajax url
 			if (iban && type) {// "/transactions?iban={iban}&type={type}"
 				switch (type) {
 					case "TRANSACTION":
@@ -159,6 +195,8 @@
 					default:
 						break;
 				}
+			} else if (iban){// "/transactions?iban={iban}
+				url = "/transactions/iban/" + iban;
 			} else if (type) {// "/transactions?type={type}"
 				url = "/transactions?type=" + type;
 			} else if (id) { // "/transactions?id={id}"
@@ -167,7 +205,7 @@
 				url = "/transactions"; // get all transactions
 			}
 
-		//execute ajax call
+			//execute ajax call
 			if (url) {
 				$.ajax({
 					async: false,
@@ -181,6 +219,12 @@
 					}
 				});
 			}
+
+
+
+
+
+
 		});
 
 
@@ -191,12 +235,9 @@
 <body>
 	<header>
 		<h1>Sw@gger Bank</h1>
-		<a type="button" class="btn btn-primary m-2" href="/employeeTools" title="Return to the previous page">&laquo; Go back</a>
-		<a type="button" class="btn btn-primary m-2" href="/get-transactions">Get all Transactions</a>
-		<a type="button" class="btn btn-primary m-2" href="/get-transactions?type=DEPOSIT">Get Deposits</a>
-		<a type="button" class="btn btn-primary m-2" href="/get-transactions?type=WITHDRAWAL">Get Withdrawals</a>
-		<a type="button" class="btn btn-primary m-2" href="/get-transactions?type=TRANSACTION">Get Transactions</a>
+		<nav id="menu">
 
+		</nav>
 	</header>
 	<main>
 		<h2 id="transactionTitle"></h2>
