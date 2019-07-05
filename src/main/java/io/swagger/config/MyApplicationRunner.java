@@ -27,7 +27,6 @@ public class MyApplicationRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments applicationArguments) throws Exception {
-        //Users and accounts
 
         Files.lines(Paths.get("src/main/resources/users.csv"))
                 .forEach(
@@ -86,7 +85,6 @@ public class MyApplicationRunner implements ApplicationRunner {
 
         transactionRepository.findAll()
                 .forEach(System.out::println);
-
     }
 }
 

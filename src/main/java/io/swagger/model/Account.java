@@ -36,7 +36,6 @@ public class Account   {
     private Double balance = null;
 
 
-
     /**
      * Gets or Sets accounttype
      */
@@ -139,7 +138,6 @@ public class Account   {
     }
 
     public Account(){}
-
 
     /**
      * Get iban

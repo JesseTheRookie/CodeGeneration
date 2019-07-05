@@ -6,9 +6,7 @@ import io.swagger.model.Account;
 import io.swagger.model.User;
 import io.swagger.repository.UserRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-
 
 @Service
 public class UserService {

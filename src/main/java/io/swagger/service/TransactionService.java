@@ -1,8 +1,5 @@
 package io.swagger.service;
 
-//import com.sun.org.apache.xpath.internal.operations.Bool;
-
-import io.swagger.api.AccountsApiController;
 import io.swagger.api.ApiException;
 import io.swagger.api.SecurityController;
 import io.swagger.model.Account;
@@ -10,13 +7,8 @@ import io.swagger.model.Transaction;
 import io.swagger.model.User;
 import io.swagger.repository.AccountRepository;
 import io.swagger.repository.UserRepository;
-import io.swagger.service.AccountService;
-import io.swagger.repository.AccountRepository;
 import io.swagger.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
-//import sun.jvm.hotspot.code.Location;
-
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,20 +16,17 @@ import java.util.Date;
 @Service
 public class TransactionService {
 
-
     //fields
     private TransactionRepository transactionRepository;
     private AccountRepository accountRepository;
     private SecurityController securityController;
     private AccountService accountService;
     private UserRepository userRepository;
-
     private final Double MAX_AMOUNT = 500.0;
     private final Integer DAILY_TRANSACTIONS_LIMIT = 2;
 
     //properties
     private Integer transactionsDoneThisDay = 0;
-
 
     //constructor
     public TransactionService(TransactionRepository transactionRepository, AccountRepository accountRepository, SecurityController securityController, UserRepository userRepository, AccountService accountService) {
@@ -67,7 +56,6 @@ public class TransactionService {
             return transactionRepository.getTransactionsByFromIban(iban);
         } else throw new ApiException(403, "You are not authorized for this request");
     }
-
 
     //get all received transactions
     public Iterable<Transaction> getTransactionsByToIban(String iban) throws ApiException {
@@ -127,7 +115,6 @@ public class TransactionService {
     }
 
     //validators
-
     private void validateTransaction(Transaction transaction) throws ApiException {
         checkIfAccountIsNull(transaction.getToIban());
         checkIfAccountIsNull(transaction.getFromIban());
@@ -154,7 +141,6 @@ public class TransactionService {
 
             }
         }
-
         //voer transactie uit
     }
 
@@ -177,7 +163,6 @@ public class TransactionService {
         }
     }
 
-
     //creators
     private void createTransaction(Transaction newTransaction) throws ApiException {
         Account fromAccount = accountRepository.findById(newTransaction.getFromIban()).orElse(null);
@@ -186,7 +171,6 @@ public class TransactionService {
         //update from account
         fromAccount.setBalance(fromAccount.getBalance() - newTransaction.getAmount());
         accountRepository.save(fromAccount);
-        // }
 
         //update to account
         toAccount.setBalance(toAccount.getBalance() + newTransaction.getAmount());
@@ -210,10 +194,9 @@ public class TransactionService {
     private void createWithdrawal(Transaction newWithdrawal) {
         Account account = accountRepository.findById(newWithdrawal.getFromIban()).orElse(null);
 
-        // if (withdrawIsValid(newWithdrawal.getFromIban(), newWithdrawal.getAmount())) {
         account.setBalance(account.getBalance() - newWithdrawal.getAmount());
+
         accountRepository.save(account);
-        // }
         transactionRepository.save(newWithdrawal);
     }
 
@@ -269,7 +252,6 @@ public class TransactionService {
         Account.AccounttypeEnum accounttypeTo = accountTo.getAccounttype();
 
         return accounttypeFrom.equals(accounttypeTo);
-
     }
 
     private Boolean balanceIsHigherThanAmount(String iban, Double amount) throws ApiException {

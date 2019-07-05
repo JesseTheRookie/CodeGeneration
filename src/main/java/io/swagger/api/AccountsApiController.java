@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -22,11 +21,8 @@ import java.util.List;
 public class AccountsApiController implements AccountsApi {
 
     private static final Logger log = LoggerFactory.getLogger(AccountsApiController.class);
-
     private final ObjectMapper objectMapper;
-
     private final HttpServletRequest request;
-
     private AccountService service;
 
     @org.springframework.beans.factory.annotation.Autowired

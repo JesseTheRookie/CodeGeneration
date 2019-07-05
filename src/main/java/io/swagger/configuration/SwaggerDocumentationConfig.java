@@ -2,7 +2,6 @@ package io.swagger.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -21,7 +20,7 @@ public class SwaggerDocumentationConfig {
             .license("")
             .licenseUrl("http://unlicense.org")
             .termsOfServiceUrl("")
-            .version("0.3")
+            .version("1.0")
             .contact(new Contact("","", ""))
             .build();
     }

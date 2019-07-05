@@ -1,6 +1,5 @@
 package io.swagger.security;
 
-
 import io.swagger.model.User;
 import io.swagger.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         } else if (user.getUsername().equals("anonymousUser")) {
             throw new UsernameNotFoundException(username);
         }
-
 
         if (!new BCryptPasswordEncoder().matches(credentials, user.getPassword())) {
             throw new BadCredentialsException("Invalid password ");
