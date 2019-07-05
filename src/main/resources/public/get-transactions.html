@@ -131,7 +131,7 @@
 			var id = findGetParameter("id");
 
 			var url;
-			
+
 		//get current logged in user info
 			$.ajax({
 				async: false,
@@ -191,13 +191,11 @@
 <body>
 	<header>
 		<h1>Sw@gger Bank</h1>
-		<a type="button" class="btn btn-primary" href="javascript:history.go(-1)"
-			title="Return to the previous page">&laquo; Go back</a>
-
+		<a type="button" class="btn btn-primary m-2" href="/employeeTools" title="Return to the previous page">&laquo; Go back</a>
 		<a type="button" class="btn btn-primary m-2" href="/get-transactions">Get all Transactions</a>
-		<a type="button" class="btn btn-primary m-2" href="/get-transactions?type=deposit">Get Deposits</a>
-		<a type="button" class="btn btn-primary m-2" href="/get-transactions?type=withdrawal">Get Withdrawals</a>
-		<a type="button" class="btn btn-primary m-2" href="/get-transactions?type=transaction">Get Transactions</a>
+		<a type="button" class="btn btn-primary m-2" href="/get-transactions?type=DEPOSIT">Get Deposits</a>
+		<a type="button" class="btn btn-primary m-2" href="/get-transactions?type=WITHDRAWAL">Get Withdrawals</a>
+		<a type="button" class="btn btn-primary m-2" href="/get-transactions?type=TRANSACTION">Get Transactions</a>
 
 	</header>
 	<main>
