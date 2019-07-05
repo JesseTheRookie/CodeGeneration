@@ -1,23 +1,23 @@
 openapi: 3.0.0
 servers:
-- description: Inholland backend
-  url: https://swaggerbank.herokuapp.com/
+  - description: Inholland backend
+    url: https://swaggerbank.herokuapp.com/
 info:
-  version: '1.0'
-  title: 'Inholland_Bank_API'
-  description: 'Banking API voor Inholland'
-  
+  version: "1.0"
+  title: "Inholland_Bank_API"
+  description: "Banking API voor Inholland"
+
 paths:
   /accounts:
     get:
-      security: 
-      - cookieAuth: []
+      security:
+        - cookieAuth: []
       tags:
         - account
       summary: Returns all accounts
       operationId: getAccounts
       description: Returns a list of all accounts, if the logged in user is an employee
-      parameters: 
+      parameters:
         - name: type
           in: query
           description: The type of accounts that need to be considered to filter
@@ -44,10 +44,10 @@ paths:
           description: Not found
         "500":
           description: Oops, something went wrong on the server. Sorry!
-          
+
     post:
-      security: 
-      - cookieAuth: []
+      security:
+        - cookieAuth: []
       tags:
         - account
       summary: Creates a new account
@@ -79,8 +79,8 @@ paths:
 
   /accounts/{iban}:
     get:
-      security: 
-      - cookieAuth: []
+      security:
+        - cookieAuth: []
       parameters:
         - in: path
           name: iban
@@ -110,8 +110,8 @@ paths:
           description: Oops, something went wrong on the server. Sorry!
 
     put:
-      security: 
-      - cookieAuth: []
+      security:
+        - cookieAuth: []
       parameters:
         - in: path
           name: iban
@@ -135,10 +135,10 @@ paths:
           description: Not found
         "500":
           description: Oops, something went wrong on the server. Sorry!
-          
+
     delete:
-      security: 
-      - cookieAuth: []
+      security:
+        - cookieAuth: []
       parameters:
         - in: path
           name: iban
@@ -157,7 +157,7 @@ paths:
         "400":
           description: Invalid input
         "403":
-          description: Forbidden, you do not have the required rights 
+          description: Forbidden, you do not have the required rights
         "404":
           description: Not found
         "500":
@@ -165,8 +165,8 @@ paths:
 
   /users:
     get:
-      security: 
-      - cookieAuth: []
+      security:
+        - cookieAuth: []
       tags:
         - user
       summary: Returns all users
@@ -189,10 +189,10 @@ paths:
           description: Not found
         "500":
           description: Oops, something went wrong on the server. Sorry!
-    
+
     post:
-      security: 
-      - cookieAuth: []
+      security:
+        - cookieAuth: []
       tags:
         - user
       summary: Creates a new user
@@ -202,7 +202,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
       responses:
         "201":
           description: User created
@@ -211,17 +211,17 @@ paths:
               schema:
                 type: integer
                 description: The id of the created user
-        "400": 
+        "400":
           description: Invalid input
         "403":
           description: Forbidden, you do not have the required rights
         "500":
           description: Oops, something went wrong on the server. Sorry!
-          
+
   /users/{userId}:
     get:
-      security: 
-      - cookieAuth: []
+      security:
+        - cookieAuth: []
       parameters:
         - in: path
           name: userId
@@ -244,19 +244,19 @@ paths:
                 type: object
                 items:
                   $ref: "#/components/schemas/User"
-        '400':
+        "400":
           description: Invalid input
-        '403':
+        "403":
           description: Forbidden, you do not have the required rights
-        '404':
+        "404":
           description: Not found
         "500":
           description: Oops, something went wrong on the server. Sorry!
-          
+
   /users/{userId}/accounts:
     get:
-      security: 
-      - cookieAuth: []
+      security:
+        - cookieAuth: []
       parameters:
         - in: path
           name: userId
@@ -301,7 +301,7 @@ paths:
               type: object
               properties:
                 username:
-                 type: string
+                  type: string
                 password:
                   type: string
         description: Username and password
@@ -323,8 +323,8 @@ paths:
 
   /logout:
     get:
-      security: 
-      - cookieAuth: []
+      security:
+        - cookieAuth: []
       tags:
         - login & out
       summary: Logs out current logged in user session
@@ -332,11 +332,11 @@ paths:
       responses:
         default:
           description: successful operation
-          
+
   /transactions:
     post:
-      security: 
-      - cookieAuth: []
+      security:
+        - cookieAuth: []
       tags:
         - transaction
       summary: Create a new transaction
@@ -346,25 +346,25 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Transaction'
+              $ref: "#/components/schemas/Transaction"
       responses:
-        '201':
+        "201":
           description: Transaction created
           content:
             application/json:
               schema:
                 type: integer
                 description: The id of the created transaction
-        "400": 
+        "400":
           description: Invalid input
         "403":
           description: Forbidden, you do not have the required rights
         "500":
           description: Oops, something went wrong on the server. Sorry!
     get:
-      security: 
-      - cookieAuth: []
-      tags: 
+      security:
+        - cookieAuth: []
+      tags:
         - transaction
       summary: Get transactions depending on the optional parameters; the abstinence of any parameters results in all transactions.
       operationId: getTransactions
@@ -381,7 +381,7 @@ paths:
           schema:
             type: string
           description: The iban of the receiving backaccount
-        - name: Type
+        - name: type
           in: query
           required: false
           schema:
@@ -402,18 +402,18 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Transaction'
+                  $ref: "#/components/schemas/Transaction"
         "400":
           description: Invalid input
         "403":
           description: Forbidden, you do not have the required rights
         "500":
           description: Oops, something went wrong on the server. Sorry!
-          
+
   /transactions/{transactionId}:
     get:
-      security: 
-      - cookieAuth: []
+      security:
+        - cookieAuth: []
       parameters:
         - in: path
           name: transactionId
@@ -434,18 +434,18 @@ paths:
               schema:
                 type: object
                 items:
-                  $ref: '#/components/schemas/Transaction'
-        "400": 
+                  $ref: "#/components/schemas/Transaction"
+        "400":
           description: Invalid input
         "403":
           description: Forbidden, you do not have the required rights
         "500":
           description: Oops, something went wrong on the server. Sorry!
-          
-  /transactions/{iban}:
+
+  /transactions/iban/{iban}:
     get:
-      security: 
-      - cookieAuth: []
+      security:
+        - cookieAuth: []
       parameters:
         - in: path
           name: iban
@@ -466,14 +466,14 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Transaction'
-        "400": 
+                  $ref: "#/components/schemas/Transaction"
+        "400":
           description: Invalid input
         "403":
           description: Forbidden, you do not have the required rights
         "500":
           description: Oops, something went wrong on the server. Sorry!
-          
+
 components:
   schemas:
     Account:
@@ -491,7 +491,7 @@ components:
         user:
           type: object
           items:
-            $ref: '#/components/schemas/User'
+            $ref: "#/components/schemas/User"
           description: The user who owns the account
         name:
           type: string
@@ -562,7 +562,7 @@ components:
           description: userID of the user who creates the transaction
 
   securitySchemes:
-    cookieAuth:         # arbitrary name for the security scheme; will be used in the "security" key later
+    cookieAuth: # arbitrary name for the security scheme; will be used in the "security" key later
       type: apiKey
       in: cookie
-      name: JSESSIONID  # cookie name
+      name: JSESSIONID # cookie name
