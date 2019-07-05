@@ -22,7 +22,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-07-04T23:40:18.106Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-07-05T06:02:23.886Z[GMT]")
 @Api(value = "transactions", description = "the transactions API")
 public interface TransactionsApi {
 
@@ -63,7 +63,7 @@ public interface TransactionsApi {
     @RequestMapping(value = "/transactions",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<Transaction>> getTransactions(@ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "fromIban", required = false) String fromIban,@ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "toIban", required = false) String toIban,@ApiParam(value = "The type of transaction", allowableValues = "transaction, deposit, withdrawal") @Valid @RequestParam(value = "Type", required = false) String type,@ApiParam(value = "The id of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy);
+    ResponseEntity<List<Transaction>> getTransactions(@ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "fromIban", required = false) String fromIban,@ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "toIban", required = false) String toIban,@ApiParam(value = "The type of transaction", allowableValues = "transaction, deposit, withdrawal") @Valid @RequestParam(value = "type", required = false) String type,@ApiParam(value = "The id of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy);
 
 
     @ApiOperation(value = "Returns all transaction with the specified iban in the fromIban or toIban field", nickname = "getTransactionsByIban", notes = "Returns all transaction which involve this iban (from or to)", response = Transaction.class, responseContainer = "List", authorizations = {
@@ -73,7 +73,7 @@ public interface TransactionsApi {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 403, message = "Forbidden, you do not have the required rights"),
         @ApiResponse(code = 500, message = "Oops, something went wrong on the server. Sorry!") })
-    @RequestMapping(value = "/transactions/{iban}",
+    @RequestMapping(value = "/transactions/iban/{iban}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<List<Transaction>> getTransactionsByIban(@ApiParam(value = "The iban for fromIban AND toIban",required=true) @PathVariable("iban") String iban);

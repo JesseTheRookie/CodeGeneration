@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-07-04T23:40:18.106Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-07-05T06:02:23.886Z[GMT]")
 @Controller
 public class TransactionsApiController implements TransactionsApi {
 
@@ -47,7 +47,7 @@ public class TransactionsApiController implements TransactionsApi {
         return new ResponseEntity<List<Transaction>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<List<Transaction>> getTransactions(@ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "fromIban", required = false) String fromIban,@ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "toIban", required = false) String toIban,@ApiParam(value = "The type of transaction", allowableValues = "transaction, deposit, withdrawal") @Valid @RequestParam(value = "Type", required = false) String type,@ApiParam(value = "The id of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) {
+    public ResponseEntity<List<Transaction>> getTransactions(@ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "fromIban", required = false) String fromIban,@ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "toIban", required = false) String toIban,@ApiParam(value = "The type of transaction", allowableValues = "transaction, deposit, withdrawal") @Valid @RequestParam(value = "type", required = false) String type,@ApiParam(value = "The id of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<List<Transaction>>(HttpStatus.NOT_IMPLEMENTED);
     }
