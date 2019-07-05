@@ -31,17 +31,39 @@
 		function showTransactions(transactions) {
 			console.log(transactions);
 			console.time('showTransactions');
+			var userInfo;
+			var userAccounts;
+
+			var iban = findGetParameter("iban");
+			var withdrawals;
+			var deposits;
+			var transactions;
+			var type = findGetParameter("type");
+			var id = findGetParameter("id");
+
 
 			if (transactions.length > 0) {
-				//title
-				var iban = findGetParameter("iban");
-				var id = findGetParameter("id");
 
-				if (iban !== null) {
+				if (iban) {
 					$("#transactionTitle").text("Transactions of: " + iban);
-				} else if (id !== null) {
+				} else if (id) {
 					$("#transactionTitle").text("Transaction with id: " + id);
-				}else{
+				} else if (type) {
+
+					switch (type) {
+						case "transaction":
+							$("#transactionTitle").text("Transactions of the Swaggerbank");
+							break;
+						case "deposit":
+							$("#transactionTitle").text("Deposits of the Swaggerbank");
+							break;
+						case "withdrawal":
+							$("#transactionTitle").text("Withdrawals of the Swaggerbank");
+							break;
+						default:
+							break;
+					}
+				} else {
 					$("#transactionTitle").text("All Transactions of the Swaggerbank");
 				}
 
@@ -64,15 +86,29 @@
 					}
 				}
 			} else {
-				//title
-				var iban = findGetParameter("iban");
-				if (iban !== null) {
+
+				if (iban) {
 					$("#transactionTitle").text("There are no transactions for: " + iban);
-				} else if (id !== null) {
+				} else if (id) {
 					$("#transactionTitle").text("There is no transaction with id: " + id);
-				}else {
+				} else if (type) {
+
+					switch (type) {
+						case "transaction":
+							$("#transactionTitle").text("There are no transactions of the Swaggerbank");
+							break;
+						case "deposit":
+							$("#transactionTitle").text("There are no deposits of the Swaggerbank");
+							break;
+						case "withdrawal":
+							$("#transactionTitle").text("There are no withdrawals of the Swaggerbank");
+							break;
+						default:
+							break;
+					}
+				} else {
 					$("#transactionTitle").text("There are no transactions to show");
-				}	
+				}
 
 			}
 			console.timeEnd('showTransactions');
@@ -81,19 +117,23 @@
 
 
 
+
+
 		$(document).ready(function () {
 			var userInfo;
 			var userAccounts;
-			var iban;
+
+			var iban = findGetParameter("iban");
 			var withdrawals;
 			var deposits;
 			var transactions;
-			var type;
-			var id;
-			//var AlltransactionsList = [];
+			var type = findGetParameter("type");
+			var id = findGetParameter("id");
 
-
-			$.ajax({//get current logged in user info
+			var url;
+			
+		//get current logged in user info
+			$.ajax({
 				async: false,
 				type: "GET",
 				url: "/userinfo",
@@ -104,83 +144,35 @@
 				}
 			});
 
-
-			if (findGetParameter("iban") && findGetParameter("type")) {// "/transactions?iban={iban}&type={type}"
-				console.log(findGetParameter("iban"));
-				iban = findGetParameter("iban");
-				type = findGetParameter("type");
-				
+		//determine ajax url
+			if (iban && type) {// "/transactions?iban={iban}&type={type}"
 				switch (type) {
-					case "transaction":
-						$.ajax({
-							async: false,
-							type: "GET",
-							url: "/transactions/" + iban,
-							data: "",
-							contentType: "application/json",
-							success: function (data) {
-								transactions = data;
-								console.log("transactions: " + data);
-								//AlltransactionsList.push(data);
-								showTransactions(data);
-							}
-						});
+					case "TRANSACTION":
+						url = "/transactions/iban/" + iban;
 						break;
-					case "deposit":
-						$.ajax({
-							async: false,
-							type: "GET",
-							url: "/transactions?toIban=" + iban,
-							data: "",
-							contentType: "application/json",
-							success: function (data) {
-								deposits = data;
-								console.log("deposits: " + data);
-								//AlltransactionsList.push(data);
-								showTransactions(data);
-							}
-						});
+					case "DEPOSIT":
+						url = "/transactions?toIban=" + iban;
 						break;
-					case "withdrawal":
-						$.ajax({
-							async: false,
-							type: "GET",
-							url: "/transactions?fromIban=" + iban,
-							data: "",
-							contentType: "application/json",
-							success: function (data) {
-								withdrawals = data;
-								console.log("withdrawals: " + data);
-								//AlltransactionsList.push(data);
-								showTransactions(data);
-							}
-						});
+					case "WITHDRAWAL":
+						url = "/transactions?fromIban=" + iban;
 						break;
 					default:
 						break;
 				}
-
-
-			} else if (findGetParameter("id")) { // "/transactions?id={id}"
-				id = findGetParameter("id");
-				$.ajax({
-					async: false,
-					type: "GET",
-					url: "/transactions/"+ id,
-					data: "",
-					contentType: "application/json",
-					success: function (data) {
-						transactions = data;
-						showTransactions(transactions);
-					}
-				});
-
+			} else if (type) {// "/transactions?type={type}"
+				url = "/transactions?type=" + type;
+			} else if (id) { // "/transactions?id={id}"
+				url = "/transactions/" + id;
 			} else {
-				// get all transactions
+				url = "/transactions"; // get all transactions
+			}
+
+		//execute ajax call
+			if (url) {
 				$.ajax({
 					async: false,
 					type: "GET",
-					url: "/transactions",
+					url: url,
 					data: "",
 					contentType: "application/json",
 					success: function (data) {
@@ -189,15 +181,9 @@
 					}
 				});
 			}
-
-
-			//console.log(AlltransactionsList);
-			//don't forget the most important part..
-			// showTransactions(AlltransactionsList);
-
-
-
 		});
+
+
 
 	</script>
 </head>
@@ -207,6 +193,12 @@
 		<h1>Sw@gger Bank</h1>
 		<a type="button" class="btn btn-primary" href="javascript:history.go(-1)"
 			title="Return to the previous page">&laquo; Go back</a>
+
+		<a type="button" class="btn btn-primary m-2" href="/get-transactions">Get all Transactions</a>
+		<a type="button" class="btn btn-primary m-2" href="/get-transactions?type=deposit">Get Deposits</a>
+		<a type="button" class="btn btn-primary m-2" href="/get-transactions?type=withdrawal">Get Withdrawals</a>
+		<a type="button" class="btn btn-primary m-2" href="/get-transactions?type=transaction">Get Transactions</a>
+
 	</header>
 	<main>
 		<h2 id="transactionTitle"></h2>

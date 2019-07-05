@@ -44,7 +44,7 @@
                 const element = account[index];
 
                 if (element.Accounttype == "CURRENT") {
-                    $("#currents").append('<a href="/get-transactions?iban=' + element.Iban + '"><li class=""><p>IBAN: ' + element.Iban + ', Balance: €' + element.Balance + '</p></li></a>');
+                    $("#currents").append('<a href="/get-transactions?iban=' + element.Iban + '"><li class=""><p>Name: ' + element.Name + '</p><p>IBAN: ' + element.Iban + ', Balance: €' + element.Balance + ', Status: ' + element.Status + '</p></li></a>');
                     currentAccountCount++;
                 }
             }
@@ -63,7 +63,7 @@
                 console.log(element);
 
                 if (element.Accounttype == "SAVINGS") {
-                    $("#savings").append('<a href="/get-transactions?iban=' + element.Iban + '"><li class=""><p>IBAN: ' + element.Iban + ', Balance: €' + element.Balance + '</p></li></a>');
+                    $("#savings").append('<a href="/get-transactions?iban=' + element.Iban + '"><li class=""><p>Name: ' + element.Name + '</p><p>IBAN: ' + element.Iban + ', Balance: €' + element.Balance + ', Status: ' + element.Status + '</p></li></a>');
                     savingsAccountCount++;
                 }
             }
@@ -103,8 +103,8 @@
                 }
             });
 
-            if (userInfo.Role === "USER") {
-                $("#employeeToolsBtn").css('display', 'none');
+            if (userInfo.Role.includes("EMPLOYEE")) {
+                $("#employeeToolsBtn").css('display', 'inline-block');
             }
         });
 
@@ -123,7 +123,7 @@
         <!-- <h3>User tools</h3> -->
         <nav>
             <a type="button" id="logoutBtn" class="btn btn-primary m-2" href="/logout">Logout</a>
-            <a type="button" id="employeeToolsBtn" class="btn btn-primary m-2" href="/employeeTools">Employee Tools</a>
+            <a type="button" id="employeeToolsBtn" class="btn btn-primary m-2" style="display: none;" href="/employeeTools">Employee Tools</a>
             <!-- <ul> -->
             <!-- <li class="active">Manage accounts</li> -->
             <!-- <br /> -->

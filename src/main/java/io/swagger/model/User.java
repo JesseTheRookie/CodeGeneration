@@ -137,7 +137,7 @@ public class User implements UserDetails {
     @JsonProperty("Password")
     public void setPassword(String password) {
         this.password = new BCryptPasswordEncoder().encode(password);
-        System.out.println(this.password);
+       // System.out.println(this.password);
     }
 
     public void setRole(String role) {

@@ -51,7 +51,7 @@ public class TransactionsApiController implements TransactionsApi {
 
     public ResponseEntity<List<Transaction>> getTransactions(@ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "fromIban", required = false) String fromIban,
                                                              @ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "toIban", required = false) String toIban,
-                                                             @ApiParam(value = "The type of the transaction") @Valid @RequestParam(value = "Type", required = false) Transaction.TransactionType type,
+                                                             @ApiParam(value = "The type of the transaction") @Valid @RequestParam(value = "type", required = false) Transaction.TransactionType type,
                                                              @ApiParam(value = "The userId of the user who performed the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) throws ApiException{
         String accept = request.getHeader("Accept");
         if (fromIban != null) {

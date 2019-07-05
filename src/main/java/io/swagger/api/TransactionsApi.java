@@ -51,7 +51,7 @@ public interface TransactionsApi {
         method = RequestMethod.GET)
     ResponseEntity<List<Transaction>> getTransactions(@ApiParam(value = "The iban of the sending backaccount") @Valid @RequestParam(value = "fromIban", required = false) String fromIban,
                                                       @ApiParam(value = "The iban of the receiving backaccount") @Valid @RequestParam(value = "toIban", required = false) String toIban,
-                                                      @ApiParam(value = "The type of transaction; transaction, deposit, withdrawal") @Valid @RequestParam(value = "Type", required = false) Transaction.TransactionType type,
+                                                      @ApiParam(value = "The type of transaction; transaction, deposit, withdrawal") @Valid @RequestParam(value = "type", required = false) Transaction.TransactionType type,
                                                       @ApiParam(value = "The id of the user performing the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) throws ApiException;
 
     @ApiOperation(value = "Returns specified transaction", nickname = "getTransactionById", notes = "Returns the specified transaction", response = Transaction.class, authorizations = {
@@ -73,7 +73,7 @@ public interface TransactionsApi {
         @ApiResponse(code = 400, message = "Invalid input"),
         @ApiResponse(code = 403, message = "Forbidden, you do not have the required rights"),
         @ApiResponse(code = 500, message = "Oops, something went wrong on the server. Sorry!") })
-    @RequestMapping(value = "/transactions/{iban}",
+    @RequestMapping(value = "/transactions/iban/{iban}",
             produces = { "application/json" },
             method = RequestMethod.GET)
     ResponseEntity<List<Transaction>> getTransactionsByIban(@Min(1)@ApiParam(value = "The iban",required=true, allowableValues = "") @PathVariable("iban") String iban) throws ApiException;
