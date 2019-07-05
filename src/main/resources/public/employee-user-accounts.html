@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="css/generic.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css" />
 
-    <title>Hello, world!</title>
+    <title></title>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -32,114 +32,138 @@
         <script type="text/javascript">
     
             function showAccount(accounts) {
-                console.time('showAccounts')
-                showCurrentAccount(accounts);
-                showSavingsAccount(accounts);
-                console.timeEnd('showAccounts')
-            }
-    
-            function showCurrentAccount(account) {
-    
-                currentAccountCount = 0;
-                for (let index = 0; index < account.length; index++) {
-                    const element = account[index];
-    
-                    if (element.Accounttype == "current") {
-                        $("#currents").append('<a href="/get-transactions?iban=' + element.Iban + '"><li class=""><p>IBAN: ' + element.Iban + ', Balance: €' + element.Balance + '</p></li></a><input type="submit" class="btn btn-secondary" value="Freeze">');
-                        currentAccountCount++;
-                    }
+                    console.time('showAccounts');
+                    showCurrentAccount(accounts);
+                    showSavingsAccount(accounts);
+                    console.timeEnd('showAccounts');
                 }
-    
-                if (currentAccountCount > 0) {
-                    $("#currentTitle").css("display", "block");
-                }
-            }
-    
-            function showSavingsAccount(account) {
-    
-                savingsAccountCount = 0;
-                //savingStringBuilder = "";
-                for (let index = 0; index < account.length; index++) {
-                    const element = account[index];
-                    console.log(element);
-    
-                    if (element.Accounttype == "savings") {
-                        $("#savings").append('<a href="/get-transactions?iban=' + element.Iban + '"><li class=""><p>IBAN: ' + element.Iban + ', Balance: €' + element.Balance + '</p></li></a><input type="submit" class="btn btn-secondary " value="Freeze">');
-                        savingsAccountCount++;
-                    }
-                }
-    
-                if (savingsAccountCount > 0) {
-                    $("#savingsTitle").css("display", "block");
-                }
-            }
-    
-            $(document).ready(function () {
-                var userInfo;
-                var userAccounts;
-                var userId;
 
-                if (findGetParameter("user-id")) {
-                var userId = findGetParameter("user-id");
-                }
-    
-                $.ajax({
-                    async: false,
-                    type: "GET",
-                    url: "/userinfo",
-                    data: "",
-                    contentType: "application/json",
-                    success: function (data) {
-                        userInfo = data;
-                    }
-                });
-    
-                $.ajax({
-                    async: false,
-                    type: "GET",
-                    url: "/users/" + userId + "/accounts",
-                    data: "",
-                    contentType: "application/json",
-                    success: function (data) {
-                        userAccounts = data;
-                        console.log(data);
-                        showAccount(data);
-                        $("#user").text(data[0].Name);
+                function showCurrentAccount(account) {
 
+                    currentAccountCount = 0;
+                    for (let index = 0; index < account.length; index++) {
+                        const element = account[index];
+
+                        if (element.Accounttype == "CURRENT") {
+                            $("#currents").append('<a href="/get-transactions?iban=' + element.Iban + '"><li class=""><p>Name: ' + element.Name + '</p><p>IBAN: ' + element.Iban + ', Balance: €' + element.Balance + ', Status: ' + element.Status + '</p></a><a type="button" class="btn btn-primary m-2" onclick="toggleAccountStatus(\'' + element.Iban +'\')">' + inverseStatus(element.Status) + '</a></li>');
+                            currentAccountCount++;
+                        }
                     }
+
+                    if (currentAccountCount > 0) {
+                        $("#currentTitle").css("display", "block");
+                    }
+                }
+
+                function showSavingsAccount(account) {
+
+                    savingsAccountCount = 0;
+                    for (let index = 0; index < account.length; index++) {
+                        const element = account[index];
+                        console.log(element);
+
+                        if (element.Accounttype == "SAVINGS") {
+                            $("#savings").append('<a href="/get-transactions?iban=' + element.Iban + '"><li class=""><p>Name: ' + element.Name + '</p><p>IBAN: ' + element.Iban + ', Balance: €' + element.Balance + ', Status: ' + element.Status + '</p></a><a type="button" class="btn btn-primary m-2" onclick="toggleAccountStatus(\''+ element.Iban +'\')">' + inverseStatus(element.Status) + '</a></li>');
+                            savingsAccountCount++;
+                        }
+                    }
+
+                    if (savingsAccountCount > 0) {
+                        $("#savingsTitle").css("display", "block");
+                    }
+                }
+
+                function toggleAccountStatus(iban) {
+                    $.ajax({
+                        async: false,
+                        type: "PUT",
+                        url:  "/accounts/" + iban,
+                        data: "",
+                        //contentType: "application/json",
+                       success: function () {
+                           location.reload(); 
+                       }
+                    });
+                }
+                
+                    function inverseStatus(status) {
+                        switch (status) {
+                            case "ACTIVE":
+                                return "Freeze Account"
+                                break;
+                            case "FROZEN":
+                                return "Activate Account"
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                $(document).ready(function () {
+                    var userInfo;
+                    var userAccounts;
+                    var userId = findGetParameter("user-id");
+
+                    $.ajax({
+                        async: false,
+                        type: "GET",
+                        url: "/userinfo",
+                        data: "",
+                        contentType: "application/json",
+                        success: function (data) {
+                            userInfo = data;
+                            $("#welcomeMsg").text("Welcome, " + data.Name + "!");
+
+                        }
+                    });
+
+                    $.ajax({
+                        async: false,
+                        type: "GET",
+                        url: "/users/" + userId + "/accounts",
+                        data: "",
+                        contentType: "application/json",
+                        success: function (data) {
+                            userAccounts = data;
+                            showAccount(data);
+                            $("#user").text(data[0].Name);
+                        }
+                    });
                 });
-                
-                
-            });
-        </script>
+
+
+            </script>
 </head>
 
 <body>
     <header id="header">
-        <h1>Employee dashboard</h1>
-    </header>
-    <a type="button" class="btn btn-primary" href="/logout">Logout</a>
-    <a type="button" class="btn btn-primary" href="/withdrawals">withdrawals</a>
-    <a type="button" class="btn btn-primary" href="/deposits">Deposits</a>
-    <a type="button" class="btn btn-primary" href="/transactions">Transactions</a>
-    <a type="button" class="btn btn-primary" href="/get-users">Users</a>
-    <a type="button" class="btn btn-primary" href="/get-accounts">Accounts</a>
-    <nav id="sideMenu">
         <h1>Employee tools</h1>
-        <ul>
-            <li class="active">Manage users</li>
-            <li>Transactions</li>
-            <br>
-            <a type="button" class="btn btn-primary" href="/employee-user-new-deposit.html">Create Deposit</a>
-            <a type="button" class="btn btn-primary" href="/employee-user-new-withdrawal.html">Create Withdrawal</a>
-            <br>
-            <a type="button" class="btn btn-primary" href="/create-transaction">Make Transaction</a>
-            <br>
-            <a type="button" class="btn btn-primary" href="/create-users">Create users</a>
-            <a type="button" class="btn btn-primary" href="/create-accounts">Create accounts</a>
-        </ul>
-    </nav>
+    </header>
+    <aside id="sideMenu">
+        <h2 id="welcomeMsg" class="mt-2"></h2>
+        <nav>
     
+            <a type="button" class="btn btn-primary m-2" href="/logout">Logout</a>
+            <a type="button" class="btn btn-primary active m-2" href="/employeeTools">Manage Users</a>
+    
+            <a type="button" class="btn btn-primary m-2" href="/create-users">Create users</a>
+            <a type="button" class="btn btn-primary m-2" href="/create-accounts">Create accounts</a>
+    
+            <a type="button" class="btn btn-primary m-2" href="/get-users">Get all Users</a>
+            <a type="button" class="btn btn-primary m-2" href="/get-accounts">Get all Accounts</a>
+    
+            <a type="button" class="btn btn-primary m-2" href="/employee-user-new-deposit.html">Create Deposit</a>
+            <a type="button" class="btn btn-primary m-2" href="/employee-user-new-withdrawal.html">Create Withdrawal</a>
+            <a type="button" class="btn btn-primary m-2" href="/create-transaction">Create Transaction</a>
+    
+    
+            <a type="button" class="btn btn-primary m-2" href="/get-transactions">Get all Transactions</a>
+            <!-- <a type="button" class="btn btn-primary m-2" href="/get-transactions?type=DEPOSIT">Get Deposits</a>
+                    <a type="button" class="btn btn-primary m-2" href="/get-transactions?type=WITHDRAWAL">Get Withdrawals</a>
+                    <a type="button" class="btn btn-primary m-2" href="/get-transactions?type=TRANSACTION">Get Transactions</a> -->
+    
+        </nav>
+    </aside>
     <section class="rightSection">
         <h1 id="user"></h1>
 
@@ -152,44 +176,16 @@
         <ul id="savings" class="list">
 
         </ul>
-<!-- 
-        <ul id="currents" class="list">
-            <h1>current accounts</h1>
-            <a href="#">
-                <li>
-                    <p>iban</p>
-                    <p>amount</p>
-                    <input type="submit" value="Freeze">
-                </li>
-            </a><br>
-            <a href="#">
-                <li>
-                    <p>iban</p>
-                    <p>amount</p>
-                    <input type="submit" value="Freeze">
-                </li>
-            </a><br>
 
-        </ul>
-        <ul id="savings" class="list">
-            <h1>savings accounts</h1>
-            <a href="#">
-                <li>
-                    <p>iban</p>
-                    <p>amount</p>
-                    <input type="submit" value="Freeze">
-                </li>
-            </a><br>
-            <a href="#">
-                <li>
-                    <p>iban</p>
-                    <p>amount</p>
-                    <input type="submit" value="Freeze">
-                </li>
-            </a><br>
-
-        </ul> -->
     </section>
 </body>
 
+
+
+
 </html>
+
+
+
+
+       
