@@ -1,5 +1,6 @@
 package io.swagger.configuration;
 
+import io.swagger.api.ApiException;
 import io.swagger.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,10 +27,10 @@ public class ViewController{
      */
     @RequestMapping(value = {"/dashboard"})
     public String dashboard() {
-        if (securityController.currentUser().getRole().equals(User.RoleEnum.EMPLOYEE)){
-            return "redirect:/all-users";
+        if (securityController.currentUser().getRole().equals(User.RoleEnum.USER)){
+            return "redirect:/dashboard";
         }
-        return "/user-dashboard.html";
+        return "redirect:/all-users";
     }
 
     /**
@@ -37,10 +38,10 @@ public class ViewController{
      */
     @RequestMapping(value = {"/employeeTools"})
     public String employeeTools() {
-        if (securityController.currentUser().getRole().equals(User.RoleEnum.USER_EMPLOYEE)){
-            return "redirect:/all-users";
+        if (securityController.currentUser().getRole().equals(User.RoleEnum.USER)){
+            return "redirect:/dashboard";
         }
-        return "/user-dashboard.html";
+        return "redirect:/all-users";
     }
 
 
@@ -49,6 +50,9 @@ public class ViewController{
      */
     @RequestMapping(value = {"/create-accounts"})
     public String createAccount() {
+        if (securityController.currentUser().getRole().equals(User.RoleEnum.USER)){
+            return "redirect:/dashboard";
+        }
         return "/create-account.html";
     }
 
@@ -119,6 +123,9 @@ public class ViewController{
      */
     @RequestMapping(value = {"/employee-get-accounts"})
     public String employeeGetAllAccounts() {
+        if (securityController.currentUser().getRole().equals(User.RoleEnum.USER)){
+            return "redirect:/dashboard";
+        }
         return "/employee-user-accounts.html";
     }
 }
