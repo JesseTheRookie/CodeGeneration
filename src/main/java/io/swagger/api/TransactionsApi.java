@@ -8,20 +8,16 @@ package io.swagger.api;
 import io.swagger.model.Transaction;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
-import java.util.Map;
+
+
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-05-29T12:43:24.827Z[GMT]")
 @Api(value = "transactions", description = "the transactions API")
 public interface TransactionsApi {
@@ -39,6 +35,7 @@ public interface TransactionsApi {
         method = RequestMethod.POST)
     ResponseEntity<Integer> createTransaction(@ApiParam(value = ""  )  @Valid @RequestBody Transaction body) throws ApiException;
 
+
     @ApiOperation(value = "Get transactions depending on the optional parameters; the abstinence of any parameters results in all transactions.", nickname = "getTransactions", notes = "", response = Transaction.class, responseContainer = "List", authorizations = {
         @Authorization(value = "cookieAuth")    }, tags={ "transaction", })
     @ApiResponses(value = { 
@@ -54,6 +51,7 @@ public interface TransactionsApi {
                                                       @ApiParam(value = "The type of transaction; transaction, deposit, withdrawal") @Valid @RequestParam(value = "type", required = false) Transaction.TransactionType type,
                                                       @ApiParam(value = "The id of the user performing the transaction") @Valid @RequestParam(value = "performedBy", required = false) Integer performedBy) throws ApiException;
 
+
     @ApiOperation(value = "Returns specified transaction", nickname = "getTransactionById", notes = "Returns the specified transaction", response = Transaction.class, authorizations = {
         @Authorization(value = "cookieAuth")    }, tags={ "transaction", })
     @ApiResponses(value = {
@@ -65,6 +63,7 @@ public interface TransactionsApi {
             produces = { "application/json" },
             method = RequestMethod.GET)
     ResponseEntity<Transaction> getTransactionById(@Min(1)@ApiParam(value = "The transaction ID",required=true, allowableValues = "") @PathVariable("transactionId") Integer transactionId) throws ApiException;
+
 
     @ApiOperation(value = "Returns all transaction with the specified iban in the fromIban or toIban field", nickname = "getTransactionsByIban", notes = "Returns all transaction which involve this iban (from or to)", response = Transaction.class, responseContainer = "List",  authorizations = {
         @Authorization(value = "cookieAuth")    }, tags={ "transaction", })

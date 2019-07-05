@@ -9,8 +9,6 @@ import io.swagger.api.SecurityController;
  * Handles views
  */
 
-
-
 @Controller
 public class ViewController{
 
@@ -22,7 +20,6 @@ public class ViewController{
     public String index() {
         return "redirect:/dashboard"; // change the url after the  '/' to change the index page
     }
-
 
     /**
      * Dashboard
@@ -79,7 +76,6 @@ public class ViewController{
         return "/create-user.html";
     }
 
-
     /**
      * Get users
      */
@@ -88,7 +84,6 @@ public class ViewController{
         return "/get-users.html";
     }
 
-
     /**
      * Get accounts
      */
@@ -96,7 +91,6 @@ public class ViewController{
     public String getAllAccounts() {
         return "/get-accounts.html";
     }
-
 
     /**
      * Login

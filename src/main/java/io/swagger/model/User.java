@@ -2,7 +2,6 @@ package io.swagger.model;
 
 import java.util.Collection;
 import java.util.Objects;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -14,7 +13,6 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
-
 import javax.persistence.Entity;
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -47,7 +45,6 @@ public class User implements UserDetails {
     @JsonProperty("Role")
     private RoleEnum role = null;
 
-
     /**
      * constructors
      */
@@ -64,7 +61,6 @@ public class User implements UserDetails {
         this.role = RoleEnum.valueOf(role);
         ;
     }
-
 
     /**
      * Getters
@@ -123,9 +119,6 @@ public class User implements UserDetails {
         return AuthorityUtils.createAuthorityList("ROLE_"+this.getRole().toString());
     }
 
-    /**
-     * Setters
-     */
     public void setId(Integer id) {
         this.id = id;
     }
@@ -137,16 +130,12 @@ public class User implements UserDetails {
     @JsonProperty("Password")
     public void setPassword(String password) {
         this.password = new BCryptPasswordEncoder().encode(password);
-       // System.out.println(this.password);
     }
 
     public void setRole(String role) {
         this.role = RoleEnum.valueOf(role);
     }
 
-    /**
-     * Vage Property constructors
-     */
     public User id(Integer id) {
         this.id = id;
         return this;
@@ -162,14 +151,9 @@ public class User implements UserDetails {
         return this;
     }
 
-    /*
-     * Misc Methods
-     */
-
     public boolean hasAuthority(RoleEnum role){
         return getRole().equals(role);
     }
-
 
     @Override
     public boolean equals(java.lang.Object o) {
@@ -186,12 +170,10 @@ public class User implements UserDetails {
                 Objects.equals(this.role, user.role);
     }
 
-
     @Override
     public int hashCode() {
         return Objects.hash(id, username, password, role);
     }
-
 
     @Override
     public String toString() {
@@ -216,7 +198,6 @@ public class User implements UserDetails {
         }
         return o.toString().replace("\n", "\n    ");
     }
-
 
     /**
      * Role Enum

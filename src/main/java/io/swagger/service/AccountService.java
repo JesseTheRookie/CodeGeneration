@@ -7,8 +7,6 @@ import io.swagger.model.User;
 import io.swagger.repository.AccountRepository;
 import io.swagger.repository.UserRepository;
 import org.springframework.stereotype.Service;
-
-import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -102,9 +100,9 @@ public class AccountService {
             accountRepository.save(updatedAccount);
         }
     }
+
     public Boolean accountIsNull(String iban){
         Account account = accountRepository.findById(iban).orElse(null);
         return account == null;
     }
-
 }

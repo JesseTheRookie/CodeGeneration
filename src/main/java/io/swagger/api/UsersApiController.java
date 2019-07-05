@@ -4,7 +4,6 @@ import io.swagger.model.Account;
 import io.swagger.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
-import io.swagger.repository.UserRepository;
 import io.swagger.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
@@ -25,11 +22,8 @@ import java.util.List;
 public class UsersApiController implements UsersApi {
 
     private static final Logger log = LoggerFactory.getLogger(UsersApiController.class);
-
     private final ObjectMapper objectMapper;
-
     private final HttpServletRequest request;
-
     private UserService service;
 
     @org.springframework.beans.factory.annotation.Autowired

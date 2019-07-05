@@ -8,19 +8,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import java.math.BigDecimal;
-
 import io.swagger.api.SecurityController;
-import io.swagger.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.context.annotation.Bean;
-import org.threeten.bp.OffsetDateTime;
 import org.springframework.validation.annotation.Validated;
-
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -42,7 +33,6 @@ public class Transaction {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonProperty("FromIban")
     private String fromIban = null;
-
 
     //optional
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -96,18 +86,6 @@ public class Transaction {
         }
     }
 
-/*
-  @JsonCreator
-  //constructor for transactions
-  public Transaction( @JsonProperty("FromIban") String fromIban, @JsonProperty("ToIban") String toIban,  @JsonProperty("Amount") Double amount, @JsonProperty("Type") TransactionType type, @JsonProperty("PerformedBy") Integer performedBy){
-    this.fromIban = fromIban;
-    this.toIban = toIban;
-    this.amount = amount;
-    this.type = type;
-    this.performedBy = performedBy;
-  }*/
-
-
     //constructor for transactions
     public Transaction(String fromIban, String toIban, Double amount, String type) {
         this.fromIban = fromIban;
@@ -133,9 +111,6 @@ public class Transaction {
     //no args constructor
     public Transaction() {
     }
-
-
-    //getters
 
     @ApiModelProperty(required = true, value = "")
     public Integer getId() {
@@ -177,7 +152,6 @@ public class Transaction {
 
 
     //setters
-
     private void setId(Integer id) {
         this.id = id;
     }
@@ -206,66 +180,15 @@ public class Transaction {
         this.performedBy = performedBy;
     }
 
-
-
-//    public Transaction id(Integer id) {
-//        this.id = id;
-//        return this;
-//    }
-//
-    /*
-    public Transaction fromIban(String fromIban) {
-        this.fromIban = fromIban;
-        return this;
-    }*/
-
-    /**
-     * the iban of the sending end
-     *
-     * @return fromIban
-     **/
-    //@ApiModelProperty(required = true, value = "the iban of the sending end")
-//  @NotNull
-
-//    public Transaction to(String to) {
-//        this.to = to;
-//        return this;
-//    }
-
-    /**
-     * the iban of the receiving end
-     *
-     * @return toIban
-     **/
-    //@ApiModelProperty(required = true, value = "the iban of the receiving end")
-//  @NotNull
-
-
     public Transaction amount(Double amount) {
         this.amount = amount;
         return this;
     }
 
-    /**
-     * the amount toIban transfer
-     *
-     * @return amount
-     **/
-
-
-
-
     public Transaction timeStamp(Timestamp timeStamp) {
         this.timeStamp = timeStamp;
         return this;
     }
-
-    /**
-     * Get timeStamp
-     *
-     * @return timeStamp
-     **/
-
 
     public Transaction performedBy(Integer performedBy) {
         this.performedBy = performedBy;
@@ -276,14 +199,6 @@ public class Transaction {
         Timestamp timestamp = Timestamp.valueOf(s);
         return timestamp;
     }
-
-    /**
-     * userID of the user who creates the transaction
-     *
-     * @return performedBy
-     **/
-
-
 
     @Override
     public boolean equals(java.lang.Object o) {
